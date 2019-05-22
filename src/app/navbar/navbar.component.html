@@ -1,0 +1,44 @@
+<mat-toolbar class="bg-secondary navbar">
+  <div class="container">
+      <div><a [routerLink]="['/inicio']" class="text-light"><span><img src="./assets/arquitecto.png" height="30px" width="30px"></span> Mantenimiento EMG</a></div>
+      <div>
+        <span *ngIf="mie">
+          <mat-menu #meqMenu="matMenu">
+            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/plantas')">Plantas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/lineas')">Lineas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/equipos')">Equipos</button>
+          </mat-menu>
+          <button mat-button [matMenuTriggerFor]="meqMenu" class="text-light">
+            Mis equipos
+          </button>
+        </span>
+        <span style="margin-left:80px" *ngIf="mie"></span>
+        <span *ngIf="usu">
+          <button mat-button class="text-light" (click)="routerTo('usuarios')">Usuarios</button>
+        </span>
+        <span *ngIf="equ">
+          <mat-menu #equMenu="matMenu">
+            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/plantas')">Plantas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/lineas')">Lineas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/equipos')">Equipos</button>
+          </mat-menu>
+          <button mat-button [matMenuTriggerFor]="equMenu" class="text-light">
+            Equipos
+          </button>
+        </span>
+        <span *ngIf="ser">
+          <button mat-button class="text-light" (click)="routerTo('servicios')">Servicios</button>
+        </span>
+        <span *ngIf="log">
+          <mat-menu #userInfo="matMenu">
+            <button mat-menu-item class="text-dark">Mi cuenta</button>
+            <button mat-menu-item class="text-danger" (click)="closeSesion()">Salir</button>
+          </mat-menu>
+          <button mat-button [matMenuTriggerFor]="userInfo" class="text-light">
+            Bienvenido {{nombre}}
+          </button>
+        </span>
+      </div>
+  </div>
+
+</mat-toolbar>

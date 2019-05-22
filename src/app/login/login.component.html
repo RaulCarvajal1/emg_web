@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div class="container pad">
+  <div class="row">
+    <div class="col-sm-12 col-md-4 offset-md-4  centrado-porcentual">
+      <div class="card ">
+        <div class="card-body">
+          <img src="assets/logo.png" alt="" srcset="" class="img-fluid">
+          <form>
+            <div class="form-group">
+              <label for="email1">Nombre de usuario</label>
+              <input  type="text" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Escribe tu nombre de usuario" name="user" [(ngModel)]="user">
+            </div>
+            <div class="form-group">
+              <label for="password1">Contraseña</label>
+              <input  type="password" class="form-control" id="password1" placeholder="Contraseña" name="pass" [(ngModel)]="pass">
+            </div>
+            <button (click)="login()" class="btn btn-primary">Entrar</button>
+            <p class="text-justify text-danger" *ngIf="faillog">
+              Usuario o contraseña incorrectos, 
+              si la falla sigue contacte a los administradores
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

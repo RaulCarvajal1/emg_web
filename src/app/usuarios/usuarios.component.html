@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <hr>
+  <div class="row">
+    <div class="col-12">
+      <h2 class="text-left">Usuarios registrados</h2>
+    </div>
+  </div>
+  <hr>
+  <hr>
+  <div class="row">
+    <div class="col-12">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Email</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Estatus</th>
+                <th scope="col">Detalle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td scope="row">{{user.info.name}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.info.email}}</td>
+                <td>{{getRol(user.role)}}</td>
+                <td>{{getStatus(user.active)}}</td>
+                <td>
+                    <a color="primary" mat-mini-fab [routerLink]="['usuarios',user._id]">
+                        <mat-icon>pageview</mat-icon>
+                    </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
