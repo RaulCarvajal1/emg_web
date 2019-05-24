@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { res } from "../interfaces/response1.interface";
-import { User } from "../interfaces/user.interface";
+import { res, resArray } from "../interfaces/response.interface";
 @Injectable({
   providedIn: 'root'
 })
@@ -31,4 +30,16 @@ export class UsuariosService {
     }
   }
   
+  newUser(user){
+    return this.http.post<res>('http://localhost:3033/user/create/', user);
+  }
+
+  userExists(u:string){
+    return this.http.get<res>('http://localhost:3033/user/existe/'+u);
+  }
+
+  getAllClients(){
+    return this.http.get<resArray>("http://127.0.0.1:3033/user/getclients");
+  }
+
 }

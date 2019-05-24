@@ -1,3 +1,68 @@
-<p>
-  add-user works!
-</p>
+
+<app-navbar></app-navbar>
+<div class="container">
+<hr>
+<hr>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Añadir nuevo usuario</h5>
+            </div>
+            <form class="container">
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="name">Nombre</label>
+                          <input type="text" [(ngModel)]="n" class="form-control" id="name" placeholder="Nombre del nuevo" [ngModelOptions]="{standalone: true}" required>
+                      </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" [(ngModel)]="e" class="form-control" id="email" placeholder="Email de usuario" [ngModelOptions]="{standalone: true}" required>
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="inputState">Rol</label>
+                          <select id="inputState" class="form-control"  [(ngModel)]="rol" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let o of options">{{o.name}}</option>
+                          </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-4">
+                      <div class="form-group">
+                        <label for="but">Usuario y contraseña</label>
+                        <Button type="button" class="btn btn-primary" id="but" (click)="genUsuCon()" [disabled]="enbutsGen()">Generar usuario y contraseña</Button>                        
+                      </div>
+                  </div>
+                  <div class="col-4">
+                      <div class="form-group">
+                          <label for="username">Usuario</label>
+                          <input type="text" [(ngModel)]="u" class="form-control" id="username" placeholder="Contraseña" [ngModelOptions]="{standalone: true}" required disabled>
+                      </div>
+                  </div>
+                  <div class="col-4">
+                      <div class="form-group">
+                          <label for="pass">Contraseña</label>
+                          <input type="text" [(ngModel)]="p" class="form-control" id="pass" placeholder="Contraseña" [ngModelOptions]="{standalone: true}" required disabled>
+                      </div>
+                  </div>
+                </div>
+                <div class="">
+                    <button type="button" class="btn btn-info subpad1" (click)="regresar()">Regresar</button>
+                    <button type="submit" class="btn btn-primary subpad" (click)="guardarUsuario()" [disabled]="enbuts()">Guardar</button>                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+<hr>
+</div>
+<app-footer></app-footer>

@@ -17,8 +17,8 @@
             </div>
             <form class="container">
                 <div class="form-group">
-                    <label for="username">Nombre de usuario</label>
-                    <input type="text" [(ngModel)]="nUser" class="form-control" id="username" placeholder="{{user.username}}" [ngModelOptions]="{standalone: true}">
+                    <label for="username">Nombre de usuario <span *ngIf="usEx" class="text-danger"><b>¡Este usuario ya existe!</b></span></label>
+                    <input type="text" [(ngModel)]="nUser" class="form-control" id="username" placeholder="{{user.username}}" [ngModelOptions]="{standalone: true}" (focusout)="existeUsuario()">
                 </div>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
@@ -31,7 +31,7 @@
                 <div class="">
                     <button type="button" class="btn btn-info butpad" (click)="regresar()">Regresar</button>
                     <button type="button" class="btn btn-warning butpad" (click)="actDes()">{{isActivatedStr(user.active)}}</button>                        
-                    <button type="submit" class="btn btn-primary butpad" (click)="updClick()">Actualizar</button>                    
+                    <button type="submit" class="btn btn-primary butpad" (click)="updClick()" [disabled]="enbuts()">Actualizar</button>                    
                 </div>
             </form>
         </div>

@@ -1,3 +1,63 @@
-<p>
-  plantas works!
-</p>
+<app-navbar></app-navbar>
+<div class="container">
+  <hr>
+  <div class="row">
+    <div class="col-4">
+      <h2 class="text-left">Plantas registradas</h2>
+    </div>
+    <div class="col-4 text-right">
+      <select id="inputState" class="form-control"  [(ngModel)]="id_cliente" [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let cliente of clientes" value="{{cliente._id}}">{{cliente.info.name}}</option>
+      </select>
+    </div>
+    <div class="col-4 text-right">
+      <button class="btn btn-primary" type="button" (click)="loadPlants()">
+        Buscar plantas
+      </button>
+    </div>
+  </div>
+  <hr>
+  <hr>
+  <div *ngIf="load"><!--asda-->
+    <div class="row">
+      <div class="col-12 text-right">
+        <button class="btn btn-primary" type="button" (click)="goNewPlant()">
+          Nueva planta
+        </button>
+      </div>
+      <br>
+    </div>
+    <div class="row text-center"><!--asda-->
+      <div class="col-12">
+          <table class="table table-striped" *ngIf="!vacio()">
+              <thead>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Código</th>
+                  <th scope="col">Jefe de planta</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">#Lineas</th>
+                  <th scope="col">Detalle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pnt of planta">
+                  <td scope="row">{{pnt.name}}</td>
+                  <td>{{pnt.code}}</td>
+                  <td>{{pnt.boss.name}}</td>
+                  <td>{{pnt.boss.email}}</td>
+                  <td>{{pnt.lines.length}}</td>
+                  <td>
+                      <button mat-mini-fab color="primary" (click)="plantDet(pnt._id)">
+                          <mat-icon>pageview</mat-icon>
+                      </button>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+          <h2 *ngIf="vacio()">El cliente no tiene plantas registradas</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

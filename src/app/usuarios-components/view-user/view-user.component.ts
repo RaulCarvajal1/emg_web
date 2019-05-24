@@ -2,7 +2,6 @@ import { Component, OnInit, DoCheck, AfterContentInit } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { UsuariosService } from "../../services/usuarios.service";
 import { User } from "../../interfaces/user.interface";
-import { MatSnackBar } from "@angular/material";
 
 
 @Component({
@@ -14,14 +13,15 @@ export class ViewUserComponent implements OnInit, DoCheck {
 
   constructor(private activatedRoute: ActivatedRoute, 
               private usuarios:UsuariosService, 
-              private router:Router,
-              private snackBar: MatSnackBar) 
+              private router:Router) 
   { }
 
   user:User;
   reg_by:User;
   reg_bystr:string;
   reg_date:string;
+
+  usEx:boolean=false;
 
   ngOnInit() {
     this.loadUser();
@@ -126,5 +126,24 @@ export class ViewUserComponent implements OnInit, DoCheck {
   }
   getDate(ut:string){
     this.reg_date = ut.slice(0, 10);
+  }
+  enbuts():boolean{
+    if(this.nUser!=""||this.nEmail!=""||this.nName!=""){
+      return false;
+    }
+    return true;
+  }
+  existeUsuario(){
+    this.usuarios.userExists(this.nUser).subscribe(
+      res=>{
+        if(res.detail!=null){
+          this.usEx=true;
+        }else{
+          this.usEx=false;
+        }
+      },err=>{
+        console.log(err);
+      }
+    );
   }
 }

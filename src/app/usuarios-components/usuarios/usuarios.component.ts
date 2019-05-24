@@ -27,7 +27,6 @@ export class UsuariosComponent implements OnInit {
       console.log(err)
     });
   }
-
   getRol(r:number):string{
     switch (r) {
       case 0:
@@ -48,8 +47,12 @@ export class UsuariosComponent implements OnInit {
       return "Inactivo";
     }
   }
-
   usuarioDet(id:string){
     this.router.navigateByUrl('usuarios/'+id);
   }
+  goNewuser(){
+    this.router.navigateByUrl('usuarios/nuevo');
+  }
+
+  /** HOLA*/
 }

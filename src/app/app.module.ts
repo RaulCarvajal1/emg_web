@@ -18,6 +18,7 @@ import { EquiposComponent } from './equipos-components/equipos/equipos.component
 import { ServiciosComponent } from './servicios-component/servicios/servicios.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UsuariosService } from './services/usuarios.service'
+import { PlantasService } from './services/plantas.service'
 
 import { MatMenuModule, MatSnackBarModule } from "@angular/material/";
 import {MatButtonModule} from '@angular/material/button';
@@ -26,6 +27,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 import { ViewUserComponent } from './usuarios-components/view-user/view-user.component';
 import { AddUserComponent } from './usuarios-components/add-user/add-user.component';
+import { ViewPlantasComponent } from './plantas-components/view-plantas/view-plantas.component';
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import { AddUserComponent } from './usuarios-components/add-user/add-user.compon
     EquiposComponent,
     ServiciosComponent,
     ViewUserComponent,
-    AddUserComponent
+    AddUserComponent,
+    ViewPlantasComponent
   ],
   imports: [
     HttpClientModule,
@@ -59,7 +62,8 @@ import { AddUserComponent } from './usuarios-components/add-user/add-user.compon
   providers: [
     LoginService,
     AuthService,
-    UsuariosService
+    UsuariosService,
+    PlantasService
   ],
   bootstrap: [AppComponent]
 })
