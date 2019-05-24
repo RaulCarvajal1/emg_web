@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { res } from "../interfaces/response1.interface";
+import { User } from "../interfaces/user.interface";
 @Injectable({
   providedIn: 'root'
 })
@@ -9,6 +10,25 @@ export class UsuariosService {
   constructor(private http:HttpClient) { }
 
   getAllUsers(){
-    return this.http.get<JSON>('http://localhost:3033/user/getall');
+    return this.http.get<res>('http://localhost:3033/user/getall');
   }
+
+  getUser(id:string){
+    return this.http.get<res>('http://localhost:3033/user/getbyid/'+id);
+  }
+
+  updateUser(user:JSON){
+    return this.http.put<res>('http://localhost:3033/user/update',
+      user
+    );
+  }
+
+  actDes(id:string,stat:boolean){
+    if(stat){
+      return this.http.patch<res>('http://localhost:3033/user/disable/'+id, {'Content-Type': 'application/json'});
+    }else{
+      return this.http.patch<res>('http://localhost:3033/user/enable/'+id, {'Content-Type': 'application/json'});
+    }
+  }
+  
 }

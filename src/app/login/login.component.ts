@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
 
   setSession(res){
     if(res.authorized){
-      console.log(res.detail);
       sessionStorage.setItem("detalle",JSON.stringify(res.detail));
       this.faillog=false;
       this.router.navigate(['inicio']);

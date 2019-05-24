@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from "./../interfaces/user.interface";
-import { UsuariosService } from "./../services/usuarios.service";
+import { User } from "../../interfaces/user.interface";
+import { UsuariosService } from "../../services/usuarios.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-usuarios',
@@ -9,9 +10,9 @@ import { UsuariosService } from "./../services/usuarios.service";
 })
 export class UsuariosComponent implements OnInit {
 
-  constructor(private usuarios:UsuariosService) { }
+  constructor(private usuarios:UsuariosService, private router:Router) { }
 
-  users:JSON[];
+  users:User[];
 
   ngOnInit() {
     this.loadUsers();
@@ -19,7 +20,7 @@ export class UsuariosComponent implements OnInit {
 
   loadUsers(){
     this.usuarios.getAllUsers().subscribe(
-    (data:JSON)=>{
+    (data)=>{
       this.users=data.detail;
     },
     (err)=>{
@@ -48,4 +49,7 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
+  usuarioDet(id:string){
+    this.router.navigateByUrl('usuarios/'+id);
+  }
 }
