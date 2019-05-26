@@ -28,6 +28,9 @@ import {MatTableModule} from '@angular/material/table';
 import { ViewUserComponent } from './usuarios-components/view-user/view-user.component';
 import { AddUserComponent } from './usuarios-components/add-user/add-user.component';
 import { ViewPlantasComponent } from './plantas-components/view-plantas/view-plantas.component';
+import { AddPlantaComponent } from './plantas-components/add-planta/add-planta.component';
+import { NewlineComponent } from './lineas-components/newline/newline.component';
+import { ViewlineComponent } from './lineas-components/viewline/viewline.component';
 
 
 @NgModule({
@@ -44,7 +47,10 @@ import { ViewPlantasComponent } from './plantas-components/view-plantas/view-pla
     ServiciosComponent,
     ViewUserComponent,
     AddUserComponent,
-    ViewPlantasComponent
+    ViewPlantasComponent,
+    AddPlantaComponent,
+    NewlineComponent,
+    ViewlineComponent
   ],
   imports: [
     HttpClientModule,

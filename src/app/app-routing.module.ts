@@ -10,6 +10,9 @@ import { ServiciosComponent } from './servicios-component/servicios/servicios.co
 import { ViewUserComponent } from './usuarios-components/view-user/view-user.component';
 import { AddUserComponent } from "./usuarios-components/add-user/add-user.component";
 import { ViewPlantasComponent } from './plantas-components/view-plantas/view-plantas.component';
+import { AddPlantaComponent } from './plantas-components/add-planta/add-planta.component';
+import { NewlineComponent } from './lineas-components/newline/newline.component';
+import { ViewlineComponent } from './lineas-components/viewline/viewline.component';
 
 const routes: Routes = [
   {path : "login", component : LoginComponent},
@@ -19,7 +22,10 @@ const routes: Routes = [
   {path : "usuarios/:id", component : ViewUserComponent},
   {path : "equipos/plantas", component : PlantasComponent},
   {path : "equipos/plantas/:id", component : ViewPlantasComponent},
+  {path : "equipos/plantas/nueva/:id", component : AddPlantaComponent},
   {path : "equipos/lineas", component : LineasComponent},
+  {path : "equipos/lineas/nueva/:id", component : NewlineComponent},
+  {path : "equipos/lineas/:id_p/:id_l", component : ViewlineComponent},
   {path : "equipos/equipos", component : EquiposComponent},
   {path : "servicios", component : ServiciosComponent}
 ];

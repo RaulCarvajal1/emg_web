@@ -1,0 +1,62 @@
+<app-navbar></app-navbar>
+<div class="container">
+<hr>
+<hr>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Agregar planta para {{reg_bystr}}</h5>
+            </div>
+            <form class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="name">Nombre de planta</label>
+                      <input type="text" [(ngModel)]="nName" class="form-control" id="name" placeholder="Nombre de la planta" [ngModelOptions]="{standalone: true}">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="code">Código de planta</label>
+                      <input type="text" [(ngModel)]="nCode" class="form-control" id="code" placeholder="Código de planta" [ngModelOptions]="{standalone: true}">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <h4 class="card-subtitle">Información de contacto en la planta</h4>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="eName">Nombre</label>
+                      <input type="text" [(ngModel)]="neName" class="form-control" id="eName" placeholder="Nombre" [ngModelOptions]="{standalone: true}">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="Email">Email</label>
+                      <input type="email" [(ngModel)]="nEmail" class="form-control" id="Email" placeholder="Correo" [ngModelOptions]="{standalone: true}">
+                    </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                        <label for="Phone">Télefono</label>
+                        <input type="tel" [(ngModel)]="nPhone" class="form-control" id="Phone" placeholder="Télefono" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+                </div>
+                <div class="pad1">
+                    <button type="button" class="btn btn-info" (click)="regresar()">Regresar</button>
+                    <button type="submit" class="btn btn-primary bot1" (click)="crearClick()" [disabled]="enbuts()">Guardar</button>                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+<hr>
+</div>
+<app-footer></app-footer>

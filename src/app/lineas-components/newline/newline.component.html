@@ -1,0 +1,39 @@
+<app-navbar></app-navbar>
+<div class="container">
+<hr>
+<hr>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Agregar linea para planta {{p_namestr}}</h5>
+            </div>
+            <form class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="name">Número de linea</label>
+                      <input type="number" [(ngModel)]="nLine" class="form-control" id="name" placeholder="Nombre de la planta" [ngModelOptions]="{standalone: true}">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="eName">Descripción</label>
+                      <textarea class="form-control" id="eName" rows="3" [(ngModel)]="nDesc" placeholder="Nombre" [ngModelOptions]="{standalone: true}"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="pad1">
+                    <button type="button" class="btn btn-info" (click)="regresar()">Regresar</button>
+                    <button type="submit" class="btn btn-primary bot1" (click)="crearClick()" [disabled]="enbuts()">Guardar</button>                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+<hr>
+</div>
+<app-footer></app-footer>

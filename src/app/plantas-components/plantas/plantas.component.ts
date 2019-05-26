@@ -46,7 +46,6 @@ export class PlantasComponent implements OnInit {
   getClients():any{
     this.usuarios.getAllClients().subscribe(
       res=>{
-        console.log(res);
         this.clientes=res.detail;
       },err=>{
         console.error(err);
@@ -57,6 +56,10 @@ export class PlantasComponent implements OnInit {
 
   plantDet(id:string){
     this.router.navigateByUrl('equipos/plantas/'+id);
+  }
+
+  goNewPlant(){
+    this.router.navigateByUrl('equipos/plantas/nueva/'+this.id_cliente);
   }
 
  

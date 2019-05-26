@@ -22,4 +22,16 @@ export class PlantasService {
       plant
     );
   }
+
+  crear(plant:JSON){
+    return this.http.post<res>("http://127.0.0.1:3033/plant/create",
+      plant
+    );
+  }
+
+  addLinea(line:JSON, id_p:string){
+    return this.http.put<res>("http://127.0.0.1:3033/plant/addline/"+id_p,
+      line
+    );
+  }
 }

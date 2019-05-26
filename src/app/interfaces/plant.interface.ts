@@ -1,4 +1,5 @@
 export interface Plant{
+    "_id" : string,
     "name" : string,
     "code" :  string,
     "client" : string,
@@ -15,7 +16,7 @@ export interface Boss{
 }
 
 export interface Lines {
-    "line_id" : string,
+    "_id" : string,
     "number" : number,
     "desc" : string
 }

@@ -28,10 +28,10 @@
                     <label for="email">Email</label>
                     <input type="email" [(ngModel)]="nEmail" class="form-control" id="email" placeholder="{{user.info.email}}" [ngModelOptions]="{standalone: true}">
                 </div>
-                <div class="">
-                    <button type="button" class="btn btn-info butpad" (click)="regresar()">Regresar</button>
-                    <button type="button" class="btn btn-warning butpad" (click)="actDes()">{{isActivatedStr(user.active)}}</button>                        
-                    <button type="submit" class="btn btn-primary butpad" (click)="updClick()" [disabled]="enbuts()">Actualizar</button>                    
+                <div class="pad1">
+                    <button type="button" class="btn btn-info " (click)="regresar()">Regresar</button>
+                    <button type="button" class="btn btn-warning bot1" (click)="actDes()">{{isActivatedStr(user.active)}}</button>                        
+                    <button type="submit" class="btn btn-primary bot1" (click)="updClick()" [disabled]="enbuts()">Actualizar</button>                    
                 </div>
             </form>
         </div>
