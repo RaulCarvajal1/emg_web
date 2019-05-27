@@ -13,6 +13,10 @@ export class PlantasService {
     return this.http.get<resArray>("http://127.0.0.1:3033/plant/getplants/"+id);
   }
 
+  getAll(){
+    return this.http.get<resArray>("http://127.0.0.1:3033/plant/getall");
+  }
+
   getPlanta(id:string){
     return this.http.get<res>("http://127.0.0.1:3033/plant/getplant/"+id)
   }

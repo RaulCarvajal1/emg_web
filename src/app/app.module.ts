@@ -19,6 +19,7 @@ import { ServiciosComponent } from './servicios-component/servicios/servicios.co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UsuariosService } from './services/usuarios.service'
 import { PlantasService } from './services/plantas.service'
+import { EmgsService } from "./services/emgs.service";
 
 import { MatMenuModule, MatSnackBarModule } from "@angular/material/";
 import {MatButtonModule} from '@angular/material/button';
@@ -31,6 +32,8 @@ import { ViewPlantasComponent } from './plantas-components/view-plantas/view-pla
 import { AddPlantaComponent } from './plantas-components/add-planta/add-planta.component';
 import { NewlineComponent } from './lineas-components/newline/newline.component';
 import { ViewlineComponent } from './lineas-components/viewline/viewline.component';
+import { AddemgComponent } from './equipos-components/addemg/addemg.component';
+import { ViewemgComponent } from './equipos-components/viewemg/viewemg.component';
 
 
 @NgModule({
@@ -50,7 +53,9 @@ import { ViewlineComponent } from './lineas-components/viewline/viewline.compone
     ViewPlantasComponent,
     AddPlantaComponent,
     NewlineComponent,
-    ViewlineComponent
+    ViewlineComponent,
+    AddemgComponent,
+    ViewemgComponent
   ],
   imports: [
     HttpClientModule,
@@ -69,7 +74,8 @@ import { ViewlineComponent } from './lineas-components/viewline/viewline.compone
     LoginService,
     AuthService,
     UsuariosService,
-    PlantasService
+    PlantasService,
+    EmgsService
   ],
   bootstrap: [AppComponent]
 })

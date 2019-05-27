@@ -9,7 +9,12 @@
   <hr>
   <div class="row">
     <div class="col">
-      <h4 class="text-left">Cliente</h4>
+      <h5 class="text-center">Filtrar</h5>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="col">
+      <h5 class="text-left">Cliente</h5>
     </div>
     <div class="col">
       <select id="inputState" class="form-control" *ngIf="true" [(ngModel)]="id_cliente" [ngModelOptions]="{standalone: true}" (change)="loadPlants()">
@@ -20,7 +25,7 @@
   <br>
   <div class="row">
     <div class="col">
-      <h4 class="text-left">Plantas</h4>
+      <h5 class="text-left">Plantas</h5>
     </div>
         <div class="col-6">  
           <select id="inputState" class="form-control" [(ngModel)]="id_planta" [ngModelOptions]="{standalone: true}" [disabled]="sinPlantas" (change)="loadLineas()">

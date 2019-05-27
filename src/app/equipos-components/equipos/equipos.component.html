@@ -1,3 +1,98 @@
-<p>
-  equipos works!
-</p>
+<app-navbar></app-navbar>
+<div class="container">
+  <hr>
+  <div class="row">
+    <div class="col">
+      <h2 class="text-left">Ver equipos registrados</h2>
+    </div>
+    <div class="col text-right">
+      <button class="btn btn-primary" (click)="goNewEmg()">Agregar equipo</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col">
+      <h5 class="text-left">Filtrar</h5>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <select class="form-control" id="tipo" [(ngModel)]="filter_o" [ngModelOptions]="{standalone: true}" (change)="check_filter()">
+          <option value="0">Ver todos</option>
+          <option value="1">Por cliente</option>
+          <option value="2">Por planta y linea</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row" *ngIf="too&&pcli">
+    <div class="col">
+      <h5 class="text-left">Seleccionar cliente</h5>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <select class="form-control" id="tipo" [(ngModel)]="client_id" [ngModelOptions]="{standalone: true}" (change)="loadEmgsByClient()">
+          <option *ngFor="let client of clients" value="{{client._id}}">{{client.info.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="too&&pplali">
+    <div class="col">
+      <h5 class="text-left">Seleccionar planta</h5>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <select class="form-control" id="tipo" [(ngModel)]="plant_id" [ngModelOptions]="{standalone: true}" (change)="loadLines()">
+          <option *ngFor="let plant of plants" value="{{plant._id}}">{{plant.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="too&&pplali">
+    <div class="col">
+      <h5 class="text-left">Seleccionar linea</h5>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <select class="form-control" id="tipo" [(ngModel)]="line_id" [ngModelOptions]="{standalone: true}" [disabled]="!have_lines" (change)="loadEmgsByPlantAndLines()">
+          <option *ngFor="let line of lines" value="{{line._id}}">{{line.number}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+      <div class="col">
+          <table class="table table-striped" *ngIf="true">
+              <thead>
+                <tr>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Modelo</th>
+                  <th scope="col">Serial</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Estatus</th>
+                  <th scope="col">Detalle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let emg of emgs">
+                  <td scope="row">{{emg.info.type}}</td>
+                  <td>{{emg.info.model}}</td>
+                  <td>{{emg.info.serial}}</td>
+                  <td>{{emg.info.description}}</td>
+                  <td>{{emg.status}}</td>
+                  <td>
+                    <button mat-mini-fab color="primary" (click)="detEmg(emg._id)">
+                        <mat-icon>pageview</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+          <h4 *ngIf="false">No existen equipos registrados</h4>
+      </div>
+  </div>
+  <hr>  
+</div>
+<app-footer></app-footer>

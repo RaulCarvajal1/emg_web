@@ -13,6 +13,8 @@ import { ViewPlantasComponent } from './plantas-components/view-plantas/view-pla
 import { AddPlantaComponent } from './plantas-components/add-planta/add-planta.component';
 import { NewlineComponent } from './lineas-components/newline/newline.component';
 import { ViewlineComponent } from './lineas-components/viewline/viewline.component';
+import { AddemgComponent } from './equipos-components/addemg/addemg.component';
+import { ViewemgComponent } from './equipos-components/viewemg/viewemg.component';
 
 const routes: Routes = [
   {path : "login", component : LoginComponent},
@@ -27,6 +29,8 @@ const routes: Routes = [
   {path : "equipos/lineas/nueva/:id", component : NewlineComponent},
   {path : "equipos/lineas/:id_p/:id_l", component : ViewlineComponent},
   {path : "equipos/equipos", component : EquiposComponent},
+  {path : "equipos/equipos/nuevo", component : AddemgComponent},
+  {path : "equipos/equipos/:id", component : ViewemgComponent},
   {path : "servicios", component : ServiciosComponent}
 ];
 
