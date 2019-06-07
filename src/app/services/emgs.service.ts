@@ -27,5 +27,12 @@ export class EmgsService {
   getById(id:string){
     return this.http.get<res>('http://127.0.0.1:3033/emg/getbyid/'+id);
   }
+  actDes(id:string,stat:boolean){
+    if(stat){
+      return this.http.patch<res>('http://localhost:3033/emg/disable/'+id, {'Content-Type': 'application/json'});
+    }else{
+      return this.http.patch<res>('http://localhost:3033/emg/enable/'+id, {'Content-Type': 'application/json'});
+    }
+  }
 
 }

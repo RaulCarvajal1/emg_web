@@ -39,7 +39,7 @@ export class AddemgComponent implements OnInit, DoCheck {
   btn:boolean=false;
 
   loadUsers(){
-    this.userService.getAllUsers().subscribe(res=>{
+    this.userService.getAllClients().subscribe(res=>{
       this.users=res.detail;
     },err=>{
       console.log(err);

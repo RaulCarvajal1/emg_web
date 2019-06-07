@@ -14,7 +14,8 @@ export class ViewUserComponent implements OnInit, DoCheck {
   constructor(private activatedRoute: ActivatedRoute, 
               private usuarios:UsuariosService, 
               private router:Router) 
-  { }
+  {
+  }
 
   user:User;
   reg_by:User;
@@ -22,19 +23,21 @@ export class ViewUserComponent implements OnInit, DoCheck {
   reg_date:string;
 
   usEx:boolean=false;
+  actualizado:boolean=false;
 
   ngOnInit() {
     this.loadUser();
   }
   ngDoCheck(){
-    this.getName(this.user.meta.registred_by);
-    this.getDate(this.user.meta.registred_date);
+
   }
 
   loadUser(){
     this.usuarios.getUser(<string>this.activatedRoute.snapshot.paramMap.get("id")).subscribe(
       (data)=>{
         this.user=data.detail;
+        this.getName(this.user.meta.registred_by);
+        this.getDate(this.user.meta.registred_date);
       },
       (err)=>{
         console.log(err)
@@ -97,10 +100,14 @@ export class ViewUserComponent implements OnInit, DoCheck {
 
     this.usuarios.updateUser(uUsr).subscribe(
       data=>{
-        this.loadUser();
-        this.nName="";
-        this.nEmail="";
-        this.nUser="";
+        this.actualizado=true;
+        setTimeout(() => {
+          this.loadUser();
+          this.nName="";
+          this.nEmail="";
+          this.nUser="";
+          this.actualizado=false;  
+        }, 1500);
       },err=>{
         console.log(err);
       });
@@ -108,7 +115,11 @@ export class ViewUserComponent implements OnInit, DoCheck {
   actDes(){
     this.usuarios.actDes(<string>this.activatedRoute.snapshot.paramMap.get("id"),this.user.active).subscribe(
       data=>{
-        this.loadUser();
+        this.actualizado=true;
+        setTimeout(() => {
+          this.loadUser();
+          this.actualizado=false;  
+        }, 1500);
       },err=>{
         console.log(err);
       });

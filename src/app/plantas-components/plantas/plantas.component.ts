@@ -16,6 +16,7 @@ export class PlantasComponent implements OnInit {
 
   ngOnInit() {
     this.getClients();
+    this.loadAllPlants();
   }
 
   planta:Plant[];
@@ -23,16 +24,33 @@ export class PlantasComponent implements OnInit {
   clientes:User[];
   load:boolean=false;
   id_cliente;
+  busq:string;
+
+  loadAllPlants(){
+    this.plantas.getAll().subscribe(
+      (data)=>{
+        this.planta=data.detail;
+        this.load=true;
+      },
+      (err)=>{
+        console.log(err)
+      });
+  }
 
   loadPlants(){
-    this.plantas.getAllPlantas(this.id_cliente).subscribe(
-    (data)=>{
-      this.planta=data.detail;
-      this.load=true;
-    },
-    (err)=>{
-      console.log(err)
-    });
+    if(this.id_cliente=="alls"){
+      this.loadAllPlants();
+    }else{
+      this.plantas.getAllPlantas(this.id_cliente).subscribe(
+        (data)=>{
+          this.planta=data.detail;
+          this.load=true;
+        },
+        (err)=>{
+          console.log(err)
+        });
+    }
+    
   }
 
   vacio():boolean{
@@ -58,9 +76,18 @@ export class PlantasComponent implements OnInit {
     this.router.navigateByUrl('equipos/plantas/'+id);
   }
 
-  goNewPlant(){
-    this.router.navigateByUrl('equipos/plantas/nueva/'+this.id_cliente);
+  newPlant(){
+    this.router.navigateByUrl('equipos/plantas/nueva/n');
   }
 
+  busqueda(){
+    if(this.busq==""){
+      this.loadAllPlants();
+    }else{
+      var regex = new RegExp(this.busq.toLowerCase());
+      let temp:Plant[]=this.planta;
+      this.planta=temp.filter(pln=> pln.name.toLowerCase().match(regex))
+    }
+  }
  
 }

@@ -15,18 +15,26 @@
                     <li class="card-text"><b>Estatus:  </b> {{getStatus(user.active)}}</li>
                 </ul>
             </div>
+            <div class="row" *ngIf="actualizado">
+                <div class="col text-center">
+                    <h4 class="text-warning">Actualizando...</h4>
+                </div>
+            </div>
             <form class="container">
                 <div class="form-group">
                     <label for="username">Nombre de usuario <span *ngIf="usEx" class="text-danger"><b>¡Este usuario ya existe!</b></span></label>
-                    <input type="text" [(ngModel)]="nUser" class="form-control" id="username" placeholder="{{user.username}}" [ngModelOptions]="{standalone: true}" (focusout)="existeUsuario()">
+                    <input type="text" [(ngModel)]="nUser" class="form-control form-control-sm" id="username" placeholder="{{user.username}}" [ngModelOptions]="{standalone: true}" (focusout)="existeUsuario()">
                 </div>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" [(ngModel)]="nName" class="form-control" id="nombre" placeholder="{{user.info.name}}" [ngModelOptions]="{standalone: true}">
+                    <input type="text" [(ngModel)]="nName" class="form-control form-control-sm" id="nombre" placeholder="{{user.info.name}}" [ngModelOptions]="{standalone: true}">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" [(ngModel)]="nEmail" class="form-control" id="email" placeholder="{{user.info.email}}" [ngModelOptions]="{standalone: true}">
+                    <input type="email" [(ngModel)]="nEmail" class="form-control form-control-sm" id="email" placeholder="{{user.info.email}}" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="form-group">
+                    <small class="text-danger">***Campos disponibles para actualizar los datos del usuario***</small>
                 </div>
                 <div class="pad1">
                     <button type="button" class="btn btn-info " (click)="regresar()">Regresar</button>

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { UsuariosService } from "./../../services/usuarios.service";
 import { User } from 'src/app/interfaces/user.interface';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -13,28 +14,31 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AddPlantaComponent implements OnInit {
 
-  constructor(private router:Router, private activatedRoute:ActivatedRoute, private usuarios:UsuariosService, private plantas:PlantasService, private auth:AuthService) { }
-
+  constructor(public fb: FormBuilder, private router:Router, private usuarios:UsuariosService, private plantas:PlantasService, private auth:AuthService)
+  { 
+    this.plantaForm=fb.group({
+      client:['', [Validators.required]],
+      name:['', [Validators.required]],
+      code:['', [Validators.required, Validators.maxLength(3)]],
+      ename:['', [Validators.required]],
+      email:['', [Validators.required, Validators.email]],
+      phone:['', [Validators.required, Validators.minLength(10)]],
+    });
+  }
+ 
   ngOnInit() {
-    this.id_c=this.activatedRoute.snapshot.paramMap.get("id");
-    this.getName(this.id_c);
+    this.getNameC();
   }
 
-  id_c:string="";
+  clients:User[];
+  plantaForm:FormGroup;
+  msg:boolean=false;
+  msgErr:boolean=false;
 
-  reg_bystr="";
-  reg_by:User;
-  nName:string="";
-  nCode:string="";
-  neName:string="";
-  nEmail:string="";
-  nPhone:string="";
-
-  getName(id:any){
-    this.usuarios.getUser(id).subscribe(
+  getNameC(){
+    this.usuarios.getAllClients().subscribe(
       res=>{
-        this.reg_by=res.detail;
-        this.reg_bystr = this.reg_by.info.name;
+        this.clients=res.detail;
       },err=>{
         console.error(err);
         return "No definido";
@@ -44,25 +48,17 @@ export class AddPlantaComponent implements OnInit {
   regresar(){
     this.router.navigateByUrl('equipos/plantas');
   }
-  enbuts():boolean{
-    if(this.nName!=""||this.nCode!=""||this.neName!=""||this.nEmail!=""){
-      return false;
-    }else{
-      return true;
-    }
-  }
-  crearClick(){
-    this.actualizar(this.nName,this.nCode,this.neName,this.nEmail,this.nPhone);
-  }
-  actualizar(n:string,c:string,ne:string,e:string,p:string){
+
+  save(){
+    let temp=this.plantaForm.value;
     let nPlant:any={
-      'client' : this.id_c,
-      'name' : n,
-      'code' : c,
+      'client' : temp.client,
+      'name' : temp.name,
+      'code' : temp.code,
       'boss' : {
-        'name' : ne,
-        'email' : e,
-        'phone' : p
+        'name' : temp.ename,
+        'email' : temp.email,
+        'phone' : temp.phone
       },
       "meta":{
         "registred_by" : this.auth.getId()
@@ -70,9 +66,12 @@ export class AddPlantaComponent implements OnInit {
     };
     this.plantas.crear(nPlant).subscribe(
       res=>{
-        //console.log(res);
-        this.regresar();
+        this.msg=true;
+        setTimeout(() => {
+          this.regresar();
+        }, 2000);
       },err=>{
+        this.msgErr=true;
         console.log(err);
       }
     );

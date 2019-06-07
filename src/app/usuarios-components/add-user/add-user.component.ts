@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { User } from "./../../interfaces/user.interface";
 import { UsuariosService } from "./../../services/usuarios.service";
 import { AuthService } from "./../../services/auth.service";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-user',
@@ -11,67 +12,45 @@ import { AuthService } from "./../../services/auth.service";
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(private router:Router, private usuarios:UsuariosService, private auth:AuthService) { }
+  constructor(private router:Router, private usuarios:UsuariosService, private auth:AuthService, public fb: FormBuilder) {
+    this.userForm=fb.group(
+      {
+        name: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        role: ['', [Validators.required]],
+      }
+    );
+  }
+
+  /*
+  Mostrar el mensaje que el usuario se creeo
+  */
 
   ngOnInit() {
   }
 
-  selectedOption: string;
-  printedOption: string;
+  userForm:FormGroup;
+
   options = [
-    { name: "1. Administrador"},
-    { name: "2. Técnico"},
-    { name: "3. Cliente"}
-  ]
-
+    { name: "Administrador", id : 0},
+    { name: "Técnico", id : 1},
+    { name: "Cliente", id : 2}];
   user:User;
-  u:string="";
-  p:string="";
-  n:string="";
-  e:string="";
-  r:number=-1;
-  rol:string="";
-
-
+  u:string;
+  msg:boolean=false;
+  msgErr:boolean=false;
 
   regresar():void{
     this.router.navigateByUrl('usuarios');
   }
-  genUsuCon():void{
-    if(this.existeUsuario(this.n.toLowerCase().replace(' ','').slice(0,6))){
-      this.u=this.n.toLowerCase().replace(' ','').slice(0,6)+"1503";
-    }else{
-      this.u=this.n.toLowerCase().replace(' ','').slice(0,6);
-    }
-    this.p=this.u;
-  }
-  getRole() {
-    this.r=parseInt(this.rol.slice(0,1))-1;
+  genUsuCon(){
+    this.u=""+(Math.floor(Math.random()*1000000));
   }
   guardarUsuario(){
-    this.getRole();
-    console.log({
-                "info" :{
-                    "name" : this.n,
-                    "email" : this.e
-                },
-                "permissions" : {
-                    "emg" :  true,
-                    "tecnicos" : true,
-                    "clientes" : true
-                },
-                "meta" : {
-                    "registred_by" : this.auth.getId()
-                },
-                "username" : this.u,
-                "password" : this.p,
-                "role" : this.r
-            });
-
-    this.usuarios.newUser({
-                              "info" :{
-                                  "name" : this.n,
-                                  "email" : this.e
+    let values=this.userForm.value;
+    this.usuarios.newUser({"info" :{
+                                  "name" : values.name,
+                                  "email" : values.email
                               },
                               "permissions" : {
                                   "emg" :  true,
@@ -82,42 +61,19 @@ export class AddUserComponent implements OnInit {
                                   "registred_by" : this.auth.getId()
                               },
                               "username" : this.u,
-                              "password" : this.p,
-                              "role" : this.r
-                          })
-                          .subscribe(
+                              "password" : this.u,
+                              "role" : values.role
+                          }).subscribe(
                               res=>{
-                                console.log(res);
-                                this.regresar();
+                                this.msg=true;
+                                setTimeout(() => {
+                                  this.regresar();
+                                }, 2000);
                               },
                               err=>{
                                 console.log(err);
+                                this.msgErr=true;
                               }
                             );
-  }
-  enbuts():boolean{
-    if(this.u!=""&&this.p!=""&&this.n!=""&&this.e!=""&&this.rol!=""){
-      return false;
-    }
-    return true;
-  }
-  enbutsGen():boolean{
-    if(this.n!=""&&this.e!=""&&this.rol!=""){
-      return false;
-    }
-    return true;
-  }
-  existeUsuario(u:string):any{
-    this.usuarios.userExists(u).subscribe(
-      res=>{
-        if(res.detail!=null){
-          return true;
-        }else{
-          return false;
-        }
-      },err=>{
-        console.log(err);
-      }
-    );
   }
 }

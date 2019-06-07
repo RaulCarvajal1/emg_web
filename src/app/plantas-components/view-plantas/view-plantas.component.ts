@@ -19,7 +19,7 @@ export class ViewPlantasComponent implements OnInit, DoCheck {
   id:string;
   ngOnInit() {
     this.getPlanta();
-  }
+  } 
   ngDoCheck(){
     this.getName(this.planta.meta.registred_by);
     this.getDate(this.planta.meta.registred_date);
@@ -35,6 +35,8 @@ export class ViewPlantasComponent implements OnInit, DoCheck {
   neName:string="";
   nEmail:string="";
   nPhone:string="";
+
+  actualizado:boolean=false;
 
   getPlanta(){
     this.plantas.getPlanta(this.id).subscribe(
@@ -100,12 +102,16 @@ export class ViewPlantasComponent implements OnInit, DoCheck {
     };
     this.plantas.updatePlanta(nPlant).subscribe(
       res=>{
-        this.getPlanta();
-        this.nName="";
-        this.nCode="";
-        this.neName="";
-        this.nEmail="";
-        this.nPhone="";
+        this.actualizado=true;
+        setTimeout(() => {
+          this.getPlanta();
+          this.nName="";
+          this.nCode="";
+          this.neName="";
+          this.nEmail="";
+          this.nPhone="";
+          this.actualizado=false;  
+        }, 1500);
       },err=>{
         console.log(err);
       }

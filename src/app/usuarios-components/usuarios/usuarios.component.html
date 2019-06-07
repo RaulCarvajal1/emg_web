@@ -12,6 +12,19 @@
     </div>
   </div>
   <hr>
+  <div class="row">
+    <div class="col">
+      <h5 class="text-center">Filtrar</h5>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="col-3">
+      <h6 class="text-left">Búscar por nombre</h6>
+    </div>
+    <div class="col-3 text-right">
+      <input type="text" class="form-control form-control-sm" placeholder="Nombre de la planta" [(ngModel)]="busq" [ngModelOptions]="{standalone: true}" (keyup)="busqueda()">
+    </div>
+  </div>
   <hr>
   <div class="row">
     <div class="col-12">

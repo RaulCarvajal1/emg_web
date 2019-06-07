@@ -13,6 +13,7 @@ export class UsuariosComponent implements OnInit {
   constructor(private usuarios:UsuariosService, private router:Router) { }
 
   users:User[];
+  busq:string;
 
   ngOnInit() {
     this.loadUsers();
@@ -54,5 +55,13 @@ export class UsuariosComponent implements OnInit {
     this.router.navigateByUrl('usuarios/nuevo');
   }
 
-  /** HOLA*/
+  busqueda(){
+    if(this.busq==""){
+      this.loadUsers();
+    }else{
+      var regex = new RegExp(this.busq.toLowerCase());
+      let temp:User[]=this.users;
+      this.users=temp.filter(pln=> pln.info.name.toLowerCase().match(regex))
+    }
+  }
 }
