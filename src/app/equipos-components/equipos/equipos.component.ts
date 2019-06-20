@@ -22,11 +22,6 @@ export class EquiposComponent implements OnInit {
     this.loadPlant();
   }
 
-  filter_o:any;
-  too:boolean=false;
-  pcli:boolean=false;
-  pplali:boolean=false;
-  load:boolean=false;
   emgs:emgs[];
   clients:User[];
   client_id:string;
@@ -34,28 +29,10 @@ export class EquiposComponent implements OnInit {
   line_id:string;
   plants:Plant[];
   lines:Lines[];
-  have_lines:boolean=false;
+  busqByName:string="";
+  busqBySerial:string="";
 
-  check_filter(){
-    switch (this.filter_o) {
-      case "0":
-        this.too=false;
-        this.getAllEmgs();
-        break;
-      case "1":
-        this.pplali=false;
-        this.too=true;
-        this.pcli=true;
-        break;
-      case "2":
-        this.too=true;
-        this.pcli=false;
-        this.pplali=true;
-        break;
-      default:
-        break;
-    }
-  }
+  have_lines:boolean=false;
 
   getAllEmgs(){
     this.emgService.getAll().subscribe(
@@ -65,7 +42,6 @@ export class EquiposComponent implements OnInit {
         console.log(err);
       });
   }
-
   loadUsers(){
     this.userService.getAllClients().subscribe(res=>{
       this.clients=res.detail;
@@ -73,7 +49,6 @@ export class EquiposComponent implements OnInit {
       console.log(err);
     })
   }
-
   loadPlant(){
     this.plantService.getAll().subscribe(res=>{
       this.plants=res.detail;
@@ -81,8 +56,8 @@ export class EquiposComponent implements OnInit {
       console.log(err);
     })
   }
-
   loadLines(){
+    this.line_id="";
     this.plants.forEach(el=>{
       if(el._id==this.plant_id){
         this.lines=el.lines;
@@ -94,17 +69,37 @@ export class EquiposComponent implements OnInit {
       this.have_lines=true;
     }
   }
-
   loadEmgsByClient(){
-    this.emgService.getByClient(this.client_id).subscribe(
-      res=>{
-        this.emgs=res.detail;
-      },err=>{
-        console.log(err);
-      });
+    this.line_id="";
+    this.plant_id="";
+    this.emgs=[];
+    if(this.client_id==""|| this.client_id=="alls"){
+      this.getAllEmgs();
+    }else{
+      this.emgService.getByClient(this.client_id).subscribe(
+        res=>{
+          this.emgs=res.detail;
+        },err=>{
+          console.log(err);
+        }); 
+    }
   }
-
+  loadEmgsByPlant(){
+    this.loadLines();
+    if(this.plant_id==""|| this.plant_id=="alls"){
+      this.getAllEmgs();
+    }else{
+      this.emgService.getByPlant(this.plant_id).subscribe(
+        res=>{
+          this.emgs=res.detail;
+        },err=>{
+          console.log(err);
+        }); 
+    }
+  }  
   loadEmgsByPlantAndLines(){
+    this.client_id="";
+    this.emgs=[];
     this.emgService.getByPlantAndLine(this.plant_id,this.line_id).subscribe(
       res=>{
         this.emgs=res.detail;
@@ -112,20 +107,34 @@ export class EquiposComponent implements OnInit {
         console.log(err);
       });
   }
- 
   detEmg(id:string){
     this.router.navigateByUrl('/equipos/equipos/'+id);
   }
-  /*vacio():boolean{
-    if(this.emgs.length()==0){
-      return true;
-    }else{
-      return false;
-    }
-  }*/
-
   goNewEmg(){
     this.router.navigateByUrl('equipos/equipos/nuevo');
   }
-
+  busquedaByName(){
+    this.client_id="";
+    this.plant_id="";
+    this.line_id="";
+    if(this.busqByName==""){
+      this.getAllEmgs();
+    }else{
+      var regex = new RegExp(this.busqByName.toLowerCase());
+      let temp:emgs[]=this.emgs;
+      this.emgs=temp.filter(emg => emg.info.name.toLowerCase().match(regex))
+    }
+  }
+  busquedaBySerial(){
+    this.client_id="";
+    this.plant_id="";
+    this.line_id="";
+    if(this.busqBySerial==""){
+      this.getAllEmgs();
+    }else{
+      var regex = new RegExp(this.busqBySerial.toLowerCase());
+      let temp:emgs[]=this.emgs;
+      this.emgs=temp.filter(emg => emg.info.serial.toLowerCase().match(regex))
+    }
+  }
 }

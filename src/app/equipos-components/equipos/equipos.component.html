@@ -12,54 +12,67 @@
   <hr>
   <div class="row">
     <div class="col">
-      <h5 class="text-left">Filtrar</h5>
-    </div>
-    <div class="col">
-      <div class="form-group">
-        <select class="form-control" id="tipo" [(ngModel)]="filter_o" [ngModelOptions]="{standalone: true}" (change)="check_filter()">
-          <option value="0">Ver todos</option>
-          <option value="1">Por cliente</option>
-          <option value="2">Por planta y linea</option>
-        </select>
-      </div>
+      <h5 class="text-left text-center">Filtrar</h5>
     </div>
   </div>
   <hr>
-  <div class="row" *ngIf="too&&pcli">
+  <div class="row">
     <div class="col">
-      <h5 class="text-left">Seleccionar cliente</h5>
+      <h6 class="text-left">Por cliente</h6>
     </div>
     <div class="col">
       <div class="form-group">
-        <select class="form-control" id="tipo" [(ngModel)]="client_id" [ngModelOptions]="{standalone: true}" (change)="loadEmgsByClient()">
+        <select class="form-control form-control-sm" id="tipo" [(ngModel)]="client_id" [ngModelOptions]="{standalone: true}" (change)="loadEmgsByClient()">
+          <option value="alls">Ver todos</option>
           <option *ngFor="let client of clients" value="{{client._id}}">{{client.info.name}}</option>
         </select>
       </div>
     </div>
-  </div>
-  <div class="row" *ngIf="too&&pplali">
     <div class="col">
-      <h5 class="text-left">Seleccionar planta</h5>
+      <h6 class="text-left">Por planta</h6>
     </div>
     <div class="col">
       <div class="form-group">
-        <select class="form-control" id="tipo" [(ngModel)]="plant_id" [ngModelOptions]="{standalone: true}" (change)="loadLines()">
+        <select class="form-control form-control-sm" id="tipo" [(ngModel)]="plant_id" [ngModelOptions]="{standalone: true}" (change)="loadEmgsByPlant()">
+          <option value="alls">Ver todos</option>          
           <option *ngFor="let plant of plants" value="{{plant._id}}">{{plant.name}}</option>
         </select>
       </div>
     </div>
-  </div>
-  <div class="row" *ngIf="too&&pplali">
     <div class="col">
-      <h5 class="text-left">Seleccionar linea</h5>
+      <h6 class="text-left"><span class="text-danger">*</span>Seleccionar linea</h6>
     </div>
     <div class="col">
       <div class="form-group">
-        <select class="form-control" id="tipo" [(ngModel)]="line_id" [ngModelOptions]="{standalone: true}" [disabled]="!have_lines" (change)="loadEmgsByPlantAndLines()">
-          <option *ngFor="let line of lines" value="{{line._id}}">{{line.number}}</option>
+        <select class="form-control form-control-sm" id="tipo" [(ngModel)]="line_id" [ngModelOptions]="{standalone: true}" [disabled]="!have_lines" (change)="loadEmgsByPlantAndLines()">
+          <option *ngFor="let line of lines" value="{{line._id}}">{{line.name}}</option>
         </select>
       </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h6 class="text-left">Búscar por serial</h6>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <input type="text" class="form-control form-control-sm" placeholder="Búsqueda por SN" [(ngModel)]="busqBySerial" [ngModelOptions]="{standalone: true}" (keyup)="busquedaBySerial()">
+      </div>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col">
+      <h6 class="text-left">Búscar por nombre</h6>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <input type="text" class="form-control form-control-sm" placeholder="Búsqueda por nombre" [(ngModel)]="busqByName" [ngModelOptions]="{standalone: true}" (keyup)="busquedaByName()">
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col"><small class="text-danger">*Primero debe seleccionar la planta</small></div>
   </div>
   <hr>
   <div class="row">
@@ -67,6 +80,7 @@
           <table class="table table-striped" *ngIf="true">
               <thead>
                 <tr>
+                  <th scope="col">Nombre</th>
                   <th scope="col">Tipo</th>
                   <th scope="col">Modelo</th>
                   <th scope="col">Serial</th>
@@ -77,6 +91,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let emg of emgs">
+                  <td scope="row">{{emg.info.name}}</td>
                   <td scope="row">{{emg.info.type}}</td>
                   <td>{{emg.info.model}}</td>
                   <td>{{emg.info.serial}}</td>

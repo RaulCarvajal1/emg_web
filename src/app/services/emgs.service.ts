@@ -15,6 +15,12 @@ export class EmgsService {
   getByClient(id:string){
     return this.http.get<resArray>('http://127.0.0.1:3033/emg/getbyclient/'+id);
   }
+  getByPlant(id:string){
+    return this.http.get<resArray>('http://127.0.0.1:3033/emg/getbyplant/'+id);
+  }
+  getByLine(id:string){
+    return this.http.get<resArray>('http://127.0.0.1:3033/emg/getbyline/'+id);
+  }
   getByPlantAndLine(id_p:string, id_l:string){
     return this.http.get<resArray>('http://127.0.0.1:3033/emg/getbyplantandline/'+id_p+'/'+id_l);
   }

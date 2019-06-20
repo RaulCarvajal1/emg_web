@@ -17,7 +17,8 @@ export interface Boss{
 
 export interface Lines {
     "_id" : string,
-    "number" : string,
+    "name" : string,
+    "shortname" : string,
     "desc" : string
 }
 

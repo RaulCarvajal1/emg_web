@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { User } from 'src/app/interfaces/user.interface';
 import { Router } from '@angular/router';
@@ -6,37 +6,47 @@ import { PlantasService } from 'src/app/services/plantas.service';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { EmgsService } from 'src/app/services/emgs.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-addemg',
   templateUrl: './addemg.component.html',
   styleUrls: ['./addemg.component.css']
 })
-export class AddemgComponent implements OnInit, DoCheck {
+export class AddemgComponent implements OnInit{
 
-  constructor(private userService:UsuariosService, private plantsService:PlantasService, private emgServices:EmgsService, private router:Router, private authService:AuthService) { }
+  constructor(private userService:UsuariosService, private plantsService:PlantasService, 
+              private emgServices:EmgsService, private router:Router, 
+              private authService:AuthService, private fb:FormBuilder) 
+              { 
+
+                this.emgForm = this.fb.group({
+                  cliente : ['',[Validators.required]],
+                  planta : ['',[Validators.required]],
+                  linea : ['',[Validators.required]],
+                  nombre : ['',[]],
+                  modelo : ['',[Validators.required]],
+                  tipo : ['',[Validators.required]],
+                  desc : ['',[Validators.required]],
+                  serie : ['',[Validators.required]]
+                });
+
+              }
 
   ngOnInit() {
     this.loadUsers();
   }
-  ngDoCheck(){
-    
-  }
+
+  emgForm:FormGroup;
 
   users:User[];
-  have_plants:boolean=false;
-  client_id:string;
   plants:Plant[];
-  have_lines:boolean=false;
-  plant_id:string;
   lines:Lines[];
-  line_id:string;
+  shortname_line:string;
+  nombre:string;
 
-  modelo:string;
-  tipo:string;
-  descripcion:string;
-  serie:string;
-  btn:boolean=false;
+  msg:boolean=false;
+  msgErr:boolean=false;
 
   loadUsers(){
     this.userService.getAllClients().subscribe(res=>{
@@ -46,41 +56,60 @@ export class AddemgComponent implements OnInit, DoCheck {
     })
   }
   loadPlants(){
-    this.plantsService.getAllPlantas(this.client_id).subscribe(res=>{
+    let temp:any = this.emgForm.value;
+    this.plantsService.getAllPlantas(temp.cliente).subscribe(res=>{
       this.plants=res.detail;
-      if(this.plants.length==0){
-        this.have_plants=false;
-      }else{
-        this.have_plants=true;
-      }
     },err=>{
       console.log(err);
     });
   }
   loadLines(){
+    let temp:any = this.emgForm.value;
     this.plants.forEach(el=>{
-      if(el._id==this.plant_id){
-        if(el.lines.length==0){
-          this.have_lines=false;
-        }else{
-          this.have_lines=true;
-          this.lines=el.lines;
-        }
+      if(el._id==temp.planta){
+        this.lines=el.lines;
+      }
+    });
+  }
+  saveLine(){
+    let temp:any=this.emgForm.value;
+    this.plants.forEach(plant=>{
+      if(plant._id==temp.planta){
+        this.lines.forEach(line=>{
+          if(line._id==temp.linea){
+            this.shortname_line=line.shortname;
+          }
+        })
       }
     });
   }
 
+  genName(){
+    let temp:any=this.emgForm.value;
+    this.emgServices.getByLine(temp.linea).subscribe(
+      res=>{
+        console.log(res);
+        this.nombre=this.shortname_line+'_emg'+(res.detail.length+1);
+      },err=>{
+
+      }
+    )
+  }
+
   save(){
+    console.log(this.emgForm.controls);
+    let temp=this.emgForm.value;
     let nemg:any={
       'info': {
-        'type':this.tipo,
-        'model':this.modelo,
-        'description':this.descripcion,
-        'serial':this.serie
+        'name':this.nombre,
+        'type':temp.tipo,
+        'model':temp.modelo,
+        'description':temp.desc,
+        'serial':temp.serie
       },
-      'client':this.client_id,
-      'plant':this.plant_id,
-      'line':this.line_id,
+      'client':temp.cliente,
+      'plant':temp.planta,
+      'line':temp.linea,
       'status':0,
       'active':true,
       'meta':{
@@ -91,25 +120,27 @@ export class AddemgComponent implements OnInit, DoCheck {
     res=>{
       this.emgServices.genEmg(res.detail._id).subscribe(
         res=>{
-          console.log(res);
-          this.regresar();
+          this.msg=true;
+          setTimeout(()=>{
+            this.regresar();
+          },1500);
         },err=>{
-          console.log(err);
+          this.msgErr=true;
+          setTimeout(()=>{
+            this.regresar();
+          },1500);
         });
     },err=>{
       console.log(err);
+      this.msgErr=true;
+      setTimeout(()=>{
+        this.regresar();
+      },1500);
     });
   }
 
   regresar(){
     this.router.navigateByUrl('equipos/equipos');
-  }
-  enBtn(){
-    if(this.client_id!=''&&this.plant_id!=''&&this.line_id!=''&&this.modelo!=''&&this.tipo!=''&&this.descripcion!=''&&this.serie!=''){
-      this.btn=true;
-    }else{
-      this.btn=false;
-    }
   }
 
 }

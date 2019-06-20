@@ -10,28 +10,41 @@
   <div class="row">
     <div class="col">
       <h5 class="text-center">Filtrar</h5>
-    </div>
+    </div> 
   </div>  
   <div class="row">
-    <div class="col-3">
+    <div class="col-6">
       <h6 class="text-left">Cliente</h6>
+      <small class="text-danger">**Primero seleccione al cliente**</small>
     </div>
-    <div class="col-3">
+    <div class="col-6">
       <select id="inputState" class="form-control form-control-sm" *ngIf="true" [(ngModel)]="id_cliente" [ngModelOptions]="{standalone: true}" (change)="loadPlants()">
         <option *ngFor="let cliente of clientes" value="{{cliente._id}}">{{cliente.info.name}}</option>
       </select>
     </div>
+  </div>
+  <br>
+  <div class="row" *ngIf="!clientSel">
     <div class="col-3">
-      <h6 class="text-left">Plantas</h6>
+      <h6 class="text-left">Ver lineas por planta</h6>
+      <small class="text-danger">**Seleccione a la planta**</small> 
     </div>
     <div class="col-3">  
       <select id="inputState" class="form-control form-control-sm" [(ngModel)]="id_planta" [ngModelOptions]="{standalone: true}" [disabled]="sinPlantas" (change)="loadLineas()">
         <option *ngFor="let plt of planta" value="{{plt._id}}">{{plt.name}}</option>
       </select>
     </div>
+    <div class="col-3">
+      <h6 class="text-left">Búscar por nombre de linea</h6>
+    </div>
+    <div class="col-3">
+        <input type="text" class="form-control form-control-sm" placeholder="Nombre de la planta" [(ngModel)]="busq" [ngModelOptions]="{standalone: true}" (keyup)="busqueda()">
+    </div>
   </div>
   <div class="row">
-    <h6 *ngIf="sinPlantas" class="text-center txt-danger">Sin lineas registradas en esta planta</h6>
+    <div class="col">
+      <h6 *ngIf="sinPlantas" class="text-center txt-danger">Sin lineas registradas en esta planta</h6>
+    </div>
   </div>
   <hr>
   <div *ngIf="load">
@@ -45,27 +58,32 @@
     </div>
     <div class="row text-center">
       <div class="col-12">
-          <table class="table table-striped" *ngIf="!vacio()">
-              <thead>
-                <tr>
-                  <th scope="col">Número de linea</th>
-                  <th scope="col">Descripción</th>
-                  <th scope="col">Detalle</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let lns of planta_sel.lines">
-                  <td scope="row">{{lns.number}}</td>
-                  <td>{{lns.desc}}</td>
-                  <td>
-                    <button mat-mini-fab color="primary" (click)="plantDet(lns._id)">
-                        <mat-icon>pageview</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-          </table>
-          <h2 *ngIf="vacio()">El cliente no tiene lineas registradas en esta planta</h2>
+        <table class="table table-striped" *ngIf="!vacio()">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Nombre corto</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Detalle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let lns of lines">
+                <td scope="row">{{lns.name}}</td>
+                <td>{{lns.shortname}}</td>
+                <td>{{lns.desc}}</td>
+                <td>
+                  <button mat-mini-fab color="primary" (click)="plantDet(lns._id)">
+                      <mat-icon>pageview</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+        <h2 *ngIf="vacio()">El cliente no tiene lineas registradas en esta planta</h2>
+        <br>
+        <hr>
+        <br>
       </div>
     </div>
   </div>

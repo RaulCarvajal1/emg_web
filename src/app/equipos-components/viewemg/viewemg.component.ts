@@ -28,14 +28,16 @@ export class ViewemgComponent implements OnInit, DoCheck {
   }
   ngDoCheck(){
     
-  }
+  } 
 
   emg:emgs;
 
+  nombre:string;
   modelo:string;
   tipo:string;
   descripcion:string;
   serie:string;
+  actualizado:boolean=false;
   
   cl:User;
   cliente:string;
@@ -45,6 +47,7 @@ export class ViewemgComponent implements OnInit, DoCheck {
 
   loadStrings(){
     let info:Info=this.emg.info;
+    this.nombre=info.name;
     this.modelo=info.model;
     this.tipo=info.type;
     this.descripcion=info.description;
@@ -80,7 +83,7 @@ export class ViewemgComponent implements OnInit, DoCheck {
         this.planta=this.pl.name;
         this.pl.lines.forEach(el=>{
           if(el._id==this.emg.line){
-            this.linea=el.number+"";
+            this.linea=el.shortname+"";
           }
         });
         this.loadStrings();
@@ -128,7 +131,11 @@ export class ViewemgComponent implements OnInit, DoCheck {
   actDes(){
     this.emgService.actDes(<string>this.activatedRoute.snapshot.paramMap.get("id"),this.emg.active).subscribe(
       data=>{
-        this.getEmg(<string>this.activatedRoute.snapshot.paramMap.get("id"));
+        this.actualizado=true;
+        setTimeout(()=>{
+          this.getEmg(<string>this.activatedRoute.snapshot.paramMap.get("id"));
+          this.actualizado = false;
+        },1500);
       },err=>{
         console.log(err);
       });

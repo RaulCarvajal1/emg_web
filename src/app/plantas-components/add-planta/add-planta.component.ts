@@ -6,7 +6,7 @@ import { PlantasService } from 'src/app/services/plantas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-
+ 
 @Component({
   selector: 'app-add-planta',
   templateUrl: './add-planta.component.html',
@@ -19,7 +19,7 @@ export class AddPlantaComponent implements OnInit {
     this.plantaForm=fb.group({
       client:['', [Validators.required]],
       name:['', [Validators.required]],
-      code:['', [Validators.required, Validators.maxLength(3)]],
+      code:['', [Validators.required]],
       ename:['', [Validators.required]],
       email:['', [Validators.required, Validators.email]],
       phone:['', [Validators.required, Validators.minLength(10)]],

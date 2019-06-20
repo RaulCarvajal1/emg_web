@@ -1,7 +1,7 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlantasService } from 'src/app/services/plantas.service';
-import { Plant } from 'src/app/interfaces/plant.interface';
+import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 
 @Component({
   selector: 'app-viewline',
@@ -10,7 +10,7 @@ import { Plant } from 'src/app/interfaces/plant.interface';
 })
 export class ViewlineComponent implements OnInit, DoCheck {
 
-
+ 
   constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantas:PlantasService) { 
     this.id_p=this.activatedRoute.snapshot.paramMap.get("id_p");
     this.id_l=this.activatedRoute.snapshot.paramMap.get("id_l");
@@ -26,9 +26,10 @@ export class ViewlineComponent implements OnInit, DoCheck {
   id_p:string;
   id_l:string;
   planta:Plant;
-  line:any;
+  line:Lines;
 
-  number:string="";
+  nombre:string="";
+  ncorto:string="";
   desc:string="";
 
   getPlanta(){
@@ -46,7 +47,8 @@ export class ViewlineComponent implements OnInit, DoCheck {
         this.line=el;
       }
     })
-    this.number=this.line.number;
+    this.nombre=this.line.name;
+    this.ncorto=this.line.shortname;
     this.desc=this.line.desc;
   }
   regresar(){

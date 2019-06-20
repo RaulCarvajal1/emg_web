@@ -13,6 +13,7 @@ export interface Meta{
     "registred_date" : string
 }
 export interface Info{
+    "name" :string,
     "type" :string,
     "model" : string,
     "description" : string,

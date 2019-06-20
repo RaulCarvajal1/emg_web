@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/interfaces/user.interface';
 import { PlantasService } from 'src/app/services/plantas.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { Plant } from 'src/app/interfaces/plant.interface';
+import { Plant, Lines } from 'src/app/interfaces/plant.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-newline',
@@ -12,12 +11,26 @@ import { Plant } from 'src/app/interfaces/plant.interface';
 })
 export class NewlineComponent implements OnInit {
 
-  constructor(private router:Router, private activatedRoute:ActivatedRoute, private planta:PlantasService, private plantas:PlantasService, private auth:AuthService) { }
+  constructor(private router:Router, private activatedRoute:ActivatedRoute, 
+              private planta:PlantasService,public fb: FormBuilder) 
+              {
+                this.lineForm=fb.group({
+                  name:['', [Validators.required]],
+                  shortname:['', [Validators.maxLength(7)]],
+                  desc:['', [Validators.required]],
+                });
+              }
 
   ngOnInit() {
     this.id_p=this.activatedRoute.snapshot.paramMap.get("id");
     this.getName(this.id_p);
   }
+
+  lineForm:FormGroup;
+  btnen:boolean=true;
+  nombrecorto:string="";
+  msg:boolean=false;
+  msgErr:boolean=false;
 
   id_p:string="";
 
@@ -41,29 +54,30 @@ export class NewlineComponent implements OnInit {
   regresar(){
     this.router.navigateByUrl('equipos/lineas');
   }
-  enbuts():boolean{
-    if(this.nLine!=0||this.nDesc!=""){
-      return false;
-    }else{
-      return true;
+  save(){
+    let temp:Lines=this.lineForm.value;
+    let nl:any={
+      'name':temp.name,
+      'shortname':this.nombrecorto,
+      'desc':temp.desc
     }
-  }
-  crearClick(){
-    this.actualizar(this.nLine,this.nDesc);
-  }
-  actualizar(n:number,d:string){
-    let nline:any={
-        'number' : n,
-        'desc' : d
-      };
-    this.planta.addLinea(nline, this.id_p).subscribe(
+    this.planta.addLinea(nl, this.id_p).subscribe(
       res=>{
-        //console.log(res);
-        this.regresar();
+        this.msg=true;
+        setTimeout(() => {
+          this.regresar();
+        }, 2000);
       },err=>{
+        this.msgErr=true;
         console.log(err);
       }
     );
   }
-
+  genShrName(){
+    let temp:Lines=this.lineForm.value;
+    this.nombrecorto=this.p_namestr.substring(0,3).toLowerCase()+"_"+temp.name.substring(0,3).toLowerCase();
+  }
+  setEnable(){
+    this.btnen=false;
+  }
 }
