@@ -1,4 +1,5 @@
 export interface emgs{
+    "_id" : string,
     "qr" : string,
     "info" : Info,
     "client" : string,

@@ -83,7 +83,7 @@ export class ViewemgComponent implements OnInit, DoCheck {
         this.planta=this.pl.name;
         this.pl.lines.forEach(el=>{
           if(el._id==this.emg.line){
-            this.linea=el.shortname+"";
+            this.linea=el.name+"";
           }
         });
         this.loadStrings();
@@ -127,7 +127,6 @@ export class ViewemgComponent implements OnInit, DoCheck {
       return "Activar";
     }
   }
-
   actDes(){
     this.emgService.actDes(<string>this.activatedRoute.snapshot.paramMap.get("id"),this.emg.active).subscribe(
       data=>{
@@ -139,6 +138,27 @@ export class ViewemgComponent implements OnInit, DoCheck {
       },err=>{
         console.log(err);
       });
+  }
+  getPdf(){
+    let data:any={
+        template: { "shortid" : "rkgmBHwjyH"  },
+        data : {
+          id: this.emg._id,
+          nombre: this.nombre,
+          cliente:this.cliente,
+          planta:this.planta,
+          linea:this.linea,
+          estatus:this.estatus(),
+          modelo:this.modelo,
+          tipo:this.tipo,
+          desc:this.descripcion,
+          serie:this.serie,
+          qr:this.emg.qr
+        },
+        options : { "timeout": 60000 }
+     };
+
+    this.emgService.getPdf(data);
   }
 
 }

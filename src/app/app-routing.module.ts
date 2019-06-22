@@ -15,6 +15,8 @@ import { NewlineComponent } from './lineas-components/newline/newline.component'
 import { ViewlineComponent } from './lineas-components/viewline/viewline.component';
 import { AddemgComponent } from './equipos-components/addemg/addemg.component';
 import { ViewemgComponent } from './equipos-components/viewemg/viewemg.component';
+import { AddservicioComponent } from './servicios-component/addservicio/addservicio.component';
+import { ViewservicioComponent } from './servicios-component/viewservicio/viewservicio.component';
 
 const routes: Routes = [
   {path : 'login', component : LoginComponent},
@@ -31,7 +33,9 @@ const routes: Routes = [
   {path : 'equipos/equipos', component : EquiposComponent},
   {path : 'equipos/equipos/nuevo', component : AddemgComponent},
   {path : 'equipos/equipos/:id', component : ViewemgComponent},
-  {path : 'servicios', component : ServiciosComponent}
+  {path : 'servicios', component : ServiciosComponent},
+  {path : 'servicios/nuevo', component : AddservicioComponent},
+  {path : 'servicios/:id', component : ViewservicioComponent}
 ];
 
 @NgModule({

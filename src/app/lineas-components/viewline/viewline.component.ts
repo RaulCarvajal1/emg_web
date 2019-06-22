@@ -7,7 +7,7 @@ import { Plant, Lines } from 'src/app/interfaces/plant.interface';
   selector: 'app-viewline',
   templateUrl: './viewline.component.html',
   styleUrls: ['./viewline.component.css']
-})
+}) 
 export class ViewlineComponent implements OnInit, DoCheck {
 
  

@@ -41,5 +41,7 @@ export class UsuariosService {
   getAllClients(){
     return this.http.get<resArray>("http://127.0.0.1:3033/user/getclients");
   }
-
+  gettec(){
+    return this.http.get<resArray>("http://127.0.0.1:3033/user/gettec");
+  }
 }

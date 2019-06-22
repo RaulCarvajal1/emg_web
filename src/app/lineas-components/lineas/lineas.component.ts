@@ -33,9 +33,9 @@ export class LineasComponent implements OnInit {
   sinLineas:boolean=false;
 
   loadPlants(){
+    this.id_planta='';
     this.plantas.getAllPlantas(this.id_cliente).subscribe(
     (data)=>{
-      this.id_planta='';
       this.lines=[];
       this.planta=data.detail;
       this.clientSel = false;
