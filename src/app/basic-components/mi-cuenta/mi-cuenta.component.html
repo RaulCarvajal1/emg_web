@@ -1,0 +1,102 @@
+<app-navbar></app-navbar>
+<div class="container">
+<hr>
+<hr> 
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+            <div class="row">
+              <div class="card-body">
+                <div class="col">
+                  <h5 class="card-title">Mi información</h5>
+                  <hr>
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-subtitle">Datos de inicio de sesión</h5>
+                      <br>
+                      <h6 class="card-subtitle"><b>Nombre de usuario:</b> {{user}}</h6>
+                      <br>
+                      <h6 class="card-subtitle"><b>Contraseña:</b> **********</h6>
+                      <br>
+                    </div>
+                    <div class="col">
+                      <h5 class="card-subtitle">Datos de personales</h5>
+                      <br>
+                      <h6 class="card-subtitle"><b>Nombre:</b> {{name}}</h6>
+                      <br>
+                      <h6 class="card-subtitle"><b>Correo:</b> {{email}}</h6>
+                      <br>
+                      <h6 class="card-subtitle"><b>Rol:</b> {{role}}</h6>
+                      <br>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col">
+                      <form *ngIf="pform" style="margin-bottom: 15px">
+                        <div class="form-group row">
+                          <label for="ant" class="col-sm-4 col-form-label col-form-label-sm">Antigua contraseña</label>
+                          <div class="col-sm-8">
+                            <input type="password" class="form-control form-control-sm" id="ant" [(ngModel)]="antigua" placeholder="Digite su antigua contraseña" [ngModelOptions]="{standalone: true}" (keyup)="pasEquals()">
+                            <small class="text-danger" *ngIf="msgEq">La contraseña no coincide</small>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="nue" class="col-sm-4 col-form-label col-form-label-sm">Nueva contraseña</label>
+                          <div class="col-sm-8">
+                            <input type="password" class="form-control form-control-sm" id="nue" [(ngModel)]="nueva" placeholder="Digite la nueva contraseña mayor a 6 digitos" [ngModelOptions]="{standalone: true}" (keyup)="pasVal()">
+                            <small class="text-danger" *ngIf="msgVal">La contraseña no es válida (Mínimo 6 carácteres)</small>                            
+                          </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" [disabled]="botCC" (click)="updatePass()">Cambiar contraseña</button>
+                      </form>
+                      <form *ngIf="aform" style="margin-bottom: 15px">
+                        <div class="form-group row">
+                          <label for="ant" class="col-sm-4 col-form-label col-form-label-sm">Nombre de usuario</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control form-control-sm" id="ant" placeholder="{{user}}" [(ngModel)]="nuser" [ngModelOptions]="{standalone: true}" (blur)="existeUsuario()">
+                            <small class="text-danger" *ngIf="existeUser">ESTE USUARIO YA EXISTE</small>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="nue" class="col-sm-4 col-form-label col-form-label-sm">Nombre</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control form-control-sm" id="nue" placeholder="{{name}}" [(ngModel)]="nname" [ngModelOptions]="{standalone: true}">
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="nue" class="col-sm-4 col-form-label col-form-label-sm">Email</label>
+                          <div class="col-sm-8">
+                            <input type="email" class="form-control form-control-sm" id="nue" placeholder="{{email}}" [(ngModel)]="nemail" [ngModelOptions]="{standalone: true}">
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" (click)="updClick()" [disabled]="existeUser">Actualizar datos</button>
+                      </form>                  
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col text-center">
+                        <p class="text-warning" *ngIf="msgAct"><b>ACTUALIZANDO</b></p>
+                      </div>
+                    </div>
+                  <div class="row">
+                    <div class="col">
+                      <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+                    </div>
+                    <div class="col">
+                      <button type="button" class="btn btn-primary w-100" (click)="showAForm()">Actualizar datos</button>                      
+                    </div>
+                    <div class="col">
+                      <button type="button" class="btn btn-warning w-100" (click)="showPForm()">Cambiar contraseña</button>                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+<hr>
+<hr>
+</div>
+<app-footer></app-footer>

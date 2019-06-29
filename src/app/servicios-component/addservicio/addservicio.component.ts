@@ -35,11 +35,13 @@ export class AddservicioComponent implements OnInit {
   serviciosForm:FormGroup;
   msg:boolean=false;
   msgErr:boolean=false;
+  minDate:String;
 
 
   ngOnInit() {
     this.loadTecnicos();
     this.loadEmgs();
+    this.getMinDate();
   }
 
   loadTecnicos(){
@@ -80,5 +82,17 @@ export class AddservicioComponent implements OnInit {
   }
   regresar(){
     this.router.navigateByUrl('/servicios');
+  }
+  getMinDate(){
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    if(month < 10){
+      this.minDate = `${year}-0${month}-${day}`;
+    }else{
+      this.minDate = `${year}-${month}-${day}`;
+    }
   }
 }

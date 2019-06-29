@@ -99,8 +99,13 @@
                 </div>
                 <hr>
                 <br><br>
-                <div class="pad1">
-                    <button type="button" class="btn btn-info " (click)="regresar()">Regresar</button>
+                <div class="row" style="padding-bottom: 0px">
+                  <div class="col">
+                    <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-danger w-100" (click)="getPdf()" [disabled]="proceso">Descargar reporte(PDF)</button>
+                  </div>
                 </div>
               </div>
             </div>

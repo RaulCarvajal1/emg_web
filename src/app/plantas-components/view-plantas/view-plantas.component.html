@@ -62,8 +62,15 @@
                     <small class="text-danger">***Campos disponibles para actualizar los datos de la planta***</small>
                   </div>
                   <div class="pad1">
-                      <button type="button" class="btn btn-info " (click)="regresar()">Regresar</button>
-                      <button type="submit" class="btn btn-primary bot1" (click)="updClick()" [disabled]="enbuts()">Actualizar</button>                    
+                  </div>
+                  <div class="row pad1">
+                    <div class="col">
+                      <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+                    </div>
+                    <div class="col">
+                      <button type="submit" class="btn btn-primary w-100" (click)="updClick()" [disabled]="enbuts()">Actualizar</button>
+                    </div>
+                    <div class="col"></div>
                   </div>
               </form>
           </div>

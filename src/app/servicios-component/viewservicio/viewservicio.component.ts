@@ -83,7 +83,29 @@ export class ViewservicioComponent implements OnInit {
   getId(id:string):string{
     return id.substring(id.length-10,id.length);
   }
-  getDate(date:string):string{
+  getDate(date:any):string{
     return date.substring(0,10);
+  }
+  getPdf(){
+    let data: any = {
+      template: { "shortid" : "HJlwC8WhkH"  },
+      data : {id : this.servicio._id,
+              emg : this.emg,
+              tec : this.tec,
+              type : this.servicio.type,
+              desc : this.servicio.desc,
+              status : this.status,
+              date : this.getDate(this.servicio.date),
+              start : '',
+              finish : '',
+              observ : '',
+              signature : ''
+            },
+      options : { 'timeout': 60000 }
+    };
+    this.serviciosService.getPdf(data);
+  }
+  regresar(){
+    this.router.navigateByUrl('/servicios');
   }
 }

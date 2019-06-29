@@ -52,7 +52,7 @@ export class NewlineComponent implements OnInit {
     )
   }
   regresar(){
-    this.router.navigateByUrl('equipos/lineas');
+    this.router.navigateByUrl('equipos/lineas/'+this.id_p);
   }
   save(){
     let temp:Lines=this.lineForm.value;
@@ -65,7 +65,7 @@ export class NewlineComponent implements OnInit {
       res=>{
         this.msg=true;
         setTimeout(() => {
-          this.regresar();
+          this.router.navigateByUrl('equipos/lineas/'+this.id_p);
         }, 2000);
       },err=>{
         this.msgErr=true;

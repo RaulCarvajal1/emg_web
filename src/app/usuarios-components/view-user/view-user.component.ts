@@ -1,7 +1,8 @@
-import { Component, OnInit, DoCheck, AfterContentInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { UsuariosService } from "../../services/usuarios.service";
 import { User } from "../../interfaces/user.interface";
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -9,11 +10,11 @@ import { User } from "../../interfaces/user.interface";
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.css']
 })
-export class ViewUserComponent implements OnInit, DoCheck {
+export class ViewUserComponent implements OnInit{
 
   constructor(private activatedRoute: ActivatedRoute, 
               private usuarios:UsuariosService, 
-              private router:Router) 
+              private router:Router, private auth:AuthService) 
   {
   }
 
@@ -22,14 +23,12 @@ export class ViewUserComponent implements OnInit, DoCheck {
   reg_bystr:string;
   reg_date:string;
 
-  usEx:boolean=false;
-  actualizado:boolean=false;
+  usEx:Boolean = false;
+  actualizado:Boolean = false;
+  im:Boolean = false;
 
   ngOnInit() {
     this.loadUser();
-  }
-  ngDoCheck(){
-
   }
 
   loadUser(){
@@ -38,6 +37,7 @@ export class ViewUserComponent implements OnInit, DoCheck {
         this.user=data.detail;
         this.getName(this.user.meta.registred_by);
         this.getDate(this.user.meta.registred_date);
+        this.iM();
       },
       (err)=>{
         console.log(err)
@@ -57,6 +57,13 @@ export class ViewUserComponent implements OnInit, DoCheck {
       case 2:
         return "Cliente"
         break;
+    }
+  }
+  iM(){
+    if(this.user._id==this.auth.getId()){
+      this.im=true;
+    }else{
+      this.im=false;
     }
   }
   getStatus(s:number):string{
@@ -143,6 +150,9 @@ export class ViewUserComponent implements OnInit, DoCheck {
       return false;
     }
     return true;
+  }
+  goToMiCuenta(){
+    this.router.navigateByUrl('micuenta');
   }
   existeUsuario(){
     this.usuarios.userExists(this.nUser).subscribe(

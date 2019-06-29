@@ -24,12 +24,22 @@ export class AuthService {
   getUsername():string{
     return JSON.parse(sessionStorage.getItem('detalle')).username;
   }
+  getPassword():string{
+    return JSON.parse(sessionStorage.getItem('detalle')).password;
+  }
+  getEmail():string{
+    return JSON.parse(sessionStorage.getItem('detalle')).info.email;
+  }
   getPermissions():any{
     return JSON.parse(sessionStorage.getItem('detalle')).permissions;
   }
   getRole():number{
     return JSON.parse(sessionStorage.getItem('detalle')).role;
   }
+  getUser():number{
+    return JSON.parse(sessionStorage.getItem('detalle'));
+  }
+
   closeSession(){
     sessionStorage.clear();
   }

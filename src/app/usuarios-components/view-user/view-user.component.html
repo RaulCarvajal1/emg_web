@@ -5,43 +5,58 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body" *ngIf="!im">
                 <h5 class="card-title">Ver usuario a detalle</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{user.info.name}}</h6>
                 <ul>
                     <li class="card-text"><b>Registrado por: </b> {{reg_bystr}}</li>
-                    <li class="card-text"><b>Dia de registro: </b> {{reg_date}}</li>
+                    <li class="card-text"><b>Día de registro: </b> {{reg_date}}</li>
                     <li class="card-text"><b>Rol: </b> <span>{{getRol(user.role)}}</span></li>
                     <li class="card-text"><b>Estatus:  </b> {{getStatus(user.active)}}</li>
                 </ul>
+                <div class="row" *ngIf="actualizado">
+                    <div class="col text-center">
+                        <h4 class="text-warning">Actualizando...</h4>
+                    </div>
+                </div>
+                <form class="container">
+                    <div class="form-group">
+                        <label for="username">Nombre de usuario <span *ngIf="usEx" class="text-danger"><b>¡Este usuario ya existe!</b></span></label>
+                        <input type="text" [(ngModel)]="nUser" class="form-control form-control-sm" id="username" placeholder="{{user.username}}" [ngModelOptions]="{standalone: true}" (focusout)="existeUsuario()">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" [(ngModel)]="nName" class="form-control form-control-sm" id="nombre" placeholder="{{user.info.name}}" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" [(ngModel)]="nEmail" class="form-control form-control-sm" id="email" placeholder="{{user.info.email}}" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="form-group">
+                        <small class="text-danger">***Campos disponibles para actualizar los datos del usuario***</small>
+                    </div>
+                    <div class="row pad1">
+                        <div class="col">
+                            <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-warning w-100" (click)="actDes()">{{isActivatedStr(user.active)}}</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary w-100" (click)="updClick()" [disabled]="enbuts()">Actualizar</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="row" *ngIf="actualizado">
-                <div class="col text-center">
-                    <h4 class="text-warning">Actualizando...</h4>
+            <div class="card-body" *ngIf="im">
+                <h5 class="card-title">El usuario que quieres visualizar te pertenece</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Si deseas modificar tus datos da click <a [routerLink]="['../../micuenta']">aqui</a></h6>
+                <div class="row pad1">
+                    <div class="col-4">
+                        <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+                    </div>
                 </div>
             </div>
-            <form class="container">
-                <div class="form-group">
-                    <label for="username">Nombre de usuario <span *ngIf="usEx" class="text-danger"><b>¡Este usuario ya existe!</b></span></label>
-                    <input type="text" [(ngModel)]="nUser" class="form-control form-control-sm" id="username" placeholder="{{user.username}}" [ngModelOptions]="{standalone: true}" (focusout)="existeUsuario()">
-                </div>
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" [(ngModel)]="nName" class="form-control form-control-sm" id="nombre" placeholder="{{user.info.name}}" [ngModelOptions]="{standalone: true}">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" [(ngModel)]="nEmail" class="form-control form-control-sm" id="email" placeholder="{{user.info.email}}" [ngModelOptions]="{standalone: true}">
-                </div>
-                <div class="form-group">
-                    <small class="text-danger">***Campos disponibles para actualizar los datos del usuario***</small>
-                </div>
-                <div class="pad1">
-                    <button type="button" class="btn btn-info " (click)="regresar()">Regresar</button>
-                    <button type="button" class="btn btn-warning bot1" (click)="actDes()">{{isActivatedStr(user.active)}}</button>                        
-                    <button type="submit" class="btn btn-primary bot1" (click)="updClick()" [disabled]="enbuts()">Actualizar</button>                    
-                </div>
-            </form>
         </div>
     </div>
 </div>

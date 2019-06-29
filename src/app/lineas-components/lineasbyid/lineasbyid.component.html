@@ -8,7 +8,7 @@
   </div>
   <hr>
   <div class="row">
-    <div class="col">
+    <div class="col"> 
       <h5 class="text-center">Filtrar</h5>
     </div> 
   </div>  
@@ -24,7 +24,7 @@
     </div>
   </div>
   <br>
-  <div class="row" *ngIf="!clientSel">
+  <div class="row">
     <div class="col-3">
       <h6 class="text-left">Ver lineas por planta</h6>
       <small class="text-danger">**Seleccione a la planta**</small> 
@@ -48,7 +48,7 @@
   </div>
   <hr>
   <hr>
-  <div *ngIf="load">
+  <div>
     <div class="row">
       <div class="col-12 text-right">
         <button class="btn btn-primary" type="button" (click)="goNewLine()">
@@ -59,7 +59,7 @@
     <br>
     <div class="row text-center">
       <div class="col-12">
-        <table class="table table-striped" *ngIf="!vacio()">
+        <table class="table table-striped">
             <thead>
               <tr>
                 <th scope="col">Nombre</th>
@@ -81,7 +81,6 @@
               </tr>
             </tbody>
         </table>
-        <h2 *ngIf="vacio()">El cliente no tiene lineas registradas en esta planta</h2>
         <br>
         <hr>
         <br>

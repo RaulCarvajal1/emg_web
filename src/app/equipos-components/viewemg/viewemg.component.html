@@ -63,18 +63,25 @@
           </div>
           <br>
           <div class="row" style="padding-bottom: 0px">
-            <div class="col">
+            <div class="col-4">
               <h6><b>Código QR de identificación</b></h6>
               <img src="{{emg.qr}}" class="img-fluid" style="width: 200px;">
             </div>
+          </div>
+          <div class="row pad1">
             <div class="col">
-              <button type="button" class="btn btn-info" (click)="regresar()">Regresar</button>
-              <button type="button" class="btn btn-warning" style="margin-left: 30px" (click)="actDes()">{{actDesStr()}}</button>
-              <button type="button" class="btn btn-danger" style="margin-left: 30px" (click)="getPdf()">Descargar ficha(PDF)</button>     
+              <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-warning w-100" (click)="actDes()">{{actDesStr()}}</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-danger w-100" (click)="getPdf()">Descargar reporte(PDF)</button>
             </div>
           </div>
         </div>
       </div>
+      <hr><hr>
     </div>
   </div>
   <hr>

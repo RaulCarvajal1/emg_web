@@ -52,6 +52,6 @@ export class ViewlineComponent implements OnInit, DoCheck {
     this.desc=this.line.desc;
   }
   regresar(){
-    this.router.navigateByUrl('equipos/plantas');
+    this.router.navigateByUrl('equipos/lineas/'+this.id_p);
   }
 }

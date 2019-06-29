@@ -29,12 +29,12 @@ export class UsuariosService {
       return this.http.patch<res>('http://localhost:3033/user/enable/'+id, {'Content-Type': 'application/json'});
     }
   }
-  
+
   newUser(user){
     return this.http.post<res>('http://localhost:3033/user/create/', user);
   }
 
-  userExists(u:string){
+  userExists(u:String){
     return this.http.get<res>('http://localhost:3033/user/existe/'+u);
   }
 
@@ -43,5 +43,11 @@ export class UsuariosService {
   }
   gettec(){
     return this.http.get<resArray>("http://127.0.0.1:3033/user/gettec");
+  }
+
+  updatePass(user:JSON){
+    return this.http.put<res>('http://localhost:3033/user/updatepass',
+      user
+    );
   }
 }

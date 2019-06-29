@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgSelect2Module } from 'ng-select2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +38,8 @@ import { AddemgComponent } from './equipos-components/addemg/addemg.component';
 import { ViewemgComponent } from './equipos-components/viewemg/viewemg.component';
 import { AddservicioComponent } from './servicios-component/addservicio/addservicio.component';
 import { ViewservicioComponent } from './servicios-component/viewservicio/viewservicio.component';
+import { MiCuentaComponent } from './basic-components/mi-cuenta/mi-cuenta.component';
+import { LineasbyidComponent } from './lineas-components/lineasbyid/lineasbyid.component';
 
 
 @NgModule({
@@ -60,7 +63,9 @@ import { ViewservicioComponent } from './servicios-component/viewservicio/viewse
     AddemgComponent,
     ViewemgComponent,
     AddservicioComponent,
-    ViewservicioComponent
+    ViewservicioComponent,
+    MiCuentaComponent,
+    LineasbyidComponent
   ],
   imports: [
     HttpClientModule,
@@ -74,7 +79,8 @@ import { ViewservicioComponent } from './servicios-component/viewservicio/viewse
     MatToolbarModule,
     MatTableModule,
     MatSnackBarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelect2Module
   ],
   providers: [
     LoginService,

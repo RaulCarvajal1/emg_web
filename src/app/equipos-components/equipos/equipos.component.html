@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <div class="container">
   <hr>
-  <div class="row">
+  <div class="row"> 
     <div class="col">
       <h2 class="text-left">Ver equipos registrados</h2>
     </div>
@@ -21,6 +21,8 @@
     </div>
     <div class="col">
       <div class="form-group">
+        <!--<ng-select2 [(ngModel)]="client_id" [ngModelOptions]="{standalone: true}" [data]="clientesList" (change)="loadEmgsByClient()" [width]="150">		
+        </ng-select2>-->
         <select class="form-control form-control-sm" id="tipo" [(ngModel)]="client_id" [ngModelOptions]="{standalone: true}" (change)="loadEmgsByClient()">
           <option value="alls">Ver todos</option>
           <option *ngFor="let client of clients" value="{{client._id}}">{{client.info.name}}</option>
