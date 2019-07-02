@@ -143,7 +143,7 @@ export class ViewemgComponent implements OnInit, DoCheck {
     let data:any={
         template: { "shortid" : "rkgmBHwjyH"  },
         data : {
-          id: this.emg._id,
+          id: this.emg._id.substring(0,10),
           nombre: this.nombre,
           cliente:this.cliente,
           planta:this.planta,

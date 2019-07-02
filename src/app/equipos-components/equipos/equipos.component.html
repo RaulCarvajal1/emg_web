@@ -96,7 +96,7 @@
                   <td scope="row">{{emg.info.type}}</td>
                   <td>{{emg.info.model}}</td>
                   <td>{{emg.info.serial}}</td>
-                  <td>{{emg.info.description}}</td>
+                  <td>{{emg.info.description.substring(0,40)}}</td>
                   <td>{{emg.status}}</td>
                   <td>
                     <button mat-mini-fab color="primary" (click)="detEmg(emg._id)">

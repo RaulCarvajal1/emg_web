@@ -89,7 +89,7 @@ export class ViewservicioComponent implements OnInit {
   getPdf(){
     let data: any = {
       template: { "shortid" : "HJlwC8WhkH"  },
-      data : {id : this.servicio._id,
+      data : {id : this.servicio._id.substring(0,10),
               emg : this.emg,
               tec : this.tec,
               type : this.servicio.type,
