@@ -1,3 +1,82 @@
-<p>
-  ver-mi-planta works!
-</p>
+<app-navbar></app-navbar>
+<div class="container">
+<hr>
+<hr>
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Ver planta</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{planta.name}}</h6>
+                  <ul>
+                      <li class="card-text"><b>Registrado por: </b> {{reg_bystr}}</li>
+                      <li class="card-text"><b>Dia de registro: </b> {{reg_date}}</li>
+                  </ul>
+              </div> 
+              <div class="row" *ngIf="actualizado">
+                <div class="col text-center">
+                  <h4 class="text-warning">Actualizando...</h4>
+                </div>
+              </div>  
+              <form class="container">
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="name">Nombre de planta</label>
+                        <input type="text" [(ngModel)]="nName" class="form-control" id="name" placeholder="{{planta.name}}" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="code">Nombre corto de planta</label>
+                        <input type="text" [(ngModel)]="nCode" class="form-control" id="code" placeholder="{{planta.code}}" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <h4 class="card-subtitle">Información de contacto en la planta</h4>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="eName">Nombre</label>
+                        <input type="text" [(ngModel)]="neName" class="form-control" id="eName" placeholder="{{planta.boss.name}}" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="email" [(ngModel)]="nEmail" class="form-control" id="Email" placeholder="{{planta.boss.email}}" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                          <label for="Phone">Télefono</label>
+                          <input type="tel" [(ngModel)]="nPhone" class="form-control" id="Phone" placeholder="{{planta.boss.phone}}" [ngModelOptions]="{standalone: true}">
+                        </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <small class="text-danger">***Campos disponibles para actualizar los datos de la planta***</small>
+                  </div>
+                  <div class="pad1">
+                  </div>
+                  <div class="row pad1">
+                    <div class="col">
+                      <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+                    </div>
+                    <div class="col">
+                      <button type="submit" class="btn btn-primary w-100" (click)="updClick()" [disabled]="enbuts()">Actualizar</button>
+                    </div>
+                    <div class="col"></div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+<hr>
+<hr>
+</div>
+<app-footer></app-footer>

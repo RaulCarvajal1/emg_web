@@ -55,14 +55,14 @@ const routes: Routes = [
   {path : 'servicios/:id', component : ViewservicioComponent},
   //Cliente
   {path : 'misplantas', component : MisPlantasComponent},
-  {path : 'misplantas/:id', component : VerMiPlantaComponent},
   {path : 'misplantas/nueva', component : NuevoMiPlantaComponent},
+  {path : 'misplantas/:id', component : VerMiPlantaComponent},
   {path : 'mislineas', component : MisLineasComponent},
-  {path : 'mislineas/:id', component : VerMiLineaComponent},
   {path : 'mislineas/nueva', component : NuevoMiLineaComponent},
+  {path : 'mislineas/:id', component : VerMiLineaComponent},
   {path : 'misequipos', component : MisEquiposComponent},
-  {path : 'misequipos/:id', component : VerMiEquipoComponent},
   {path : 'misequipos/nuevo', component : NuevoMiEquipoComponent},
+  {path : 'misequipos/:id', component : VerMiEquipoComponent},
   {path : 'misservicios', component : MisServiciosComponent},
   {path : 'misservicios/solicitar', component : SolicitarServicioComponent},
   //Tecnicos

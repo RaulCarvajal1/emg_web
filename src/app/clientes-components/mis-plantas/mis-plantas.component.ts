@@ -57,11 +57,11 @@ export class MisPlantasComponent implements OnInit {
   }
 
   plantDet(id:string){
-    this.router.navigateByUrl('equipos/plantas/'+id);
+    this.router.navigateByUrl('misplantas/'+id);
   }
 
   newPlant(){
-    this.router.navigateByUrl('equipos/plantas/nueva/n');
+    this.router.navigateByUrl('misplantas/nueva');
   }
 
   busqueda(){
