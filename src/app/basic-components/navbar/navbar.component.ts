@@ -14,11 +14,10 @@ export class NavbarComponent implements OnInit {
   }
 
   nombre:string="ejemplo";
-  usu:boolean=false;
-  equ:boolean=false;
-  ser:boolean=false;
-  mie:boolean=false;
   log:boolean=false;
+  adm:boolean=false;
+  tec:boolean=false;
+  cli:boolean=false;
   /*
     Si es administrador
     Usuarios|Equipos|Servicios
@@ -34,23 +33,20 @@ export class NavbarComponent implements OnInit {
       this.log=true;
       switch(this.auth.getRole()) { 
         case 0: { 
-          this.usu=true;
-          this.equ=true;
-          this.ser=true;
-          break; 
+          this.adm = true;
+          break;
         } 
         case 1: {
-          this.equ=true;
-          this.ser=true;
-          break; 
+          this.tec = true;
+          break;
         }
-        case 2: { 
-          this.mie=true;
-          break; 
+        case 2: {
+          this.cli = true;
+          break;
         }
       } 
     }else{
-      
+      this.closeSesion();
     }
   }
 

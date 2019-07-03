@@ -31,13 +31,26 @@
         <div class="card w-100 h-100">
           <div class="card-body">
             <h5 class="card-title">Accesos rápidos</h5>
-            <ul class="card-text list-group">
-              <li class="list-group-item"><a href="">Ver servicios</a></li>
-              <li class="list-group-item"><a href="">Programar/Solicitar servicio</a></li>
-              <li class="list-group-item"><a href="">Ver equipos</a></li>
-              <li class="list-group-item"><a href="">Ver plantas</a></li>
-              <li class="list-group-item"><a href="">Ver lineas</a></li>
-              <li class="list-group-item"><a href="">Mi cuenta</a></li>
+            <ul class="card-text list-group" *ngIf="admin">
+              <li class="list-group-item"><a [routerLink]="['/servicios']">Ver servicios</a></li>
+              <li class="list-group-item"><a [routerLink]="['/servicios/nuevo']">Programar servicio</a></li>
+              <li class="list-group-item"><a [routerLink]="['/equipos/equipos']">Ver equipos</a></li>
+              <li class="list-group-item"><a [routerLink]="['/equipos/plantas']">Ver plantas</a></li>
+              <li class="list-group-item"><a [routerLink]="['/equipos/lineas']">Ver lineas</a></li>
+              <li class="list-group-item"><a [routerLink]="['/micuenta']">Mi cuenta</a></li>
+            </ul>
+            <ul class="card-text list-group" *ngIf="tecni">
+              <li class="list-group-item"><a [routerLink]="['/misservicios-tec']">Ver mis servicios</a></li>
+              <li class="list-group-item"><a [routerLink]="['/servicios/nuevo']">Programar servicio</a></li>
+              <li class="list-group-item"><a [routerLink]="['/micuenta']">Mi cuenta</a></li>
+            </ul>
+            <ul class="card-text list-group" *ngIf="clien">
+              <li class="list-group-item"><a [routerLink]="['/misservicios']">Ver mis servicios</a></li>
+              <li class="list-group-item"><a [routerLink]="['/misservicios/solicitar']">Solicitar servicio</a></li>
+              <li class="list-group-item"><a [routerLink]="['/misequipos']">Ver mis equipos</a></li>
+              <li class="list-group-item"><a [routerLink]="['/misplantas']">Ver mis plantas</a></li>
+              <li class="list-group-item"><a [routerLink]="['/mislineas']">Ver mis lineas</a></li>
+              <li class="list-group-item"><a [routerLink]="['/micuenta']">Mi cuenta</a></li>
             </ul>
           </div>
         </div>

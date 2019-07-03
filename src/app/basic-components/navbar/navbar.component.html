@@ -1,22 +1,14 @@
 <mat-toolbar class="bg-secondary navbar">
   <div class="container">
       <div><a [routerLink]="['/inicio']" class="text-light"><span><img src="./assets/arquitecto.png" height="30px" width="30px"></span> Mantenimiento EMG</a></div>
-      <div>
-        <span *ngIf="mie">
-          <mat-menu #meqMenu="matMenu">
-            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/plantas')">Plantas</button>
-            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/lineas')">Lineas</button>
-            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/equipos')">Equipos</button>
-          </mat-menu>
-          <button mat-button [matMenuTriggerFor]="meqMenu" class="text-light">
-            Mis equipos
+      <div *ngIf="adm">
+        <span style="margin-left:80px"></span>
+        <span>
+          <button mat-button class="text-light" (click)="routerTo('usuarios')">
+            Usuarios
           </button>
         </span>
-        <span style="margin-left:80px" *ngIf="mie"></span>
-        <span *ngIf="usu">
-          <button mat-button class="text-light" (click)="routerTo('usuarios')">Usuarios</button>
-        </span>
-        <span *ngIf="equ">
+        <span>
           <mat-menu #equMenu="matMenu">
             <button mat-menu-item class="text-dark" (click)="routerTo('equipos/plantas')">Plantas</button>
             <button mat-menu-item class="text-dark" (click)="routerTo('equipos/lineas')">Lineas</button>
@@ -26,10 +18,74 @@
             Equipos
           </button>
         </span>
-        <span *ngIf="ser">
-          <button mat-button class="text-light" (click)="routerTo('servicios')">Servicios</button>
+        <span>
+          <button mat-button class="text-light" (click)="routerTo('servicios')">
+            Servicios
+          </button>
         </span>
-        <span *ngIf="log">
+        <span>
+          <mat-menu #userInfo="matMenu">
+            <button mat-menu-item class="text-dark" (click)="routerTo('micuenta')">Mi cuenta</button>
+            <button mat-menu-item class="text-danger" (click)="closeSesion()">Salir</button>
+          </mat-menu>
+          <button mat-button [matMenuTriggerFor]="userInfo" class="text-light">
+            Bienvenido {{nombre}}
+          </button>
+        </span>
+      </div>
+      <div *ngIf="tec">
+        <span *ngIf="false">
+          <button mat-button class="text-light" (click)="routerTo('usuarios')">
+            Usuarios
+          </button>
+        </span>
+        <span *ngIf="true">
+          <mat-menu #meqMenu="matMenu">
+            <button mat-menu-item class="text-dark" (click)="routerTo('misplantas')">Plantas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('mislineas')">Lineas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('misequipos')">Equipos</button>
+          </mat-menu>
+          <button mat-button [matMenuTriggerFor]="meqMenu" class="text-light">
+            Equipos
+          </button>
+        </span>
+        <span>
+          <button mat-button class="text-light" (click)="routerTo('misservicios-tec')">
+            Mis servicios
+          </button>
+        </span>
+        <span>
+          <mat-menu #userInfo="matMenu">
+            <button mat-menu-item class="text-dark" (click)="routerTo('micuenta')">Mi cuenta</button>
+            <button mat-menu-item class="text-danger" (click)="closeSesion()">Salir</button>
+          </mat-menu>
+          <button mat-button [matMenuTriggerFor]="userInfo" class="text-light">
+            Bienvenido {{nombre}}
+          </button>
+        </span>
+      </div>
+      <div *ngIf="cli">
+        <span>
+          <mat-menu #meqMenu="matMenu">
+            <button mat-menu-item class="text-dark" (click)="routerTo('misplantas')">Plantas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('mislineas')">Lineas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('misequipos')">Equipos</button>
+          </mat-menu>
+          <button mat-button [matMenuTriggerFor]="meqMenu" class="text-light">
+            Mis equipos
+          </button>
+        </span>
+        <span>
+          <button mat-button class="text-light" (click)="routerTo('misservicios')">
+            Mis servicios
+          </button>
+        </span>
+        <span>
+          <button mat-button class="text-light" (click)="routerTo('misservicios/solicitar')">
+            Solicitar servicio
+          </button>
+        </span>
+        <span>
           <mat-menu #userInfo="matMenu">
             <button mat-menu-item class="text-dark" (click)="routerTo('micuenta')">Mi cuenta</button>
             <button mat-menu-item class="text-danger" (click)="closeSesion()">Salir</button>

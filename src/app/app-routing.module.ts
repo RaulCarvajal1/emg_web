@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { InicioComponent } from './inicio/inicio.component';
+import { MiCuentaComponent } from './basic-components/mi-cuenta/mi-cuenta.component';
 import { UsuariosComponent } from './usuarios-components/usuarios/usuarios.component';
 import { PlantasComponent } from './plantas-components/plantas/plantas.component';
 import { LineasComponent } from './lineas-components/lineas/lineas.component';
@@ -18,7 +19,20 @@ import { AddemgComponent } from './equipos-components/addemg/addemg.component';
 import { ViewemgComponent } from './equipos-components/viewemg/viewemg.component';
 import { AddservicioComponent } from './servicios-component/addservicio/addservicio.component';
 import { ViewservicioComponent } from './servicios-component/viewservicio/viewservicio.component';
-import { MiCuentaComponent } from './basic-components/mi-cuenta/mi-cuenta.component';
+import { MisPlantasComponent } from './clientes-components/mis-plantas/mis-plantas.component';
+import { MisLineasComponent } from './clientes-components/mis-lineas/mis-lineas.component';
+import { MisEquiposComponent } from './clientes-components/mis-equipos/mis-equipos.component';
+import { MisServiciosComponent } from './clientes-components/mis-servicios/mis-servicios.component';
+import { SolicitarServicioComponent } from './clientes-components/solicitar-servicio/solicitar-servicio.component';
+import { MisServiciosTecComponent } from './tecnicos-components/mis-servicios-tec/mis-servicios-tec.component';
+import { IniciarServicioComponent } from './tecnicos-components/iniciar-servicio/iniciar-servicio.component';
+//Vistas clientes
+import { VerMiPlantaComponent } from './clientes-components/ver-mi-planta/ver-mi-planta.component';
+import { VerMiLineaComponent } from './clientes-components/ver-mi-linea/ver-mi-linea.component';
+import { VerMiEquipoComponent } from './clientes-components/ver-mi-equipo/ver-mi-equipo.component';
+import { NuevoMiEquipoComponent } from './clientes-components/nuevo-mi-equipo/nuevo-mi-equipo.component';
+import { NuevoMiLineaComponent } from './clientes-components/nuevo-mi-linea/nuevo-mi-linea.component';
+import { NuevoMiPlantaComponent } from './clientes-components/nuevo-mi-planta/nuevo-mi-planta.component';
 
 const routes: Routes = [
   {path : 'login', component : LoginComponent},
@@ -39,6 +53,21 @@ const routes: Routes = [
   {path : 'servicios', component : ServiciosComponent},
   {path : 'servicios/nuevo', component : AddservicioComponent},
   {path : 'servicios/:id', component : ViewservicioComponent},
+  //Cliente
+  {path : 'misplantas', component : MisPlantasComponent},
+  {path : 'misplantas/:id', component : VerMiPlantaComponent},
+  {path : 'misplantas/nueva', component : NuevoMiPlantaComponent},
+  {path : 'mislineas', component : MisLineasComponent},
+  {path : 'mislineas/:id', component : VerMiLineaComponent},
+  {path : 'mislineas/nueva', component : NuevoMiLineaComponent},
+  {path : 'misequipos', component : MisEquiposComponent},
+  {path : 'misequipos/:id', component : VerMiEquipoComponent},
+  {path : 'misequipos/nuevo', component : NuevoMiEquipoComponent},
+  {path : 'misservicios', component : MisServiciosComponent},
+  {path : 'misservicios/solicitar', component : SolicitarServicioComponent},
+  //Tecnicos
+  {path : 'misservicios-tec', component : MisServiciosTecComponent},
+  {path : 'misservicios/iniciar/:id', component : IniciarServicioComponent},
   {path : 'micuenta', component : MiCuentaComponent}
 ];
 
