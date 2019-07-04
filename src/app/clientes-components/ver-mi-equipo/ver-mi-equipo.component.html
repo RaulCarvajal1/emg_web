@@ -1,3 +1,89 @@
-<p>
-  ver-mi-equipo works!
-</p>
+<app-navbar></app-navbar>
+<div class="container">
+  <hr>
+  <div class="row">
+    <div class="col-12">
+      <div class="card w-100">
+        <div class="card-body">
+          <h5 class="card-title">Ver equipo EMG</h5>
+          <br>
+          <h6 class="card-subtitle"><b>Nombre:</b>{{nombre}}</h6>
+          <br>
+          <hr>  
+          <div class="row">
+            <div class="col">
+              <h6 class="card-subtitle">Ubicación del equipo</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h6><b>Cliente: </b>{{cliente}}</h6>
+            </div>
+            <div class="col">
+              <h6><b>Planta: </b>{{planta}}</h6>
+            </div>
+            <div class="col">
+              <h6><b>Linea: </b>{{linea}}</h6>
+            </div>
+          </div>
+          <hr>
+          <br>
+          <div class="row">
+            <div class="col">
+              <h6 class="card-subtitle">Información del equipo EMG</h6>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+                <h6><b>Estado del equipo: </b>{{activado()}}</h6>                
+            </div>
+          </div>
+          <hr>
+          <div class="row" *ngIf="actualizado">
+            <div class="col text-center">
+                <h4 class="text-warning">Actualizando...</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h6><b>Modelo: </b>{{modelo}}</h6>
+            </div>
+            <div class="col">
+              <h6><b>Tipo: </b>{{tipo}}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h6><b>Descripción: </b>{{descripcion}}</h6>
+            </div>
+            <div class="col">
+              <h6><b>Serie: </b>{{serie}}</h6>
+            </div>
+          </div>
+          <br>
+          <div class="row" style="padding-bottom: 0px">
+            <div class="col-4">
+              <h6><b>Código QR de identificación</b></h6>
+              <img src="{{emg.qr}}" class="img-fluid" style="width: 200px;">
+            </div>
+          </div>
+          <div class="row pad1">
+            <div class="col">
+              <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-warning w-100" (click)="actDes()">{{actDesStr()}}</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-danger w-100" (click)="getPdf()">Descargar reporte(PDF)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr><hr>
+    </div>
+  </div>
+  <hr>
+</div>
+<app-footer></app-footer>
