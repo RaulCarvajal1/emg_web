@@ -22,6 +22,7 @@ export class ViewservicioComponent implements OnInit {
             }
 
   ngOnInit() {
+    this.getTecnicos();
   }
 
   servicio:servicios;
@@ -29,6 +30,11 @@ export class ViewservicioComponent implements OnInit {
   tec:string;
   emg:string;
   proceso:boolean=false;
+  stat0: boolean = false;
+  btnen:boolean = true;
+  msg:boolean = false;
+  tecnicos: User[];
+  tec_id:string = ""
 
   getServicio(id:string){
     this.serviciosService.getById(id).subscribe(
@@ -54,6 +60,7 @@ export class ViewservicioComponent implements OnInit {
       case 0:
         this.status = 'Solicitado por cliente (Falta asignar tecnico)';
         this.proceso = false;
+        this.stat0 = true;
         break;
       case 1:
         this.status = 'Progamado';
@@ -68,6 +75,15 @@ export class ViewservicioComponent implements OnInit {
         this.proceso = true;
         break;
     }
+  }
+  getTecnicos(){
+    this.userServices.gettec().subscribe(
+      res=>{
+        this.tecnicos=res.detail;
+      },err=>{
+        console.error(err);
+      }
+    );
   }
   getTec(){
     this.userServices.getUser(<any>this.servicio.tecnico).subscribe(
@@ -117,5 +133,22 @@ export class ViewservicioComponent implements OnInit {
   }
   regresar(){
     this.router.navigateByUrl('/servicios');
+  }
+  enBut(){
+    this.btnen=false;
+  }
+  asigTec(){
+    this.serviciosService.asigTec(this.servicio._id,this.tec_id).subscribe(
+      res => {
+        console.log(res);
+        this.msg = true;
+        this.stat0 = false;
+        setTimeout(() => {
+          this.regresar()
+        }, 1000);
+      },err => {
+        console.error(err);
+      }
+    );
   }
 }

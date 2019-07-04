@@ -17,7 +17,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="emg"><span class="text-danger">*</span>Equipo EMG</label>
-                  <select class="form-control" id="emg" formControlName="emg">
+                  <select class="form-control form-control-sm" id="emg" formControlName="emg">
                     <option *ngFor="let emg of emgs" value="{{emg._id}}">{{emg.info.name}}</option>
                   </select>
                   <div *ngIf="serviciosForm.get('emg').errors&&serviciosForm.get('emg').dirty">
@@ -28,7 +28,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="tecnico"><span class="text-danger">*</span>Técnico a asignar</label>
-                  <select class="form-control" id="tecnico" formControlName="tecnico">
+                  <select class="form-control form-control-sm" id="tecnico" formControlName="tecnico">
                     <option *ngFor="let tecnico of tecnicos" value="{{tecnico._id}}">{{tecnico.info.name}}</option>
                   </select>
                   <div *ngIf="serviciosForm.get('tecnico').errors&&serviciosForm.get('tecnico').dirty">
@@ -47,7 +47,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="type"><span class="text-danger">*</span>Tipo de servicio</label>
-                  <select class="form-control" id="type" formControlName="type">
+                  <select class="form-control form-control-sm" id="type" formControlName="type">
                     <option value="Mantenimiento">Mantenimiento</option>
                     <option value="Reparación">Reparación</option>
                   </select>
@@ -59,7 +59,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="date"><span class="text-danger">*</span>Fecha</label>
-                  <input type="date" class="form-control" id="date" formControlName="date" min="{{minDate}}">
+                  <input type="date" class="form-control form-control-sm" id="date" formControlName="date" min="{{minDate}}">
                 </div>
                 <div *ngIf="serviciosForm.get('date').errors&&serviciosForm.get('date').dirty">
                   <p *ngIf="serviciosForm.get('date').hasError('required')" class="text-danger">La fecha es requerido</p>
@@ -70,7 +70,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="Descripción"><span class="text-danger">*</span>Descripción a detalle del servico</label>
-                  <input type="text" class="form-control" id="Descripción" formControlName="desc">
+                  <input type="text" class="form-control form-control-sm" id="Descripción" formControlName="desc">
                   <div *ngIf="serviciosForm.get('desc').errors&&serviciosForm.get('desc').dirty">
                     <p *ngIf="serviciosForm.get('desc').hasError('required')" class="text-danger">La descripción es requerida</p>
                   </div>

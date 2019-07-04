@@ -25,9 +25,23 @@
                   <div class="col">
                     <div class="">
                       <h6><b>Nombre de técnico</b></h6>
+                      <h6 *ngIf="stat0">Falta asignar técnico</h6>
+                      <h6 class="text-warning" *ngIf="msg"><b>Asignando...</b></h6>
                       <h6>{{tec}}</h6>                        
                     </div>
                   </div>
+                </div>
+                <div class="row card" *ngIf="stat0">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="tecnico"><span class="text-danger">*</span>Técnico a asignar</label>
+                      <select class="form-control form-control-sm" id="tecnico" [(ngModel)]="tec_id" (change)="enBut()">
+                        <option *ngFor="let tecnico of tecnicos" value="{{tecnico._id}}">{{tecnico.info.name}}</option>
+                      </select>
+                    </div>
+                    <button class="btn btn-primary" [disabled]="btnen" (click)="asigTec()">Guardar</button>
+                  </div>
+                  <br>
                 </div>
                 <hr>
                 <br>
