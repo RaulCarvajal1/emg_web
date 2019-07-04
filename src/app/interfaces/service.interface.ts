@@ -6,6 +6,7 @@ export interface servicios {
     start : Date,
     finish : Date,
     status : number,
+    client : String,
     tecnico : String,
     emg : String,
     observ : String,

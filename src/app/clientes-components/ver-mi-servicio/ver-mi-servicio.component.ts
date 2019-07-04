@@ -8,18 +8,18 @@ import { User } from 'src/app/interfaces/user.interface';
 import { emgs } from 'src/app/interfaces/emg.interface';
 
 @Component({
-  selector: 'app-viewservicio',
-  templateUrl: './viewservicio.component.html',
-  styleUrls: ['./viewservicio.component.css']
+  selector: 'app-ver-mi-servicio',
+  templateUrl: './ver-mi-servicio.component.html',
+  styleUrls: ['./ver-mi-servicio.component.css']
 })
-export class ViewservicioComponent implements OnInit {
+export class VerMiServicioComponent implements OnInit {
 
   constructor(private activatedRoute:ActivatedRoute, private router:Router, 
-              private serviciosService:ServiciosService, private userServices:UsuariosService, 
-              private emgServices:EmgsService)
-            { 
-              this.getServicio(this.activatedRoute.snapshot.paramMap.get("id"));
-            }
+    private serviciosService:ServiciosService, private userServices:UsuariosService, 
+    private emgServices:EmgsService)
+  { 
+    this.getServicio(this.activatedRoute.snapshot.paramMap.get("id"));
+  }
 
   ngOnInit() {
   }
@@ -43,16 +43,11 @@ export class ViewservicioComponent implements OnInit {
       }
     );
   }
-  /*
-  0. Solicitado por cliente(Falta asignar tecnico)
-  1. Programado
-  2. En proceso
-  3. Realizado
-  */
+  
   conditonials(n:number){
     switch (n) {
       case 0:
-        this.status = 'Solicitado por cliente (Falta asignar tecnico)';
+        this.status = 'Solicitado, en espera de asignación de técnico';
         this.proceso = false;
         break;
       case 1:
@@ -98,24 +93,24 @@ export class ViewservicioComponent implements OnInit {
   }
   getPdf(){
     let data: any = {
-      template: { "shortid" : "HJlwC8WhkH"  },
-      data : {id : this.servicio._id.substring(0,10),
-              emg : this.emg,
-              tec : this.tec,
-              type : this.servicio.type,
-              desc : this.servicio.desc,
-              status : this.status,
-              date : this.getDate(this.servicio.date),
-              start : '',
-              finish : '',
-              observ : '',
-              signature : ''
-            },
-      options : { 'timeout': 60000 }
+    template: { "shortid" : "HJlwC8WhkH"  },
+    data : {id : this.servicio._id.substring(0,10),
+        emg : this.emg,
+        tec : this.tec,
+        type : this.servicio.type,
+        desc : this.servicio.desc,
+        status : this.status,
+        date : this.getDate(this.servicio.date),
+        start : '',
+        finish : '',
+        observ : '',
+        signature : ''
+      },
+    options : { 'timeout': 60000 }
     };
     this.serviciosService.getPdf(data);
   }
   regresar(){
-    this.router.navigateByUrl('/servicios');
+    this.router.navigateByUrl('/misservicios');
   }
 }

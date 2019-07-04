@@ -1,0 +1,118 @@
+<app-navbar></app-navbar>
+<div class="container">
+<hr>
+<hr> 
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Ver servicio</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Id del servicio {{getId(servicio._id)}}</h6>
+              <div class="col">
+                <hr>
+                <div class="row">
+                  <div class="col">
+                    <h6 class="card-subtitle mb-2">Técnico y Equipo</h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Equipo</b></h6>
+                      <h6>{{emg}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Nombre de técnico</b></h6>
+                      <h6>{{tec}}</h6>                        
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <h6 class="card-subtitle mb-2">Información del servicio</h6>
+                  </div>
+                <br>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Tipo de servicio</b></h6>
+                      <h6>{{servicio.type}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Descripcion</b></h6>
+                      <p>{{servicio.desc}}</p>                        
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Estado del servicio</b></h6>
+                      <h6>{{status}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Fecha programada</b></h6>
+                      <h6>{{getDate(servicio.date)}}</h6>                        
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="row" *ngIf="proceso">
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Fecha de inicio</b></h6>
+                      <h6>{{servicio.start}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Fecha de finalización</b></h6>
+                      <h6>{{servicio.finish}}</h6>                        
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="row" *ngIf="proceso">
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Observaciones del servicio</b></h6>
+                      <h6>{{servicio.observ}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Firma del cliente</b></h6>
+                      <img src="{{servicio.signature}}" class="w-100 img-fluid">                       
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <br><br>
+                <div class="row" style="padding-bottom: 0px">
+                  <div class="col">
+                    <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-danger w-100" (click)="getPdf()" [disabled]="proceso">Descargar reporte(PDF)</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+<hr>
+<hr>
+</div>
+<app-footer></app-footer>

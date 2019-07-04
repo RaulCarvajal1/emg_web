@@ -32,6 +32,7 @@ export class AddservicioComponent implements OnInit {
 
   tecnicos:User[];
   emgs:emgs[];
+  emg_c_id: String;
   serviciosForm:FormGroup;
   msg:boolean=false;
   msgErr:boolean=false;
@@ -62,9 +63,25 @@ export class AddservicioComponent implements OnInit {
       }
     );
   }
+  getClientId(){
+    let temp = this.serviciosForm.value.emg;
+    this.emgs.forEach(emg => {
+      if(emg._id==temp){
+        this.emg_c_id=emg.client;
+      }
+    });
+  }
+  /*
+  0. Solicitado por cliente(Falta asignar tecnico)
+  1. Programado
+  2. En proceso
+  3. Realizado
+  */
   save(){
+    this.getClientId();
     let temp = this.serviciosForm.value;
-    temp.status = 0;
+    temp.status = 1;
+    temp.client =  this.emg_c_id;
     console.log(temp);
     this.serviciosService.save(temp).subscribe(
       res=>{

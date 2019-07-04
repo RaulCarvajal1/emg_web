@@ -58,10 +58,14 @@ export class ServiciosComponent implements OnInit {
     );
   }
   getTecnico(id:string):string{
-    let n:User = this.tecnicos.find((tec)=>{
-                    return tec._id == id;
-                 });
-    return n.info.name;
+    if(id==null){
+      return "Por asignar"
+    }else{
+      let n:User = this.tecnicos.find((tec)=>{
+        return tec._id == id;
+      });
+      return n.info.name;
+    }
   }
   getEmg(id:string):string{
     let n:emgs = this.emgs.find((tec)=>{
@@ -69,15 +73,24 @@ export class ServiciosComponent implements OnInit {
                  });
     return n.info.name;
   }
+   /*
+  0. Solicitado por cliente(Falta asignar tecnico)
+  1. Programado
+  2. En proceso
+  3. Realizado
+  */
   getStatus(n:number):string{
     switch (n) {
       case 0:
-        return "Programado";
+        return "Solicitado (Asignar Tec)";
         break;
       case 1:
-        return "En proceso";
+        return "Programado";
         break;
       case 2:
+        return "En proceso";
+        break;
+      case 3:
         return "Realizado";
         break;
       default:

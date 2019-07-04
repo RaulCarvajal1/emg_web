@@ -34,6 +34,7 @@ import { NuevoMiEquipoComponent } from './clientes-components/nuevo-mi-equipo/nu
 import { NuevoMiLineaComponent } from './clientes-components/nuevo-mi-linea/nuevo-mi-linea.component';
 import { NuevoMiPlantaComponent } from './clientes-components/nuevo-mi-planta/nuevo-mi-planta.component';
 import { MislineasbyidComponent } from './clientes-components/mislineasbyid/mislineasbyid.component';
+import { VerMiServicioComponent } from './clientes-components/ver-mi-servicio/ver-mi-servicio.component';
 
 const routes: Routes = [
   {path : 'login', component : LoginComponent},
@@ -67,9 +68,10 @@ const routes: Routes = [
   {path : 'misequipos/:id', component : VerMiEquipoComponent},
   {path : 'misservicios', component : MisServiciosComponent},
   {path : 'misservicios/solicitar', component : SolicitarServicioComponent},
+  {path : 'misservicios/:id', component : VerMiServicioComponent},
   //Tecnicos
   {path : 'misservicios-tec', component : MisServiciosTecComponent},
-  {path : 'misservicios/iniciar/:id', component : IniciarServicioComponent},
+  {path : 'misservicios-tec/iniciar/:id', component : IniciarServicioComponent},
   {path : 'micuenta', component : MiCuentaComponent}
 ];
 
