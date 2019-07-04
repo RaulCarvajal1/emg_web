@@ -54,6 +54,7 @@ import { VerMiEquipoComponent } from './clientes-components/ver-mi-equipo/ver-mi
 import { NuevoMiEquipoComponent } from './clientes-components/nuevo-mi-equipo/nuevo-mi-equipo.component';
 import { NuevoMiLineaComponent } from './clientes-components/nuevo-mi-linea/nuevo-mi-linea.component';
 import { NuevoMiPlantaComponent } from './clientes-components/nuevo-mi-planta/nuevo-mi-planta.component';
+import { MislineasbyidComponent } from './clientes-components/mislineasbyid/mislineasbyid.component';
 
 // tslint:disable-next-line: no-unused-expression
 @NgModule({
@@ -92,7 +93,8 @@ import { NuevoMiPlantaComponent } from './clientes-components/nuevo-mi-planta/nu
     VerMiEquipoComponent,
     NuevoMiEquipoComponent,
     NuevoMiLineaComponent,
-    NuevoMiPlantaComponent
+    NuevoMiPlantaComponent,
+    MislineasbyidComponent
   ],
   imports: [
     HttpClientModule,

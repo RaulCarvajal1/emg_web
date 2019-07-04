@@ -33,6 +33,7 @@ import { VerMiEquipoComponent } from './clientes-components/ver-mi-equipo/ver-mi
 import { NuevoMiEquipoComponent } from './clientes-components/nuevo-mi-equipo/nuevo-mi-equipo.component';
 import { NuevoMiLineaComponent } from './clientes-components/nuevo-mi-linea/nuevo-mi-linea.component';
 import { NuevoMiPlantaComponent } from './clientes-components/nuevo-mi-planta/nuevo-mi-planta.component';
+import { MislineasbyidComponent } from './clientes-components/mislineasbyid/mislineasbyid.component';
 
 const routes: Routes = [
   {path : 'login', component : LoginComponent},
@@ -58,8 +59,9 @@ const routes: Routes = [
   {path : 'misplantas/nueva', component : NuevoMiPlantaComponent},
   {path : 'misplantas/:id', component : VerMiPlantaComponent},
   {path : 'mislineas', component : MisLineasComponent},
-  {path : 'mislineas/nueva', component : NuevoMiLineaComponent},
-  {path : 'mislineas/:id', component : VerMiLineaComponent},
+  {path : 'mislineas/:id', component : MislineasbyidComponent},
+  {path : 'mislineas/nueva/:id', component : NuevoMiLineaComponent},
+  {path : 'mislineas/:id_p/:id_l', component : VerMiLineaComponent},
   {path : 'misequipos', component : MisEquiposComponent},
   {path : 'misequipos/nuevo', component : NuevoMiEquipoComponent},
   {path : 'misequipos/:id', component : VerMiEquipoComponent},
