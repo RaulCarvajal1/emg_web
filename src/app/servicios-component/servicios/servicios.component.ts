@@ -45,7 +45,7 @@ export class ServiciosComponent implements OnInit {
         this.emgs=res.detail;
       },err=>{
         console.error(err);
-      }
+      } 
     );
   }
   loadServices(){

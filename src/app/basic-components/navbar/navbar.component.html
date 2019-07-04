@@ -40,14 +40,14 @@
           </button>
         </span>
         <span *ngIf="true">
-          <mat-menu #meqMenu="matMenu">
-            <button mat-menu-item class="text-dark" (click)="routerTo('misplantas')">Plantas</button>
-            <button mat-menu-item class="text-dark" (click)="routerTo('mislineas')">Lineas</button>
-            <button mat-menu-item class="text-dark" (click)="routerTo('misequipos')">Equipos</button>
-          </mat-menu>
-          <button mat-button [matMenuTriggerFor]="meqMenu" class="text-light">
-            Equipos
-          </button>
+            <mat-menu #equMenu="matMenu">
+              <button mat-menu-item class="text-dark" (click)="routerTo('equipos/plantas')">Plantas</button>
+              <button mat-menu-item class="text-dark" (click)="routerTo('equipos/lineas')">Lineas</button>
+              <button mat-menu-item class="text-dark" (click)="routerTo('equipos/equipos')">Equipos</button>
+            </mat-menu>
+            <button mat-button [matMenuTriggerFor]="equMenu" class="text-light">
+              Equipos
+            </button>
         </span>
         <span>
           <button mat-button class="text-light" (click)="routerTo('misservicios-tec')">

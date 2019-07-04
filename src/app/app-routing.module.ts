@@ -25,6 +25,7 @@ import { MisEquiposComponent } from './clientes-components/mis-equipos/mis-equip
 import { MisServiciosComponent } from './clientes-components/mis-servicios/mis-servicios.component';
 import { SolicitarServicioComponent } from './clientes-components/solicitar-servicio/solicitar-servicio.component';
 import { MisServiciosTecComponent } from './tecnicos-components/mis-servicios-tec/mis-servicios-tec.component';
+import { AddservicioTecComponent } from './tecnicos-components/addservicio-tec/addservicio-tec.component';
 import { IniciarServicioComponent } from './tecnicos-components/iniciar-servicio/iniciar-servicio.component';
 //Vistas clientes
 import { VerMiPlantaComponent } from './clientes-components/ver-mi-planta/ver-mi-planta.component';
@@ -71,7 +72,8 @@ const routes: Routes = [
   {path : 'misservicios/:id', component : VerMiServicioComponent},
   //Tecnicos
   {path : 'misservicios-tec', component : MisServiciosTecComponent},
-  {path : 'misservicios-tec/iniciar/:id', component : IniciarServicioComponent},
+  {path : 'misservicios-tec/nuevo', component : AddservicioTecComponent},
+  {path : 'misservicios-tec/:id', component : IniciarServicioComponent},
   {path : 'micuenta', component : MiCuentaComponent}
 ];
 
