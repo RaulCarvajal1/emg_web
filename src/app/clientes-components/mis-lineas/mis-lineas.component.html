@@ -14,7 +14,7 @@
   </div> 
   <div class="row">
     <div class="col-3">
-      <h6 class="text-left">Ver lineas por planta</h6>
+      <h6 class="text-left">Ver líneas por planta</h6>
       <small class="text-danger">**Seleccione a la planta**</small> 
     </div>
     <div class="col-3">  
@@ -23,7 +23,7 @@
       </select>
     </div>
     <div class="col-3">
-      <h6 class="text-left">Búscar por nombre de linea</h6>
+      <h6 class="text-left">Búscar por nombre de línea</h6>
     </div>
     <div class="col-3">
         <input type="text" class="form-control form-control-sm" placeholder="Nombre de la planta" [(ngModel)]="busq" [ngModelOptions]="{standalone: true}" (keyup)="busqueda()">
@@ -31,7 +31,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <h6 *ngIf="sinPlantas" class="text-center txt-danger">Sin lineas registradas en esta planta</h6>
+      <h6 *ngIf="sinPlantas" class="text-center txt-danger">Sin líneas registradas en esta planta</h6>
     </div>
   </div>
   <hr>
@@ -40,7 +40,7 @@
     <div class="row">
       <div class="col-12 text-right">
         <button class="btn btn-primary" type="button" (click)="goNewLine()">
-          Nueva linea
+          Nueva línea
         </button>
       </div>
     </div>
@@ -69,7 +69,7 @@
               </tr>
             </tbody>
         </table>
-        <h2 *ngIf="vacio()">El cliente no tiene lineas registradas en esta planta</h2>
+        <h2 *ngIf="vacio()">El cliente no tiene líneas registradas en esta planta</h2>
         <br>
         <hr>
         <br>

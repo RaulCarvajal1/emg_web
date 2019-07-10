@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
   }
 
   nombre:string="ejemplo";
+  role:string="";
   log:boolean=false;
   adm:boolean=false;
   tec:boolean=false;
@@ -34,14 +35,17 @@ export class NavbarComponent implements OnInit {
       switch(this.auth.getRole()) { 
         case 0: { 
           this.adm = true;
+          this.role = "(Administrador)";
           break;
         } 
         case 1: {
           this.tec = true;
+          this.role = "(Técnico)";
           break;
         }
         case 2: {
           this.cli = true;
+          this.role = "(Cliente)";          
           break;
         }
       } 

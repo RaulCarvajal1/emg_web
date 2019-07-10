@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="col">
-      <h6 class="text-left"><span class="text-danger">*</span>Seleccionar linea</h6>
+      <h6 class="text-left"><span class="text-danger">*</span>Seleccionar línea</h6>
     </div>
     <div class="col">
       <div class="form-group">
@@ -84,7 +84,7 @@
                   <td>{{emg.info.model}}</td>
                   <td>{{emg.info.serial}}</td>
                   <td>{{emg.info.description.substring(0,40)}}</td>
-                  <td>{{emg.status}}</td>
+                  <td>{{getStatus(emg.status)}}</td>
                   <td>
                     <button mat-mini-fab color="primary" (click)="detEmg(emg._id)">
                         <mat-icon>pageview</mat-icon>

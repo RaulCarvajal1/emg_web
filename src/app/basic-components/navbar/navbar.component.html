@@ -1,6 +1,6 @@
 <mat-toolbar class="bg-secondary navbar">
   <div class="container">
-      <div><a [routerLink]="['/inicio']" class="text-light"><span><img src="./assets/arquitecto.png" height="30px" width="30px"></span> Mantenimiento EMG</a></div>
+      <div><a [routerLink]="['/inicio']" class="text-light"><span><img src="./assets/arquitecto.png" height="30px" width="30px"></span> Mantenimiento EMG - {{nombre}}</a></div>
       <div *ngIf="adm">
         <span style="margin-left:80px"></span>
         <span>
@@ -11,7 +11,7 @@
         <span>
           <mat-menu #equMenu="matMenu">
             <button mat-menu-item class="text-dark" (click)="routerTo('equipos/plantas')">Plantas</button>
-            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/lineas')">Lineas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('equipos/lineas')">Líneas</button>
             <button mat-menu-item class="text-dark" (click)="routerTo('equipos/equipos')">Equipos</button>
           </mat-menu>
           <button mat-button [matMenuTriggerFor]="equMenu" class="text-light">
@@ -29,7 +29,7 @@
             <button mat-menu-item class="text-danger" (click)="closeSesion()">Salir</button>
           </mat-menu>
           <button mat-button [matMenuTriggerFor]="userInfo" class="text-light">
-            Bienvenido {{nombre}}
+            Bienvenido {{role}}
           </button>
         </span>
       </div>
@@ -42,7 +42,7 @@
         <span *ngIf="true">
             <mat-menu #equMenu="matMenu">
               <button mat-menu-item class="text-dark" (click)="routerTo('equipos/plantas')">Plantas</button>
-              <button mat-menu-item class="text-dark" (click)="routerTo('equipos/lineas')">Lineas</button>
+              <button mat-menu-item class="text-dark" (click)="routerTo('equipos/lineas')">Líneas</button>
               <button mat-menu-item class="text-dark" (click)="routerTo('equipos/equipos')">Equipos</button>
             </mat-menu>
             <button mat-button [matMenuTriggerFor]="equMenu" class="text-light">
@@ -60,7 +60,7 @@
             <button mat-menu-item class="text-danger" (click)="closeSesion()">Salir</button>
           </mat-menu>
           <button mat-button [matMenuTriggerFor]="userInfo" class="text-light">
-            Bienvenido {{nombre}}
+            Bienvenido {{role}}
           </button>
         </span>
       </div>
@@ -68,7 +68,7 @@
         <span>
           <mat-menu #meqMenu="matMenu">
             <button mat-menu-item class="text-dark" (click)="routerTo('misplantas')">Plantas</button>
-            <button mat-menu-item class="text-dark" (click)="routerTo('mislineas')">Lineas</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('mislineas')">Líneas</button>
             <button mat-menu-item class="text-dark" (click)="routerTo('misequipos')">Equipos</button>
           </mat-menu>
           <button mat-button [matMenuTriggerFor]="meqMenu" class="text-light">
@@ -91,7 +91,7 @@
             <button mat-menu-item class="text-danger" (click)="closeSesion()">Salir</button>
           </mat-menu>
           <button mat-button [matMenuTriggerFor]="userInfo" class="text-light">
-            Bienvenido {{nombre}}
+            Bienvenido {{role}}
           </button>
         </span>
       </div>

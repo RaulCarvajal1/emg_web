@@ -6,14 +6,14 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Agregar linea para planta {{p_namestr}}</h5>
+                <h5 class="card-title">Agregar línea para planta {{p_namestr}}</h5>
             </div>
             <form class="container" [formGroup]="lineForm" (ngSubmit)="save()">
                 <div class="row">
                   <div class="col">
                     <div class="form-group">
-                      <label for="name"><span class="text-danger">*</span>Nombre linea</label>
-                      <input type="text" class="form-control" id="name" placeholder="Nombre de la linea" formControlName="name" (keyup)="setEnable()">
+                      <label for="name"><span class="text-danger">*</span>Nombre línea</label>
+                      <input type="text" class="form-control" id="name" placeholder="Nombre de la línea" formControlName="name" (keyup)="setEnable()">
                       <div *ngIf="lineForm.get('name').errors&&lineForm.get('name').dirty">
                         <p *ngIf="lineForm.get('name').hasError('required')" class="text-danger">Nombre requerido</p>
                       </div>
@@ -30,7 +30,7 @@
                       <div class="col-8">
                         <div class="form-group">
                           <label for="shortname">...</label>
-                          <input type="text" class="form-control" id="shortname" placeholder="Nombre corto de la linea(max 6 digitos)" formControlName="shortname" value="{{nombrecorto}}">
+                          <input type="text" class="form-control" id="shortname" placeholder="Nombre corto de la línea(max 6 digitos)" formControlName="shortname" value="{{nombrecorto}}">
                           <div *ngIf="lineForm.get('shortname').errors&&lineForm.get('shortname').dirty">
                             <p *ngIf="lineForm.get('shortname').hasError('maxlength')" class="text-danger">Máximo 7 digitos</p>
                           </div>
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <h5 class="text-info" *ngIf="msg">PLANTA REGISTRADA</h5>
+                        <h5 class="text-info" *ngIf="msg">LÍNEA REGISTRADA</h5>
                         <h5 class="text-danger" *ngIf="msgErr">ERROR DURANTE REGISTRO</h5>
                     </div>
                 </div>

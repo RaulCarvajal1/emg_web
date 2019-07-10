@@ -38,12 +38,12 @@
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label for="linea"><span class="text-danger">*</span>Linea <small class="text-muted">seleccione primero cliente y planta</small></label>
+                  <label for="linea"><span class="text-danger">*</span>Línea <small class="text-muted">seleccione primero cliente y planta</small></label>
                   <select class="form-control" id="linea" formControlName="linea" (change)="saveLine()">
                     <option *ngFor="let line of lines" value="{{line._id}}">{{line.name}}</option>
                   </select>
                   <div *ngIf="emgForm.get('linea').errors&&emgForm.get('linea').dirty">
-                    <p *ngIf="emgForm.get('linea').hasError('required')" class="text-danger">La linea es requerida</p>
+                    <p *ngIf="emgForm.get('linea').hasError('required')" class="text-danger">La línea es requerida</p>
                   </div>
                 </div>
               </div>

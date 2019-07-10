@@ -158,4 +158,11 @@ export class EquiposComponent implements OnInit {
       this.emgs=temp.filter(emg => emg.info.serial.toLowerCase().match(regex))
     }
   }
+  getStatus(s:Number){
+    if(s==1){
+      return "Desactivado";
+    }else{
+      return "Activo"
+    }
+  }
 }
