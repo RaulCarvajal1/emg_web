@@ -42,6 +42,13 @@ export class AddUserComponent implements OnInit {
   genUsuCon(){
     this.u=""+(Math.floor(Math.random()*1000000));
   }
+  getRol(id){
+    this.options.forEach(e=>{
+      if(e.id=id){
+        return e.name;
+      }
+    })
+  }
   guardarUsuario(){
     let values=this.userForm.value;
     this.usuarios.newUser({"info" :{
@@ -62,6 +69,13 @@ export class AddUserComponent implements OnInit {
                           }).subscribe(
                               res=>{
                                 this.msg=true;
+                                this.sendMail({
+                                                "email" : res.detail.info.email,
+                                                "username" : this.u,
+                                                "password" : this.u,
+                                                "name" : values.name,
+                                                "id" : res.detail._id
+                                              });
                                 setTimeout(() => {
                                   this.regresar();
                                 }, 2000);
@@ -71,5 +85,12 @@ export class AddUserComponent implements OnInit {
                                 this.msgErr=true;
                               }
                             );
+  }
+  sendMail(data){
+    this.usuarios.sendMailNewUser(data).subscribe(res=>{
+      console.log(res);
+    },err=>{
+      console.log(err);
+    });
   }
 }

@@ -46,6 +46,7 @@ export class ViewUserComponent implements OnInit{
   nUser:string="";
   nName:string=""; 
   nEmail:string="";
+  nPass:string="";
   getRol(r:number):string{
     switch (r) {
       case 0:
@@ -87,18 +88,22 @@ export class ViewUserComponent implements OnInit{
     if(this.nUser==""){
       this.nUser=this.user.username;
     }
+    if(this.nPass==""){
+      this.nPass=this.user.password;
+    }
     if(this.nName==""){
       this.nName=this.user.info.name;
     }
     if(this.nEmail==""){
       this.nEmail=this.user.info.email;
     }
-    this.actualizar(this.nUser,this.nName,this.nEmail);
+    this.actualizar(this.nUser,this.nPass,this.nName,this.nEmail);
   }
-  actualizar(u:string,n:string,e:string){  
+  actualizar(u:string,p:string,n:string,e:string){  
     let uUsr:any={
       '_id' : this.user._id,
       'username' : u,
+      'password' : p,
       'info' : {
         'name' : n,
         'email' : e

@@ -34,6 +34,10 @@ export class UsuariosService {
     return this.http.post<res>('http://localhost:3033/user/create/', user);
   }
 
+  sendMailNewUser(data){
+    return this.http.post<res>('http://localhost:3033/user/newUserEmail',data);
+  }
+
   userExists(u:String){
     return this.http.get<res>('http://localhost:3033/user/existe/'+u);
   }

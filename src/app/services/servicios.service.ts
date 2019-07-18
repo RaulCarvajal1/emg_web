@@ -54,4 +54,19 @@ export class ServiciosService {
     );
   }
 
+  //Send correos
+  /*
+  solicitar
+  programar
+  asignar
+  */
+  emailSolicitar(data:any){
+    return this.http.post<res>('http://localhost:3033/service/emailsolicitarservicio',data);
+  }
+  emailProgramar(data:any){
+    return this.http.post<res>('http://localhost:3033/service/emailprogramarservicio',data);
+  }
+  emailAsignar(data:any){
+    return this.http.post<res>('http://localhost:3033/service/emailasignarservicio',data);
+  }
 }
