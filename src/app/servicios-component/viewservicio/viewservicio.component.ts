@@ -22,6 +22,7 @@ export class ViewservicioComponent implements OnInit {
             }
 
   ngOnInit() {
+    this.loadClients();
     this.getTecnicos();
   }
 
@@ -34,8 +35,23 @@ export class ViewservicioComponent implements OnInit {
   btnen:boolean = true;
   msg:boolean = false;
   tecnicos: User[];
-  tec_id:string = ""
+  clientes:User[];
+  tec_id:string = "";
+  //email data
+  tec_email:string;
+  tec_name:string;
+  cli_email:string;
+  cli_name:string;
 
+  loadClients(){
+    this.userServices.getAllClients().subscribe(
+      res=>{
+        this.clientes=res.detail;
+      },err=>{
+        console.error(err);
+      }
+    );
+  }
   getServicio(id:string){
     this.serviciosService.getById(id).subscribe(
       res=>{
@@ -143,6 +159,19 @@ export class ViewservicioComponent implements OnInit {
         console.log(res);
         this.msg = true;
         this.stat0 = false;
+        this.getEmailData(this.servicio.client,this.tec_id);
+        this.serviciosService.emailProgramar({
+                                                "email_tecnico" : this.tec_email,
+                                                "email_cliente" : this.cli_email,
+                                                "nameTec" : this.tec_name,
+                                                "nameCli" : this.cli_name,
+                                                "date" : this.servicio.date,
+                                                "id" : this.servicio._id.substring(this.servicio._id.length-10,this.servicio._id.length)
+                                              }).subscribe(res=>{
+                                                
+                                              },err=>{
+
+                                              });
         setTimeout(() => {
           this.regresar()
         }, 1000);
@@ -150,5 +179,20 @@ export class ViewservicioComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  getEmailData(idc,idt){
+    this.clientes.forEach(async e=>{
+      if(idc==e._id){
+        this.cli_email=e.info.email;
+        this.cli_name=e.info.name;
+      }
+    });
+    this.tecnicos.forEach(async e=>{
+      if(idt==e._id){
+        this.tec_email=e.info.email;
+        this.tec_name=e.info.name;
+      }
+    });
   }
 }

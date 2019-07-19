@@ -49,6 +49,10 @@ export class UsuariosService {
     return this.http.get<resArray>("http://127.0.0.1:3033/user/gettec");
   }
 
+  getAdmin(){
+    return this.http.get<res>('http://localhost:3033/user/getadmin');
+  }
+
   updatePass(user:JSON){
     return this.http.put<res>('http://localhost:3033/user/updatepass',
       user

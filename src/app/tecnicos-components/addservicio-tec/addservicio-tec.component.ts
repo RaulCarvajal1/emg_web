@@ -29,6 +29,7 @@ export class AddservicioTecComponent implements OnInit {
     );
   }
 
+  clientes:User[];
   tecnicos:User[];
   emgs:emgs[];
   emg_c_id: String;
@@ -36,14 +37,27 @@ export class AddservicioTecComponent implements OnInit {
   msg:boolean=false;
   msgErr:boolean=false;
   minDate:String;
-
+  //email data
+  tec_email:string;
+  tec_name:string;
+  cli_email:string;
+  cli_name:string;
 
   ngOnInit() {
     this.loadTecnicos();
     this.loadEmgs();
     this.getMinDate();
+    this.loadClients();
   }
-
+  loadClients(){
+    this.userServices.getAllClients().subscribe(
+      res=>{
+        this.clientes=res.detail;
+      },err=>{
+        console.error(err);
+      }
+    );
+  }
   loadTecnicos(){
     this.userServices.gettec().subscribe(
       res=>{
@@ -85,7 +99,20 @@ export class AddservicioTecComponent implements OnInit {
     console.log(temp);
     this.serviciosService.save(temp).subscribe(
       res=>{
+        this.getEmailData(temp.client,temp.tecnico);
         this.msg=true
+        this.serviciosService.emailProgramar({
+                                              "email_tecnico" : this.tec_email,
+                                              "email_cliente" : this.cli_email,
+                                              "nameTec" : this.tec_name,
+                                              "nameCli" : this.cli_name,
+                                              "date" : temp.date,
+                                              "id" : res.detail._id.substring(res.detail._id.length-10,res.detail._id.length)
+                                            }).subscribe(res=>{
+                                              
+                                            },err=>{
+
+                                            });
         setTimeout(() => {
           this.regresar();
         }, 1500);
@@ -97,6 +124,22 @@ export class AddservicioTecComponent implements OnInit {
       }
     );
   }
+
+  getEmailData(idc,idt){
+    this.clientes.forEach(async e=>{
+      if(idc==e._id){
+        this.cli_email=e.info.email;
+        this.cli_name=e.info.name;
+      }
+    });
+    this.tecnicos.forEach(async e=>{
+      if(idt==e._id){
+        this.tec_email=e.info.email;
+        this.tec_name=e.info.name;
+      }
+    });
+  }
+
   regresar(){
     this.router.navigateByUrl('/misservicios-tec');
   }
@@ -107,9 +150,9 @@ export class AddservicioTecComponent implements OnInit {
     const year = date.getFullYear();
 
     if(month < 10){
-      this.minDate = `${year}-0${month}-${day}`;
+      this.minDate = `${year}-0${month}-${day}T00:00`;
     }else{
-      this.minDate = `${year}-${month}-${day}`;
+      this.minDate = `${year}-${month}-${day}T00:00`;
     }
   }
 }

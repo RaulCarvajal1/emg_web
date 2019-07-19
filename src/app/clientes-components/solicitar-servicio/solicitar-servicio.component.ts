@@ -37,12 +37,15 @@ export class SolicitarServicioComponent implements OnInit {
   msg:boolean=false;
   msgErr:boolean=false;
   minDate:String;
+  //For email
+  admin:User;
 
 
   ngOnInit() {
     this.loadTecnicos();
     this.loadEmgs();
     this.getMinDate();
+    this.getAdmin();
   }
 
   loadTecnicos(){
@@ -58,6 +61,15 @@ export class SolicitarServicioComponent implements OnInit {
     this.emgServices.getByClient(this.auth.getId()).subscribe(
       res=>{
         this.emgs=res.detail;
+      },err=>{
+        console.error(err);
+      }
+    );
+  }
+  getAdmin(){
+    this.userServices.getAdmin().subscribe(
+      res=>{
+        this.admin=res.detail;
       },err=>{
         console.error(err);
       }
@@ -85,7 +97,20 @@ export class SolicitarServicioComponent implements OnInit {
     console.log(temp);
     this.serviciosService.save(temp).subscribe(
       res=>{
-        this.msg=true
+        this.msg=true;
+        this.serviciosService.emailSolicitar({
+                                              "email" : this.admin.info.email,
+                                              "name" : this.admin.info.name,
+                                              "client" : this.auth.getName(),
+                                              "date" : temp.date,
+                                              "id" : res.detail._id.substring(res.detail._id.length-10,res.detail._id.length)
+                                              }).subscribe(
+                                                res=>{
+                                                  console.log(res);
+                                                },err=>{
+                                                  console.error(err);
+                                                }
+                                              )
         setTimeout(() => {
           this.regresar();
         }, 1500);
@@ -107,9 +132,9 @@ export class SolicitarServicioComponent implements OnInit {
     const year = date.getFullYear();
 
     if(month < 10){
-      this.minDate = `${year}-0${month}-${day}`;
+      this.minDate = `${year}-0${month}-${day}T00:00`;
     }else{
-      this.minDate = `${year}-${month}-${day}`;
+      this.minDate = `${year}-${month}-${day}T00:00`;
     }
   }
 }
