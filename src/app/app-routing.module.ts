@@ -27,6 +27,7 @@ import { SolicitarServicioComponent } from './clientes-components/solicitar-serv
 import { MisServiciosTecComponent } from './tecnicos-components/mis-servicios-tec/mis-servicios-tec.component';
 import { AddservicioTecComponent } from './tecnicos-components/addservicio-tec/addservicio-tec.component';
 import { IniciarServicioComponent } from './tecnicos-components/iniciar-servicio/iniciar-servicio.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 //Vistas clientes
 import { VerMiPlantaComponent } from './clientes-components/ver-mi-planta/ver-mi-planta.component';
 import { VerMiLineaComponent } from './clientes-components/ver-mi-linea/ver-mi-linea.component';
@@ -56,6 +57,7 @@ const routes: Routes = [
   {path : 'servicios', component : ServiciosComponent},
   {path : 'servicios/nuevo', component : AddservicioComponent},
   {path : 'servicios/:id', component : ViewservicioComponent},
+  {path : 'configuracion', component : ConfigurationComponent},
   //Cliente
   {path : 'misplantas', component : MisPlantasComponent},
   {path : 'misplantas/nueva', component : NuevoMiPlantaComponent},

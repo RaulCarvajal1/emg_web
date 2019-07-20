@@ -22,6 +22,7 @@ import { UsuariosService } from './services/usuarios.service';
 import { PlantasService } from './services/plantas.service';
 import { EmgsService } from './services/emgs.service';
 import { ServiciosService } from './services/servicios.service';
+import { ConfigurationService } from './services/configuration.service';
 
 import { MatMenuModule, MatSnackBarModule } from '@angular/material/';
 import { MatButtonModule } from '@angular/material/button';
@@ -57,6 +58,7 @@ import { NuevoMiLineaComponent } from './clientes-components/nuevo-mi-linea/nuev
 import { NuevoMiPlantaComponent } from './clientes-components/nuevo-mi-planta/nuevo-mi-planta.component';
 import { MislineasbyidComponent } from './clientes-components/mislineasbyid/mislineasbyid.component';
 import { VerMiServicioComponent } from './clientes-components/ver-mi-servicio/ver-mi-servicio.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 
 // tslint:disable-next-line: no-unused-expression
 @NgModule({
@@ -98,7 +100,8 @@ import { VerMiServicioComponent } from './clientes-components/ver-mi-servicio/ve
     NuevoMiPlantaComponent,
     MislineasbyidComponent,
     VerMiServicioComponent,
-    AddservicioTecComponent
+    AddservicioTecComponent,
+    ConfigurationComponent
   ],
   imports: [
     HttpClientModule,
@@ -121,7 +124,8 @@ import { VerMiServicioComponent } from './clientes-components/ver-mi-servicio/ve
     UsuariosService,
     PlantasService,
     EmgsService,
-    ServiciosService
+    ServiciosService,
+    ConfigurationService
   ],
   bootstrap: [AppComponent]
 })

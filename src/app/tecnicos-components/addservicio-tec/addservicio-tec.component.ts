@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user.interface';
 import { emgs } from 'src/app/interfaces/emg.interface';
 import { AuthService } from 'src/app/services/auth.service';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
   selector: 'app-addservicio-tec',
@@ -17,7 +18,7 @@ export class AddservicioTecComponent implements OnInit {
 
     constructor(private fb:FormBuilder, private userServices:UsuariosService, 
               private emgServices:EmgsService, private serviciosService:ServiciosService,
-              private router:Router, private auth: AuthService) 
+              private router:Router, private auth: AuthService, private configServices:ConfigurationService) 
   {
     this.serviciosForm = fb.group(
       {
@@ -27,6 +28,7 @@ export class AddservicioTecComponent implements OnInit {
         desc : ['',[Validators.required]],
       }
     );
+    this.fecExiste();
   }
 
   clientes:User[];
@@ -37,6 +39,8 @@ export class AddservicioTecComponent implements OnInit {
   msg:boolean=false;
   msgErr:boolean=false;
   minDate:String;
+  fecAnt: boolean;
+
   //email data
   tec_email:string;
   tec_name:string;
@@ -46,8 +50,23 @@ export class AddservicioTecComponent implements OnInit {
   ngOnInit() {
     this.loadTecnicos();
     this.loadEmgs();
-    this.getMinDate();
     this.loadClients();
+  }
+
+  fecExiste(){
+    this.configServices.getFec().subscribe(
+      res => {
+        console.log(res.detail.value)
+        if(res.detail===null){
+          this.configServices.setFec().subscribe(res=>{console.log(res)},err=>{});
+          this.getMinDate(false);
+        }else{
+          this.getMinDate(<boolean>res.detail.value);
+        }
+      },err => {
+        console.log(err);
+      }
+    )
   }
   loadClients(){
     this.userServices.getAllClients().subscribe(
@@ -143,16 +162,19 @@ export class AddservicioTecComponent implements OnInit {
   regresar(){
     this.router.navigateByUrl('/misservicios-tec');
   }
-  getMinDate(){
+  getMinDate(fa){
     const date = new Date();
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-
-    if(month < 10){
-      this.minDate = `${year}-0${month}-${day}T00:00`;
+    if(fa){
+      this.minDate='';
     }else{
-      this.minDate = `${year}-${month}-${day}T00:00`;
+      if(month < 10){
+        this.minDate = `${year}-0${month}-${day}T00:00`;
+      }else{
+        this.minDate = `${year}-${month}-${day}T00:00`;
+      }
     }
   }
 }

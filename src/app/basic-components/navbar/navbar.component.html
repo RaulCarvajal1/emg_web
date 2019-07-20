@@ -26,6 +26,7 @@
         <span>
           <mat-menu #userInfo="matMenu">
             <button mat-menu-item class="text-dark" (click)="routerTo('micuenta')">Mi cuenta</button>
+            <button mat-menu-item class="text-dark" (click)="routerTo('configuracion')">Configuración</button>
             <button mat-menu-item class="text-danger" (click)="closeSesion()">Salir</button>
           </mat-menu>
           <button mat-button [matMenuTriggerFor]="userInfo" class="text-light">

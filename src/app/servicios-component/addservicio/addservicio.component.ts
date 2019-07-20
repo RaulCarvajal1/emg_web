@@ -8,6 +8,7 @@ import { User } from 'src/app/interfaces/user.interface';
 import { emgs } from 'src/app/interfaces/emg.interface';
 import { template } from '@angular/core/src/render3';
 import { async } from '@angular/core/testing';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
   selector: 'app-addservicio',
@@ -18,7 +19,7 @@ export class AddservicioComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private userServices:UsuariosService, 
               private emgServices:EmgsService, private serviciosService:ServiciosService,
-              private router:Router) 
+              private router:Router, private configServices:ConfigurationService) 
               {
                 this.serviciosForm = fb.group(
                   {
@@ -29,6 +30,7 @@ export class AddservicioComponent implements OnInit {
                     desc : ['',[Validators.required]],
                   }
                 );
+                this.fecExiste();
               }
 
   tecnicos:User[];
@@ -39,6 +41,7 @@ export class AddservicioComponent implements OnInit {
   msg:boolean=false;
   msgErr:boolean=false;
   minDate:String;
+  fecAnt: boolean;
   
   //email data
   tec_email:string;
@@ -49,8 +52,23 @@ export class AddservicioComponent implements OnInit {
   ngOnInit() {
     this.loadTecnicos();
     this.loadEmgs();
-    this.getMinDate();
     this.loadClients();
+  }
+
+  fecExiste(){
+    this.configServices.getFec().subscribe(
+      res => {
+        console.log(res.detail.value)
+        if(res.detail===null){
+          this.configServices.setFec().subscribe(res=>{console.log(res)},err=>{});
+          this.getMinDate(false);
+        }else{
+          this.getMinDate(<boolean>res.detail.value);
+        }
+      },err => {
+        console.log(err);
+      }
+    )
   }
 
   loadTecnicos(){
@@ -153,16 +171,19 @@ export class AddservicioComponent implements OnInit {
   regresar(){
     this.router.navigateByUrl('/servicios');
   }
-  getMinDate(){
+  getMinDate(fa){
     const date = new Date();
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-
-    if(month < 10){
-      this.minDate = `${year}-0${month}-${day}T00:00`;
+    if(fa){
+      this.minDate='';
     }else{
-      this.minDate = `${year}-${month}-${day}T00:00`;
+      if(month < 10){
+        this.minDate = `${year}-0${month}-${day}T00:00`;
+      }else{
+        this.minDate = `${year}-${month}-${day}T00:00`;
+      }
     }
   }
 }
