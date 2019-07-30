@@ -102,7 +102,7 @@ export class MisServiciosTecComponent implements OnInit {
     return id.substring(id.length-10,id.length);
   }
   getDate(date:string):string{
-    return date.substring(0,10);
+    return date.slice(0,16).replace('T',' a las ');
   }
   gotoNew(){
     this.router.navigateByUrl('misservicios-tec/nuevo');

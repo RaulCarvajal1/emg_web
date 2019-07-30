@@ -21,4 +21,14 @@ export class ConfigurationService {
   }
 
   //Tipos de mantenimiento configurations
+  getTipos(){
+    return this.http.get<res>('http://localhost:3033/config/getst');
+  }
+  saveTipo(data){
+    return this.http.post<res>('http://localhost:3033/config/savest',data);
+  }
+  deleteTipo(id){
+    return this.http.delete<res>(`http://localhost:3033/config/delst/${id}`);
+  }
+
 }

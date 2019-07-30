@@ -39,6 +39,7 @@ export class AddservicioTecComponent implements OnInit {
   msg:boolean=false;
   msgErr:boolean=false;
   minDate:String;
+  tipos: any;
   fecAnt: boolean;
 
   //email data
@@ -51,8 +52,17 @@ export class AddservicioTecComponent implements OnInit {
     this.loadTecnicos();
     this.loadEmgs();
     this.loadClients();
+    this.getTipos();
   }
-
+  getTipos(){
+    this.configServices.getTipos().subscribe(
+      res => {
+        this.tipos = res.detail;
+      },err => {
+        console.log(err);
+      }
+    );
+  }
   fecExiste(){
     this.configServices.getFec().subscribe(
       res => {
@@ -125,7 +135,7 @@ export class AddservicioTecComponent implements OnInit {
                                               "email_cliente" : this.cli_email,
                                               "nameTec" : this.tec_name,
                                               "nameCli" : this.cli_name,
-                                              "date" : temp.date,
+                                              "date" : this.getDate(temp.date),
                                               "id" : res.detail._id.substring(res.detail._id.length-10,res.detail._id.length)
                                             }).subscribe(res=>{
                                               
@@ -143,7 +153,9 @@ export class AddservicioTecComponent implements OnInit {
       }
     );
   }
-
+  getDate(date:any):string{
+    return date.slice(0,16).replace('T',' a las ');
+  }
   getEmailData(idc,idt){
     this.clientes.forEach(async e=>{
       if(idc==e._id){

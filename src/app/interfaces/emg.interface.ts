@@ -7,6 +7,7 @@ export interface emgs{
     "line" : string,
     "status" : number,
     "active" : boolean,
+    "cod_pro" : string,
     "meta" : Meta
 }
 export interface Meta{

@@ -43,8 +43,7 @@
                 <div class="form-group">
                   <label for="type"><span class="text-danger">*</span>Tipo de servicio</label>
                   <select class="form-control" id="type" formControlName="type">
-                    <option value="Mantenimiento">Mantenimiento</option>
-                    <option value="Reparación">Reparación</option>
+                    <option *ngFor="let tipo of tipos" value="{{tipo.name}}">{{tipo.name}}</option>                    
                   </select>
                   <div *ngIf="serviciosForm.get('type').errors&&serviciosForm.get('type').dirty">
                     <p *ngIf="serviciosForm.get('type').hasError('required')" class="text-danger">El tipo es requerido</p>
@@ -55,6 +54,7 @@
                 <div class="form-group">
                   <label for="date"><span class="text-danger">*</span>Fecha y hora a sugerir</label>
                   <input type="datetime-local" class="form-control" id="date" formControlName="date" min="{{minDate}}">
+                  <small class="text-muted">El día y hora solicitada es posible que se modifique a disponibilidad de los técnicos.</small>
                 </div>
                 <div *ngIf="serviciosForm.get('date').errors&&serviciosForm.get('date').dirty">
                   <p *ngIf="serviciosForm.get('date').hasError('required')" class="text-danger">La fecha es requerido</p>

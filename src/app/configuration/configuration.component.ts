@@ -10,10 +10,49 @@ export class ConfigurationComponent implements OnInit {
 
   constructor(private configServices:ConfigurationService) { }
 
+  addserv: boolean = false;
+  fecAnt: boolean;
+  tipos: any[];
+  newTipo: String ;
+
+
   ngOnInit() {
     this.fecExiste();
+    this.getTipos();
+  }
+
+  addTipo(){
+    this.addserv = !this.addserv;
+  }
+
+  getTipos(){
+    this.configServices.getTipos().subscribe(
+      res => {
+        this.tipos = res.detail;
+      },err => {
+        console.log(err);
+      }
+    );
   }
  
+  saveTipo(){
+    this.configServices.saveTipo({'name' : this.newTipo}).subscribe(
+      res => {
+        this.addserv = !this.addserv;
+        this.getTipos();
+        this.newTipo="";
+      },err => {
+        console.log(err);
+      }
+    );
+  }
+
+  delTipo(id){
+    this.configServices.deleteTipo(id).subscribe(
+      res=>{ this.getTipos(); },err=>{}
+    );
+  }
+
   fecExiste(){
     this.configServices.getFec().subscribe(
       res => {
@@ -29,8 +68,6 @@ export class ConfigurationComponent implements OnInit {
       }
     )
   }
-
-  fecAnt: boolean;
 
   change(){
     console.log(!this.fecAnt);

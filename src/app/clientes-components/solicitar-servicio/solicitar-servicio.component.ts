@@ -40,6 +40,7 @@ export class SolicitarServicioComponent implements OnInit {
   msgErr:boolean=false;
   fecAnt: boolean;
   minDate:String = '';
+  tipos: any;
   //For email
   admin:User;
 
@@ -47,6 +48,21 @@ export class SolicitarServicioComponent implements OnInit {
     this.loadTecnicos();
     this.loadEmgs();
     this.getAdmin();
+    this.getTipos();
+  }
+
+  getTipos(){
+    this.configServices.getTipos().subscribe(
+      res => {
+        this.tipos = res.detail;
+      },err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getDate(date:any):string{
+    return date.slice(0,16).replace('T',' a las ');
   }
 
   fecExiste(){
@@ -119,7 +135,7 @@ export class SolicitarServicioComponent implements OnInit {
                                               "email" : this.admin.info.email,
                                               "name" : this.admin.info.name,
                                               "client" : this.auth.getName(),
-                                              "date" : temp.date,
+                                              "date" : this.getDate(temp.date),
                                               "id" : res.detail._id.substring(res.detail._id.length-10,res.detail._id.length)
                                               }).subscribe(
                                                 res=>{

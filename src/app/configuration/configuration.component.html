@@ -22,7 +22,6 @@
       <hr>
       <h6 class="card-subtitle mb-2 text-muted">Tipos de servicios</h6>
       <p class="card-text">Esta opción permite añadir o borrar tipos de servicios.</p>
-      <h6 class="card-subtitle">Tipos de servicios</h6>
       <br>
       <div class="row">
         <div class="col">
@@ -30,24 +29,34 @@
             <thead>
               <tr>
                 <th scope="col">Tipo de servicio</th>
-                <th scope="col">Eliminar</th>
+                <th scope="col" class="text-right">Eliminar</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
+              <tr *ngFor="let tipo of tipos">
+                <td>{{tipo.name}}</td>
+                <td class="text-right">
+                  <button mat-mini-fab color="danger" (click)="delTipo(tipo._id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" *ngIf="!addserv">
+          <button class="btn btn-primary" (click)="addTipo()">Agregar nuevo</button>
+        </div>
+        <div class="col" *ngIf="addserv">
+          <form class="form-inline">
+            <div class="form-group" style="width: 400px">
+              <label for="tserv" class="sr-only">Tipo de servicio</label>
+              <input type="text" class="form-control w-100" id="tserv" placeholder="Ej. Calibración, Mantenimiento... Etc." [(ngModel)]="newTipo" [ngModelOptions]="{standalone: true}">
+            </div>
+            <button type="button" class="btn btn-primary mx-sm-3" (click)="saveTipo()">Guardar</button>
+          </form>
         </div>
       </div>
     </div>

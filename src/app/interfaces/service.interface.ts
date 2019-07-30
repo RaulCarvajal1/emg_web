@@ -2,7 +2,7 @@ export interface servicios {
     _id : String,
     type : String,
     desc : String,
-    date : Date,
+    date : String,
     start : Date,
     finish : Date,
     status : number,
@@ -10,5 +10,6 @@ export interface servicios {
     tecnico : String,
     emg : String,
     observ : String,
-    signature : String
+    signature : String,
+    score : number
 }

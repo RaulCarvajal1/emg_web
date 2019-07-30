@@ -43,8 +43,7 @@
                 <div class="form-group">
                   <label for="type"><span class="text-danger">*</span>Tipo de servicio</label>
                   <select class="form-control" id="type" formControlName="type">
-                    <option value="Mantenimiento">Mantenimiento</option>
-                    <option value="Reparación">Reparación</option>
+                    <option *ngFor="let tipo of tipos" value="{{tipo.name}}">{{tipo.name}}</option>
                   </select>
                   <div *ngIf="serviciosForm.get('type').errors&&serviciosForm.get('type').dirty">
                     <p *ngIf="serviciosForm.get('type').hasError('required')" class="text-danger">El tipo es requerido</p>
