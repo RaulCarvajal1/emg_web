@@ -79,7 +79,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col"> 
                 <div class="form-group">
                   <label for="Descripción"><span class="text-danger">*</span>Descripción</label>
                   <input type="text" class="form-control" id="Descripción" formControlName="desc" placeholder="Descripción del equipo">
@@ -94,6 +94,15 @@
                   <input type="text" class="form-control" id="Seria" formControlName="serie" placeholder="Número de serie del equipo">
                   <div *ngIf="emgForm.get('serie').errors&&emgForm.get('serie').dirty">
                     <p *ngIf="emgForm.get('serie').hasError('required')" class="text-danger">El número de serie es requerido</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="cp"><span class="text-danger">*</span>Código de proyecto</label>
+                  <input type="text" class="form-control" id="cp" formControlName="cod_pro" placeholder="Código de proyecto del equipo">
+                  <div *ngIf="emgForm.get('cod_pro').errors&&emgForm.get('cod_pro').dirty">
+                    <p *ngIf="emgForm.get('cod_pro').hasError('required')" class="text-danger">El Código de proyecto es requerido</p>
                   </div>
                 </div>
               </div>

@@ -108,6 +108,15 @@
                   </div>
                 </div>
               </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="cp"><span class="text-danger">*</span>Código de proyecto</label>
+                  <input type="text" class="form-control" id="cp" formControlName="cod_pro" placeholder="Código de proyecto del equipo">
+                  <div *ngIf="emgForm.get('cod_pro').errors&&emgForm.get('cod_pro').dirty">
+                    <p *ngIf="emgForm.get('cod_pro').hasError('required')" class="text-danger">El Código de proyecto es requerido</p>
+                  </div>
+                </div>
+              </div>
             </div>
             <br><br>
             <div class="row">

@@ -33,6 +33,7 @@ export class VerMiEquipoComponent implements OnInit {
   tipo:string;
   descripcion:string;
   serie:string;
+  cod_pro:string;
   actualizado:boolean=false;
 
   cl:User;
@@ -48,6 +49,7 @@ export class VerMiEquipoComponent implements OnInit {
     this.tipo=info.type;
     this.descripcion=info.description;
     this.serie=info.serial;
+    this.cod_pro = this.emg.cod_pro;
   }
 
   getEmg(id:string){
@@ -149,7 +151,8 @@ export class VerMiEquipoComponent implements OnInit {
         tipo:this.tipo,
         desc:this.descripcion,
         serie:this.serie,
-        qr:this.emg.qr
+        qr:this.emg.qr,
+        cod_pro : this.cod_pro
       },
       options : { "timeout": 60000 }
     };

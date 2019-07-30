@@ -44,6 +44,7 @@ export class ViewemgComponent implements OnInit, DoCheck {
   pl:Plant;
   planta:string;
   linea:string;
+  cod_pro:string;
 
   loadStrings(){
     let info:Info=this.emg.info;
@@ -52,6 +53,7 @@ export class ViewemgComponent implements OnInit, DoCheck {
     this.tipo=info.type;
     this.descripcion=info.description;
     this.serie=info.serial;
+    this.cod_pro = this.emg.cod_pro;
   }
 
   getEmg(id:string){
@@ -153,7 +155,8 @@ export class ViewemgComponent implements OnInit, DoCheck {
           tipo:this.tipo,
           desc:this.descripcion,
           serie:this.serie,
-          qr:this.emg.qr
+          qr:this.emg.qr,
+          cod_pro:this.cod_pro
         },
         options : { "timeout": 60000 }
      };

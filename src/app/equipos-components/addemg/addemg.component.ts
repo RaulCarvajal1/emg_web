@@ -28,7 +28,8 @@ export class AddemgComponent implements OnInit{
                   modelo : ['',[Validators.required]],
                   tipo : ['',[Validators.required]],
                   desc : ['',[Validators.required]],
-                  serie : ['',[Validators.required]]
+                  serie : ['',[Validators.required]],
+                  cod_pro : ['',[Validators.required]]
                 });
 
               }
@@ -110,6 +111,7 @@ export class AddemgComponent implements OnInit{
       'client':temp.cliente,
       'plant':temp.planta,
       'line':temp.linea,
+      'cod_pro':temp.cod_pro,
       'status':0,
       'active':true,
       'meta':{
