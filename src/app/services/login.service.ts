@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { HttpHeaders } from '@angular/common/http';
+import { link } from './app.settings';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class LoginService {
   };
 
   login(user:string,pass:string){
-    return this.http.post<JSON>('http://localhost:3033/user/login', 
+    return this.http.post<JSON>(`http://${link}/user/login`, 
     {
       username: user,
       password: pass

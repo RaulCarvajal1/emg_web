@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { res, resArray } from "./../interfaces/response.interface";
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+import { link } from './app.settings';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,34 +13,34 @@ export class EmgsService {
   constructor(private http:HttpClient) { }
 
   getAll(){
-    return this.http.get<resArray>('http://127.0.0.1:3033/emg/getall');
+    return this.http.get<resArray>(`http://${link}/emg/getall`);
   }
   getByClient(id:string){
-    return this.http.get<resArray>('http://127.0.0.1:3033/emg/getbyclient/'+id);
+    return this.http.get<resArray>(`http://${link}/emg/getbyclient/${id}`);
   }
   getByPlant(id:string){
-    return this.http.get<resArray>('http://127.0.0.1:3033/emg/getbyplant/'+id);
+    return this.http.get<resArray>(`http://${link}/emg/getbyplant/${id}`);
   }
   getByLine(id:string){
-    return this.http.get<resArray>('http://127.0.0.1:3033/emg/getbyline/'+id);
+    return this.http.get<resArray>(`http://${link}/emg/getbyline/${id}`);
   }
   getByPlantAndLine(id_p:string, id_l:string){
-    return this.http.get<resArray>('http://127.0.0.1:3033/emg/getbyplantandline/'+id_p+'/'+id_l);
+    return this.http.get<resArray>(`http://${link}/emg/getbyplantandline/${id_p}/${id_l}`);
   }
   create(nuevo:JSON){
-    return this.http.post<res>('http://127.0.0.1:3033/emg/create',nuevo);
+    return this.http.post<res>(`http://${link}/emg/create`,nuevo);
   }
   genEmg(id:string){
-    return this.http.put<res>('http://127.0.0.1:3033/emg/genqr/'+id,{});
+    return this.http.put<res>(`http://${link}/emg/genqr/${id}`,{});
   }
   getById(id:string){
-    return this.http.get<res>('http://127.0.0.1:3033/emg/getbyid/'+id);
+    return this.http.get<res>(`http://${link}/emg/getbyid/${id}`);
   }
   actDes(id:string,stat:boolean){
     if(stat){
-      return this.http.patch<res>('http://localhost:3033/emg/disable/'+id, {'Content-Type': 'application/json'});
+      return this.http.patch<res>(`http://${link}/emg/disable/${id}`, {'Content-Type': 'application/json'});
     }else{
-      return this.http.patch<res>('http://localhost:3033/emg/enable/'+id, {'Content-Type': 'application/json'});
+      return this.http.patch<res>(`http://${link}/emg/enable/${id}`, {'Content-Type': 'application/json'});
     }
   }
 

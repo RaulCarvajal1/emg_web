@@ -1,0 +1,111 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <hr>
+  <div class="row">
+    <div class="col-12">
+      <div class="card w-100">
+        <div class="card-body">
+          <h5 class="card-title">Generar nuevo contrato</h5>
+          <br>
+          <form [formGroup]="contratoForm" (ngSubmit)="save()">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-subtitle">Asignacion de equipo Cliente y equipos EMG's</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h6 class="card-subtitle">Información del contrato</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="name"><span class="text-danger">*</span>Nombre de contrato</label>
+                  <input type="text" class="form-control form-control-sm" id="name" formControlName="name">
+                  <div *ngIf="contratoForm.get('name').errors&&contratoForm.get('name').dirty">
+                    <p *ngIf="contratoForm.get('name').hasError('required')" class="text-danger">El nombre es requerido</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="description"><span class="text-danger">*</span>Descripción</label>
+                  <input type="text" class="form-control form-control-sm" id="description" formControlName="description">
+                </div>
+                <div *ngIf="contratoForm.get('description').errors&&contratoForm.get('description').dirty">
+                  <p *ngIf="contratoForm.get('description').hasError('required')" class="text-danger">La descripción es requerido</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="single" formControlName="single">
+                  <label class="form-check-label" for="single">¿Es un servicio es sencillo?.</label><br>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="start">Inicio de contrato</label>
+                  <input type="date" class="form-control form-control-sm" id="start" formControlName="start">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="end">Final del contrato</label>
+                  <input type="date" class="form-control form-control-sm" id="end" formControlName="end">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="client"><span class="text-danger">*</span>Cliente a asignar</label>
+                  <select class="form-control form-control-sm" id="client" formControlName="client">
+                    <option *ngFor="let cliente of clientes" value="{{cliente.info.name}}">{{cliente.info.name}}</option>
+                  </select>
+                  <div *ngIf="contratoForm.get('client').errors&&contratoForm.get('client').dirty">
+                    <p *ngIf="contratoForm.get('client').hasError('required')" class="text-danger">El cliente es requerido</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="emgs"><span class="text-danger">*</span>Equipos EMG's</label>
+                  <select class="form-control form-control-sm" id="emgs" formControlName="emgs" multiple>
+                    <option *ngFor="let emg of emgs" value="{{emg.info.name}}">{{emg.info.name}}</option>
+                  </select>
+                  <div *ngIf="contratoForm.get('emgs').errors&&contratoForm.get('emgs').dirty">
+                    <p *ngIf="contratoForm.get('emgs').hasError('required')" class="text-danger">El equipo es requerido</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <br><br>
+            <div class="row">
+                <div class="col-4">
+                    <div class="pad1 w-100">
+                        <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="pad1 w-100">
+                        <button type="submit" class="btn btn-primary w-100" [disabled]="contratoForm.invalid">Guardar</button><!--contratoForm.invalid-->                    
+                    </div>
+                </div>
+                <div class="col-4">
+                    <h5 class="text-info" *ngIf="msg">SERVICIO PROGRAMADO</h5>
+                    <h5 class="text-danger" *ngIf="msgErr">ERROR DURANTE REGISTRO</h5>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <hr>
+</div>
+<app-footer></app-footer>

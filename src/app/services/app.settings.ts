@@ -1,0 +1,1 @@
+export const link = 'localhost:3033';

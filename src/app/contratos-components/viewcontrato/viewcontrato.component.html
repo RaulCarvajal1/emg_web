@@ -1,0 +1,100 @@
+<app-navbar></app-navbar>
+<div class="container">
+<hr>
+<hr> 
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Ver contrato</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Nombre del contrato {{name}}</h6>
+              <div class="col">
+                <hr>
+                <div class="row">
+                  <div class="col">
+                    <h6 class="card-subtitle mb-2">Cliente y Equipos</h6>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Cliente</b></h6>
+                      <h6>{{cliente}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Nombre de los equipos</b></h6>
+                      <ul>
+                        <li *ngFor="let emg of emgs">{{emg}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <hr>
+                <div class="row">
+                  <div class="col">
+                    <h6 class="card-subtitle mb-2">Información del contrato</h6>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Descripción</b></h6>
+                      <h6>{{desc}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Estatus</b></h6>
+                      <p>{{getStatus(estatus)}}</p>                        
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col">
+                    <h6 class="card-subtitle mb-2">Información del periodo del contrato</h6>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <div>
+                      <h6><b>Contrato único</b></h6>
+                      <h6>El contrato abarca un solo evento</h6>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div>
+                      <h6><b>Fecha de inicio</b></h6>
+                      <h6>Fecha de incio del contrato</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div>
+                      <h6><b>Fecha de finalización</b></h6>
+                      <h6>Fecha de finalización de contrato</h6>                        
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <br><br>
+                <div class="row" style="padding-bottom: 0px">
+                  <div class="col">
+                    <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
+                  </div>
+                  <div class="col"></div>
+                  <div class="col"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+<hr>
+<hr>
+</div>
+<app-footer></app-footer>

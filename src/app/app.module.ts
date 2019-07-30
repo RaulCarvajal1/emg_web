@@ -23,6 +23,7 @@ import { PlantasService } from './services/plantas.service';
 import { EmgsService } from './services/emgs.service';
 import { ServiciosService } from './services/servicios.service';
 import { ConfigurationService } from './services/configuration.service';
+import { AgreementsService } from './services/agreements.service';
 
 import { MatMenuModule, MatSnackBarModule } from '@angular/material/';
 import { MatButtonModule } from '@angular/material/button';
@@ -59,6 +60,9 @@ import { NuevoMiPlantaComponent } from './clientes-components/nuevo-mi-planta/nu
 import { MislineasbyidComponent } from './clientes-components/mislineasbyid/mislineasbyid.component';
 import { VerMiServicioComponent } from './clientes-components/ver-mi-servicio/ver-mi-servicio.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
+import { ContratosComponent } from './contratos-components/contratos/contratos.component';
+import { AddcontratosComponent } from './contratos-components/addcontratos/addcontratos.component';
+import { ViewcontratoComponent } from './contratos-components/viewcontrato/viewcontrato.component';
 
 // tslint:disable-next-line: no-unused-expression
 @NgModule({
@@ -101,7 +105,10 @@ import { ConfigurationComponent } from './configuration/configuration.component'
     MislineasbyidComponent,
     VerMiServicioComponent,
     AddservicioTecComponent,
-    ConfigurationComponent
+    ConfigurationComponent,
+    ContratosComponent,
+    AddcontratosComponent,
+    ViewcontratoComponent
   ],
   imports: [
     HttpClientModule,
@@ -125,7 +132,8 @@ import { ConfigurationComponent } from './configuration/configuration.component'
     PlantasService,
     EmgsService,
     ServiciosService,
-    ConfigurationService
+    ConfigurationService,
+    AgreementsService
   ],
   bootstrap: [AppComponent]
 })

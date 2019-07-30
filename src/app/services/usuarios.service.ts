@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { res, resArray } from "../interfaces/response.interface";
+import { link } from './app.settings';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,52 +11,52 @@ export class UsuariosService {
   constructor(private http:HttpClient) { }
 
   getAllUsers(){
-    return this.http.get<res>('http://localhost:3033/user/getall');
+    return this.http.get<res>(`http://${link}/user/getall`);
   }
 
   getUser(id:string){
-    return this.http.get<res>('http://localhost:3033/user/getbyid/'+id);
+    return this.http.get<res>(`http://${link}/user/getbyid/${id}`);
   }
 
   updateUser(user:JSON){
-    return this.http.put<res>('http://localhost:3033/user/update',
+    return this.http.put<res>(`http://${link}/user/update`,
       user
     );
   }
 
   actDes(id:string,stat:boolean){
     if(stat){
-      return this.http.patch<res>('http://localhost:3033/user/disable/'+id, {'Content-Type': 'application/json'});
+      return this.http.patch<res>(`http://${link}/user/disable/${id}`, {'Content-Type': 'application/json'});
     }else{
-      return this.http.patch<res>('http://localhost:3033/user/enable/'+id, {'Content-Type': 'application/json'});
+      return this.http.patch<res>(`http://${link}/user/enable/${id}`, {'Content-Type': 'application/json'});
     }
   }
 
   newUser(user){
-    return this.http.post<res>('http://localhost:3033/user/create/', user);
+    return this.http.post<res>(`http://${link}/user/create/`, user);
   }
 
   sendMailNewUser(data){
-    return this.http.post<res>('http://localhost:3033/user/newUserEmail',data);
+    return this.http.post<res>(`http://${link}/user/newUserEmail`,data);
   }
 
   userExists(u:String){
-    return this.http.get<res>('http://localhost:3033/user/existe/'+u);
+    return this.http.get<res>(`http://${link}/user/existe/${u}`);
   }
 
   getAllClients(){
-    return this.http.get<resArray>("http://127.0.0.1:3033/user/getclients");
+    return this.http.get<resArray>(`http://127.0.0.1:3033/user/getclients`);
   }
   gettec(){
-    return this.http.get<resArray>("http://127.0.0.1:3033/user/gettec");
+    return this.http.get<resArray>(`http://127.0.0.1:3033/user/gettec`);
   }
 
   getAdmin(){
-    return this.http.get<res>('http://localhost:3033/user/getadmin');
+    return this.http.get<res>(`http://${link}/user/getadmin`);
   }
 
   updatePass(user:JSON){
-    return this.http.put<res>('http://localhost:3033/user/updatepass',
+    return this.http.put<res>(`http://${link}/user/updatepass`,
       user
     );
   }

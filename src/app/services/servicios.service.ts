@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { res, resArray } from "../interfaces/response.interface";
 import { saveAs } from 'file-saver';
+import { link } from './app.settings';
 
 
 @Injectable({
@@ -12,35 +13,35 @@ export class ServiciosService {
   constructor(private http:HttpClient) { }
 
   getAll(){
-    return this.http.get<resArray>('http://localhost:3033/service/getall');
+    return this.http.get<resArray>(`http://${link}/service/getall`);
   }
 
   save(data:any){
-    return this.http.post<res>('http://localhost:3033/service/create',data);
+    return this.http.post<res>(`http://${link}/service/create`,data);
   }
 
   getByTec(id:String){
-    return this.http.get<resArray>('http://localhost:3033/service/getbytec/'+id);
+    return this.http.get<resArray>(`http://${link}/service/getbytec/${id}`);
   }
 
   getByEmg(id:String){
-    return this.http.get<resArray>('http://localhost:3033/service/getbyemg/'+id);
+    return this.http.get<resArray>(`http://${link}/service/getbyemg/${id}`);
   }
   
   getByClient(id:String){
-    return this.http.get<resArray>('http://localhost:3033/service/getbyclient/'+id);
+    return this.http.get<resArray>(`http://${link}/service/getbyclient/${id}`);
   }
   
   getById(id:String){
-    return this.http.get<res>('http://localhost:3033/service/getbyid/'+id);
+    return this.http.get<res>(`http://${link}/service/getbyid/${id}`);
   }
 
   start(id:String){
-    return this.http.put<res>('http://localhost:3033/service/start/'+id,{});
+    return this.http.put<res>(`http://${link}/service/start/${id}`,{});
   }
 
   asigTec(id_s:String, id_t:String,date){///asigtec/:id_s/:id_t
-    return this.http.patch<res>('http://localhost:3033/service/asigtec/'+id_s+"/"+id_t,{"date" : date});
+    return this.http.patch<res>(`http://${link}/service/asigtec/${id_s}/${id_t}`,{"date" : date});
   }
 
   getPdf(data:any){
@@ -61,12 +62,12 @@ export class ServiciosService {
   asignar
   */
   emailSolicitar(data:any){
-    return this.http.post<res>('http://localhost:3033/service/emailsolicitarservicio',data);
+    return this.http.post<res>('http://${link}/service/emailsolicitarservicio',data);
   }
   emailProgramar(data:any){
-    return this.http.post<res>('http://localhost:3033/service/emailprogramarservicio',data);
+    return this.http.post<res>('http://${link}/service/emailprogramarservicio',data);
   }
   emailAsignar(data:any){
-    return this.http.post<res>('http://localhost:3033/service/emailasignarservicio',data);
+    return this.http.post<res>('http://${link}/service/emailasignarservicio',data);
   }
 }
