@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./mis-servicios.component.css']
 })
 export class MisServiciosComponent implements OnInit {
-
+ 
   constructor(private userServices:UsuariosService, private emgServices:EmgsService, 
               private serviciosService:ServiciosService, private router:Router,
               private auth: AuthService) { }
@@ -146,6 +146,21 @@ export class MisServiciosComponent implements OnInit {
             console.error(err);
           }
         );
+    }
+  }
+  
+  getScore(score:Number, status :Number){
+    if(status != 3){
+      return 'No Calificado';
+    }else{
+      switch (score) {
+        case 0:
+          return 'Mala';
+        case 1:
+          return 'Buena';
+        case 2:
+          return 'Excelente';
+      }
     }
   }
 }

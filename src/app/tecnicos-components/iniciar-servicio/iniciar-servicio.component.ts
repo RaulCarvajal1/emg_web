@@ -206,9 +206,9 @@ export class IniciarServicioComponent implements OnInit {
                                                   "date" : this.getDate(this.nfec),
                                                   "id" : this.servicio._id.substring(this.servicio._id.length-10,this.servicio._id.length)
                                                 }).subscribe(res=>{
-                                                  
+                                                  console.log(res);
                                                 },err=>{
-  
+                                                  console.error(err);
                                                 });
           setTimeout(() => {
             this.regresar()

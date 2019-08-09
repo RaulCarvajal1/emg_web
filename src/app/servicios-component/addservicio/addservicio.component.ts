@@ -149,9 +149,9 @@ export class AddservicioComponent implements OnInit {
                                               "date" : this.getDate(temp.date),
                                               "id" : res.detail._id.substring(res.detail._id.length-10,res.detail._id.length)
                                             }).subscribe(res=>{
-                                              
+                                              console.log(res);
                                             },err=>{
-
+                                              console.error(err);
                                             });
         setTimeout(() => {
           this.regresar();

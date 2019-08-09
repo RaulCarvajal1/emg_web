@@ -149,4 +149,18 @@ export class MisServiciosTecComponent implements OnInit {
       );
     }
   }
+  getScore(score:Number, status :Number){
+    if(status != 3){
+      return 'No Calificado';
+    }else{
+      switch (score) {
+        case 0:
+          return 'Mala';
+        case 1:
+          return 'Buena';
+        case 2:
+          return 'Excelente';
+      }
+    }
+  }
 }

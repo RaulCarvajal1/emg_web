@@ -62,12 +62,12 @@ export class ServiciosService {
   asignar
   */
   emailSolicitar(data:any){
-    return this.http.post<res>('http://${link}/service/emailsolicitarservicio',data);
+    return this.http.post<res>(`http://${link}/service/emailsolicitarservicio`,data);
   }
   emailProgramar(data:any){
-    return this.http.post<res>('http://${link}/service/emailprogramarservicio',data);
+    return this.http.post<res>(`http://${link}/service/emailprogramarservicio`,data);
   }
   emailAsignar(data:any){
-    return this.http.post<res>('http://${link}/service/emailasignarservicio',data);
+    return this.http.post<res>(`http://${link}/service/emailasignarservicio`,data);
   }
 }

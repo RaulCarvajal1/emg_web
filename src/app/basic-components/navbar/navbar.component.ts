@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
   constructor(private router:Router, private auth:AuthService) { 
   }
 
-  nombre:string="ejemplo";
+  nombre:string="";
   role:string="";
   log:boolean=false;
   adm:boolean=false;
@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
   */
   ngOnInit(){
     if(this.auth.isLoged()){
-      this.nombre=this.auth.getName();
+      this.nombre=' - '+this.auth.getName();
       this.log=true;
       switch(this.auth.getRole()) { 
         case 0: { 

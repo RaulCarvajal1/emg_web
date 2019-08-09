@@ -1,6 +1,6 @@
 <mat-toolbar class="bg-secondary navbar">
   <div class="container">
-      <div><a [routerLink]="['/inicio']" class="text-light"><span><img src="./assets/arquitecto.png" height="30px" width="30px"></span> Mantenimiento EMG - {{nombre}}</a></div>
+      <div><a [routerLink]="['/inicio']" class="text-light"><span><img src="./assets/arquitecto.png" height="30px" width="30px"></span> Mantenimiento EMG{{nombre}}</a></div>
       <div *ngIf="adm">
         <span style="margin-left:80px"></span>
         <span>
@@ -99,6 +99,11 @@
           <button mat-button [matMenuTriggerFor]="userInfo" class="text-light">
             Bienvenido {{role}}
           </button>
+        </span>
+      </div>
+      <div *ngIf="!log">
+        <span>
+          <img src="assets/emg.png" alt="" srcset="" style="width:100px;">
         </span>
       </div>
   </div>

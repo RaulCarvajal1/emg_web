@@ -64,8 +64,9 @@
                   <th scope="col">Id</th>
                   <th scope="col">Equipo</th>
                   <th scope="col">Técnico</th>
-                  <th scope="col">Fecha</th>
+                  <th scope="col">Fecha programada</th>
                   <th scope="col">Estatus</th>
+                  <th scope="col">Calificación</th>
                   <th scope="col">Detalle</th>
                 </tr>
               </thead>
@@ -76,6 +77,7 @@
                   <td>{{getTecnico(servicio.tecnico)}}</td>
                   <td>{{getDate(servicio.date)}}</td>
                   <td>{{getStatus(servicio.status)}}</td>
+                  <td>{{getScore(servicio.score,servicio.status)}}</td>
                   <td>
                     <button mat-mini-fab color="primary" (click)="viewService(servicio._id)">
                         <mat-icon>pageview</mat-icon>
