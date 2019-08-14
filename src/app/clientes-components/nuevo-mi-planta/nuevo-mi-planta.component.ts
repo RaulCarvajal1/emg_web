@@ -39,7 +39,7 @@ export class NuevoMiPlantaComponent implements OnInit {
   save(){
     let temp=this.plantaForm.value;
     let nPlant:any={
-      'client' : this.auth.getId(),
+      'client' : this.auth.getEmpresaId(),
       'name' : temp.name,
       'code' : temp.code,
       'boss' : {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/interfaces/user.interface';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { Router, ActivatedRoute } from "@angular/router";
 import { PlantasService } from 'src/app/services/plantas.service';
-import { UsuariosService } from 'src/app/services/usuarios.service';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { empresa } from 'src/app/interfaces/clients.interface';
 
 @Component({
   selector: 'app-lineasbyid',
@@ -12,7 +12,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class LineasbyidComponent implements OnInit {
 
-  constructor(private router:Router, private plantas:PlantasService, private usuarios:UsuariosService, private activatedRoute:ActivatedRoute,) { 
+  constructor(private router:Router, private plantas:PlantasService,private empresas:EmpresasService, private activatedRoute:ActivatedRoute,) { 
     this.id_p=this.activatedRoute.snapshot.paramMap.get("id");
   }
 
@@ -22,8 +22,7 @@ export class LineasbyidComponent implements OnInit {
   }
 
   planta:Plant[];
-  clns:User[];
-  clientes:User[];
+  clientes:empresa[];
   lines:Lines[];
 
   nPlantas:Plant[];
@@ -57,7 +56,7 @@ export class LineasbyidComponent implements OnInit {
     });
   }
   getClients():any{
-    this.usuarios.getAllClients().subscribe(
+    this.empresas.get().subscribe(
       res=>{
         this.clientes=res.detail;
       },err=>{

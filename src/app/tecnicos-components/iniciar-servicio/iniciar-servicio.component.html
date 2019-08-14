@@ -107,7 +107,26 @@
                   <div class="col">
                     <div class="">
                       <h6><b>Observaciones del servicio</b></h6>
-                      <h6>{{servicio.observ}}</h6>                        
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="proceso"><!--proceso-->
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Trabajo realizado</b></h6>
+                      <h6>{{servicio.observ.trabajo_realizado}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Comentarios</b></h6>
+                      <h6>{{servicio.observ.comentarios}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Recomendaciones</b></h6>
+                      <h6>{{servicio.observ.recomendaciones}}</h6>                        
                     </div>
                   </div>
                 </div>

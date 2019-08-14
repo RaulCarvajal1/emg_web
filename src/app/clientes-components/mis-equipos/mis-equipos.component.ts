@@ -38,7 +38,7 @@ export class MisEquiposComponent implements OnInit {
   have_lines:boolean=false;
 
   getAllEmgs(){
-    this.emgService.getByClient(this.auth.getId()).subscribe(
+    this.emgService.getByClient(this.auth.getEmpresaId()).subscribe(
       res=>{
         this.emgs=res.detail;
       },err=>{
@@ -58,7 +58,7 @@ export class MisEquiposComponent implements OnInit {
     });
   }
   loadPlant(){
-    this.plantService.getAllPlantas(this.auth.getId()).subscribe(
+    this.plantService.getAllPlantas(this.auth.getEmpresaId()).subscribe(
       res=>{
         this.plants=res.detail;
       },err=>{

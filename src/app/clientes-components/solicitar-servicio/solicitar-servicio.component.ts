@@ -91,7 +91,7 @@ export class SolicitarServicioComponent implements OnInit {
     );
   }
   loadEmgs(){
-    this.emgServices.getByClient(this.auth.getId()).subscribe(
+    this.emgServices.getByClient(this.auth.getEmpresaId()).subscribe(
       res=>{
         this.emgs=res.detail;
       },err=>{

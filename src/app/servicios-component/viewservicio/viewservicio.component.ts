@@ -179,7 +179,10 @@ export class ViewservicioComponent implements OnInit {
               observ : this.servicio.observ,
               signature : this.servicio.signature,
               score : this.score,
-              scoretext : this.scoretext
+              scoretext : this.scoretext,
+              trabajo_realizado : this.servicio.observ.trabajo_realizado,
+              comentarios : this.servicio.observ.comentarios,
+              recomendaciones : this.servicio.observ.recomendaciones
             },
       options : { 'timeout': 60000 }
     };

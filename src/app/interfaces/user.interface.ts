@@ -6,7 +6,8 @@ export interface User{
     "_id" : string,
     "username" : string,
     "password" : string,
-    "role" : number
+    "role" : number,
+    "cliente" : String
 }
 
 export interface Info{

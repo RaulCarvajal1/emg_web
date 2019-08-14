@@ -37,7 +37,7 @@ export class MislineasbyidComponent implements OnInit {
 
   loadPlants(){
     this.id_planta='';
-    this.plantas.getAllPlantas(this.auth.getId()).subscribe(
+    this.plantas.getAllPlantas(this.auth.getEmpresaId()).subscribe(
     (data)=>{
       this.lines=[];
       this.planta=data.detail;

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsuariosService } from "./../../services/usuarios.service";
-import { User } from 'src/app/interfaces/user.interface';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { empresa } from 'src/app/interfaces/clients.interface';
 
  
 @Component({
@@ -14,7 +14,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class AddPlantaComponent implements OnInit {
 
-  constructor(public fb: FormBuilder, private router:Router, private usuarios:UsuariosService, private plantas:PlantasService, private auth:AuthService)
+  constructor(public fb: FormBuilder, private router:Router, private clientes:EmpresasService, private plantas:PlantasService, private auth:AuthService)
   { 
     this.plantaForm=fb.group({
       client:['', [Validators.required]],
@@ -30,13 +30,13 @@ export class AddPlantaComponent implements OnInit {
     this.getNameC();
   }
 
-  clients:User[];
+  clients:empresa[];
   plantaForm:FormGroup;
   msg:boolean=false;
   msgErr:boolean=false;
 
   getNameC(){
-    this.usuarios.getAllClients().subscribe(
+    this.clientes.get().subscribe(
       res=>{
         this.clients=res.detail;
       },err=>{

@@ -45,7 +45,8 @@
                       <label for="nfecnue"><span class="text-danger">*</span>Fecha y hora solicitadas <small class="text-muted">Puedes cambiarlo dependiendo de la disponibilidad del técnico.</small> </label>
                       <input class="form-control form-control-sm" type="datetime-local" id="nfecnue" [(ngModel)]="nfec" (change)="showf()">
                     </div>
-                    <button class="btn btn-primary" [disabled]="btnen" (click)="asigTec()">Guardar</button>
+                    <button class="btn btn-primary" [disabled]="btnen" (click)="asigTec()">Asignar y programar</button>
+                    <small class="text-muted" *ngIf="!msg">Al asignar el técnico, se le enviara un correo notificandole que se le asigno un servicio a realizar.</small>
                   </div>
                   <br>
                 </div>
@@ -107,7 +108,26 @@
                   <div class="col">
                     <div class="">
                       <h6><b>Observaciones del servicio</b></h6>
-                      <h6>{{servicio.observ}}</h6>                        
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="proceso"><!--proceso-->
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Trabajo realizado</b></h6>
+                      <h6>{{servicio.observ.trabajo_realizado}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Comentarios</b></h6>
+                      <h6>{{servicio.observ.comentarios}}</h6>                        
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="">
+                      <h6><b>Recomendaciones</b></h6>
+                      <h6>{{servicio.observ.recomendaciones}}</h6>                        
                     </div>
                   </div>
                 </div>

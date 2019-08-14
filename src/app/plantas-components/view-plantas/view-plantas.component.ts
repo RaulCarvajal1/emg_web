@@ -4,6 +4,7 @@ import { PlantasService } from "./../../services/plantas.service";
 import { UsuariosService } from "./../../services/usuarios.service";
 import { Plant } from "./../../interfaces/plant.interface";
 import { User } from 'src/app/interfaces/user.interface';
+import { EmpresasService } from 'src/app/services/empresas.service';
 
 
 @Component({
@@ -13,7 +14,8 @@ import { User } from 'src/app/interfaces/user.interface';
 })
 export class ViewPlantasComponent implements OnInit, DoCheck {
 
-  constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantas:PlantasService, private usuarios:UsuariosService) { 
+  constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantas:PlantasService, private usuarios:UsuariosService,
+              private empresas:EmpresasService) { 
     this.id=this.activatedRoute.snapshot.paramMap.get("id")
   }
   id:string;
@@ -29,6 +31,7 @@ export class ViewPlantasComponent implements OnInit, DoCheck {
   reg_bystr:string="";
   reg_date:string="";
   planta:Plant;
+  empresa: String = "";
 
   nName:string="";
   nCode:string="";
@@ -42,7 +45,18 @@ export class ViewPlantasComponent implements OnInit, DoCheck {
     this.plantas.getPlanta(this.id).subscribe(
       res=>{
         this.planta=res.detail;
+        this.getEmpresa();
       },err=>{
+        console.error(err);
+      }
+    );
+  }
+  getEmpresa(){
+    this.empresas.getid(this.planta.client).subscribe(
+      res => {
+        this.empresa = res.detail.name;
+        console.log(res);
+      },err => {
         console.error(err);
       }
     );

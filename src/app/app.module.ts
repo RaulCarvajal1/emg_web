@@ -24,6 +24,7 @@ import { EmgsService } from './services/emgs.service';
 import { ServiciosService } from './services/servicios.service';
 import { ConfigurationService } from './services/configuration.service';
 import { AgreementsService } from './services/agreements.service';
+import { EmpresasService } from './services/empresas.service';
 
 import { MatMenuModule, MatSnackBarModule } from '@angular/material/';
 import { MatButtonModule } from '@angular/material/button';
@@ -63,6 +64,7 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { ContratosComponent } from './contratos-components/contratos/contratos.component';
 import { AddcontratosComponent } from './contratos-components/addcontratos/addcontratos.component';
 import { ViewcontratoComponent } from './contratos-components/viewcontrato/viewcontrato.component';
+import { AddEmpresaComponent } from './usuarios-components/add-empresa/add-empresa.component';
 
 // tslint:disable-next-line: no-unused-expression
 @NgModule({
@@ -108,7 +110,8 @@ import { ViewcontratoComponent } from './contratos-components/viewcontrato/viewc
     ConfigurationComponent,
     ContratosComponent,
     AddcontratosComponent,
-    ViewcontratoComponent
+    ViewcontratoComponent,
+    AddEmpresaComponent
   ],
   imports: [
     HttpClientModule,
@@ -133,7 +136,8 @@ import { ViewcontratoComponent } from './contratos-components/viewcontrato/viewc
     EmgsService,
     ServiciosService,
     ConfigurationService,
-    AgreementsService
+    AgreementsService,
+    EmpresasService
   ],
   bootstrap: [AppComponent]
 })

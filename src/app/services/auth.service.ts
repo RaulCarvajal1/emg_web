@@ -39,6 +39,9 @@ export class AuthService {
   getUser():number{
     return JSON.parse(sessionStorage.getItem('detalle'));
   }
+  getEmpresaId():any{
+    return JSON.parse(sessionStorage.getItem('detalle')).cliente;
+  }
 
   closeSession(){
     sessionStorage.clear();

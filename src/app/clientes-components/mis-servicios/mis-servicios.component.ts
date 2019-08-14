@@ -42,7 +42,7 @@ export class MisServiciosComponent implements OnInit {
     );
   } 
   loadEmgs(){
-    this.emgServices.getByClient(this.auth.getId()).subscribe(
+    this.emgServices.getByClient(this.auth.getEmpresaId()).subscribe(
     res=>{
       this.emgs=res.detail;
     },err=>{
@@ -51,7 +51,7 @@ export class MisServiciosComponent implements OnInit {
   );
   }
   loadServices(){
-    this.serviciosService.getByClient(this.auth.getId()).subscribe(
+    this.serviciosService.getByClient(this.auth.getEmpresaId()).subscribe(
       res=>{
         this.servicios=res.detail;
       },err=>{

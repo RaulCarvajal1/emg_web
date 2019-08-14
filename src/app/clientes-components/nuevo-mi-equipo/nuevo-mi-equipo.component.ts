@@ -47,7 +47,7 @@ export class NuevoMiEquipoComponent implements OnInit {
 
   loadPlants(){
     let temp:any = this.emgForm.value;
-    this.plantsService.getAllPlantas(this.authService.getId()).subscribe(res=>{
+    this.plantsService.getAllPlantas(this.authService.getEmpresaId()).subscribe(res=>{
       this.plants=res.detail;
     },err=>{
       console.log(err);
@@ -96,14 +96,14 @@ export class NuevoMiEquipoComponent implements OnInit {
           'description':temp.desc,
           'serial':temp.serie
         },
-        'client':this.authService.getId(),
+        'client':this.authService.getEmpresaId(),
         'plant':temp.planta,
         'line':temp.linea,
         'cod_pro':temp.cod_pro,
         'status':0,
         'active':true,
         'meta':{
-          'registred_by' : this.authService.getId()
+          'registred_by' : this.authService.getEmpresaId()
         }
       };
     this.emgServices.create(nemg).subscribe(

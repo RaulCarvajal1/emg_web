@@ -7,7 +7,7 @@
     </div>
   </div>
   <hr>
-  <div class="row">
+  <div class="row"> 
     <div class="col">
       <h5 class="text-center">Filtrar</h5>
     </div> 
@@ -19,7 +19,7 @@
     </div>
     <div class="col-6">
       <select id="inputState" class="form-control form-control-sm" *ngIf="true" [(ngModel)]="id_cliente" [ngModelOptions]="{standalone: true}" (change)="loadPlants()">
-        <option *ngFor="let cliente of clientes" value="{{cliente._id}}">{{cliente.info.name}}</option>
+        <option *ngFor="let cliente of clientes" value="{{cliente._id}}">{{cliente.name}}</option>
       </select>
     </div>
   </div>

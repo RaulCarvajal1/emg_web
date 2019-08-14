@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../../services/auth.service";
+import { EmpresasService } from 'src/app/services/empresas.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { AuthService } from "../../services/auth.service";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private router:Router, private auth:AuthService) { 
+  constructor(private router:Router, private auth:AuthService, private empresaService: EmpresasService) { 
   }
 
   nombre:string="";
@@ -30,7 +31,7 @@ export class NavbarComponent implements OnInit {
   */
   ngOnInit(){
     if(this.auth.isLoged()){
-      this.nombre=' - '+this.auth.getName();
+      this.nombre=' - '+this.auth.getName().split(' ')[0];
       this.log=true;
       switch(this.auth.getRole()) { 
         case 0: { 
@@ -45,13 +46,24 @@ export class NavbarComponent implements OnInit {
         }
         case 2: {
           this.cli = true;
-          this.role = "(Cliente)";          
+          this.role = "(Cliente)";     
+          this.getEmpresa();    
           break;
         }
       } 
     }else{
       this.closeSesion();
     }
+  }
+
+  getEmpresa(){
+    this.empresaService.getid(this.auth.getEmpresaId()).subscribe(
+      res => {
+        this.nombre = this.nombre+`(${res.detail.name})`; 
+      },err => {
+        console.error(err);
+      }
+    );
   }
 
   havePermisions():JSON{

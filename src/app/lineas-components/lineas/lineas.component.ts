@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/interfaces/user.interface';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { Router } from "@angular/router";
 import { PlantasService } from 'src/app/services/plantas.service';
-import { UsuariosService } from 'src/app/services/usuarios.service';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { empresa } from 'src/app/interfaces/clients.interface';
 
 
 @Component({
@@ -12,15 +12,14 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
   styleUrls: ['./lineas.component.css']
 })
 export class LineasComponent implements OnInit {
-  constructor(private router:Router, private plantas:PlantasService, private usuarios:UsuariosService) { }
+  constructor(private router:Router, private plantas:PlantasService, private empresas:EmpresasService) { }
 
   ngOnInit() {
     this.getClients();
   }
 
   planta:Plant[];
-  clns:User[];
-  clientes:User[];
+  clientes:empresa[];
   lines:Lines[];
 
   load:boolean=false;
@@ -58,7 +57,7 @@ export class LineasComponent implements OnInit {
     }
   }
   getClients():any{
-    this.usuarios.getAllClients().subscribe(
+    this.empresas.get().subscribe(
       res=>{
         this.clientes=res.detail;
       },err=>{

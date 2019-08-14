@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Plant } from "../../interfaces/plant.interface";
 import { User } from "../../interfaces/user.interface";
 import { PlantasService } from "../../services/plantas.service";
-import { UsuariosService } from "../../services/usuarios.service";
 import { Router } from "@angular/router";
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { empresa } from 'src/app/interfaces/clients.interface';
 
 @Component({
   selector: 'app-plantas',
@@ -12,7 +13,7 @@ import { Router } from "@angular/router";
 })
 export class PlantasComponent implements OnInit {
 
-  constructor(private router:Router, private plantas:PlantasService, private usuarios:UsuariosService) { }
+  constructor(private router:Router, private plantas:PlantasService, private empresas:EmpresasService) { }
 
   ngOnInit() {
     this.getClients();
@@ -20,8 +21,7 @@ export class PlantasComponent implements OnInit {
   }
 
   planta:Plant[];
-  clns:User[];
-  clientes:User[];
+  clientes:empresa[];
   load:boolean=false;
   id_cliente;
   busq:string;
@@ -62,7 +62,7 @@ export class PlantasComponent implements OnInit {
   }
 
   getClients():any{
-    this.usuarios.getAllClients().subscribe(
+    this.empresas.get().subscribe(
       res=>{
         this.clientes=res.detail;
       },err=>{

@@ -27,7 +27,7 @@ export class MisPlantasComponent implements OnInit {
   busq:string;
 
   loadAllPlants(){
-    this.plantas.getAllPlantas(this.auth.getId()).subscribe(
+    this.plantas.getAllPlantas(this.auth.getEmpresaId()).subscribe(
       (data)=>{
         this.planta=data.detail;
         this.load=true;

@@ -6,6 +6,8 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { emgs, Info } from 'src/app/interfaces/emg.interface';
 import { Plant } from 'src/app/interfaces/plant.interface';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { empresa } from 'src/app/interfaces/clients.interface';
 
 @Component({
   selector: 'app-viewemg',
@@ -16,7 +18,7 @@ export class ViewemgComponent implements OnInit, DoCheck {
 
   constructor(private activatedRoute:ActivatedRoute, 
               private emgService:EmgsService, 
-              private userService:UsuariosService, 
+              private empresaService:EmpresasService, 
               private plantasService:PlantasService, 
               private router:Router) 
   { 
@@ -39,8 +41,8 @@ export class ViewemgComponent implements OnInit, DoCheck {
   serie:string;
   actualizado:boolean=false;
   
-  cl:User;
-  cliente:string;
+  cl:empresa;
+  cliente:String;
   pl:Plant;
   planta:string;
   linea:string;
@@ -58,6 +60,7 @@ export class ViewemgComponent implements OnInit, DoCheck {
 
   getEmg(id:string){
     this.emgService.getById(id).subscribe(res=>{
+      console.log(res);
       this.emg=res.detail;
       this.getClient();
     },req=>{
@@ -65,11 +68,11 @@ export class ViewemgComponent implements OnInit, DoCheck {
     });
   }
   getClient(){
-    let usr:string=this.emg.client;
-    this.userService.getUser(usr).subscribe(
+    let emp:string=this.emg.client;
+    this.empresaService.getid(emp).subscribe(
       res=>{
         this.cl=res.detail;
-        this.cliente=this.cl.info.name;
+        this.cliente=this.cl.name;
         this.getPlant();
       },
       err=>{

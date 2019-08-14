@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { EmgsService } from 'src/app/services/emgs.service';
 import { emgs } from 'src/app/interfaces/emg.interface';
 import { Router } from '@angular/router';
-import { UsuariosService } from 'src/app/services/usuarios.service';
-import { User } from 'src/app/interfaces/user.interface';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { Select2OptionData } from 'ng-select2';
-import { delay } from 'q';
+import { empresa } from 'src/app/interfaces/clients.interface';
+import { EmpresasService } from 'src/app/services/empresas.service';
 
 @Component({
   selector: 'app-equipos',
@@ -17,7 +16,7 @@ import { delay } from 'q';
 export class EquiposComponent implements OnInit {
 
   constructor(private emgService: EmgsService, private router: Router,
-              private userService: UsuariosService, private plantService: PlantasService)
+              private empresaService: EmpresasService, private plantService: PlantasService)
               {
                 this.getAllEmgs();
                 this.loadUsers();
@@ -28,7 +27,7 @@ export class EquiposComponent implements OnInit {
   }
 
   emgs:emgs[];
-  clients:User[];
+  clients:empresa[];
   client_id:string;
   plant_id:string;
   line_id:string;
@@ -50,7 +49,7 @@ export class EquiposComponent implements OnInit {
       });
   }
   loadUsers(){
-    this.userService.getAllClients().subscribe(res=>{
+    this.empresaService.get().subscribe(res=>{
       this.clients=res.detail;
       console.log(res.detail);
       this.setClientList(this.clients);
@@ -66,7 +65,7 @@ export class EquiposComponent implements OnInit {
     a.forEach(c=>{
       this.clientesList.push({
         id : c._id,
-        text : c.info.name
+        text : c.name
       });
     });
   }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from "../../interfaces/user.interface";
 import { UsuariosService } from "../../services/usuarios.service";
 import { Router } from "@angular/router";
+import { empresa } from 'src/app/interfaces/clients.interface';
+import { EmpresasService } from 'src/app/services/empresas.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -10,13 +12,16 @@ import { Router } from "@angular/router";
 })
 export class UsuariosComponent implements OnInit {
 
-  constructor(private usuarios:UsuariosService, private router:Router) { }
+  constructor(private usuarios:UsuariosService, private router:Router, private empresasService:EmpresasService) { }
 
   users:User[];
   busq:string;
 
+  empresas: empresa[];
+
   ngOnInit() {
     this.loadUsers();
+    this.loadEmpresas();
   }
 
   loadUsers(){
@@ -27,6 +32,16 @@ export class UsuariosComponent implements OnInit {
     (err)=>{
       console.log(err)
     });
+  }
+  loadEmpresas(){
+    this.empresasService.get().subscribe(
+      res => {
+        this.empresas = res.detail;
+      },
+      err => {
+        console.error(err)
+      }
+    );
   }
   getRol(r:number):string{
     switch (r) {
@@ -41,7 +56,7 @@ export class UsuariosComponent implements OnInit {
         break;
     }
   }
-  getStatus(s:number):string{
+  getStatus(s:any):string{
     if(s){
       return "Activo";
     }else{
@@ -54,7 +69,9 @@ export class UsuariosComponent implements OnInit {
   goNewuser(){
     this.router.navigateByUrl('usuarios/nuevo');
   }
-
+  goNewEmpresa(){
+    this.router.navigateByUrl('usuarios/nuevaempresa');
+  }
   busqueda(){
     if(this.busq==""){
       this.loadUsers();

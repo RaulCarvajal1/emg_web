@@ -1,4 +1,5 @@
 export interface Contrato{
+    "_id" : String,
     "client" : string,
     "clientName" : string,
     "period" : period,
