@@ -40,6 +40,10 @@ export class ServiciosService {
     return this.http.put<res>(`http://${link}/service/start/${id}`,{});
   }
 
+  finish(id:String,data:any){
+    return this.http.put<res>(`http://${link}/service/finish/${id}`,data);
+  }
+
   asigTec(id_s:String, id_t:String,date){///asigtec/:id_s/:id_t
     return this.http.patch<res>(`http://${link}/service/asigtec/${id_s}/${id_t}`,{"date" : date});
   }

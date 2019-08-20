@@ -8,9 +8,13 @@ import { User } from 'src/app/interfaces/user.interface';
 import { emgs } from 'src/app/interfaces/emg.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { AgreementsService } from 'src/app/services/agreements.service';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { PlantasService } from 'src/app/services/plantas.service';
+import { Contrato } from 'src/app/interfaces/agreement.interface';
 
 
-@Component({
+@Component({ 
   selector: 'app-solicitar-servicio',
   templateUrl: './solicitar-servicio.component.html',
   styleUrls: ['./solicitar-servicio.component.css']
@@ -19,7 +23,9 @@ export class SolicitarServicioComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private userServices:UsuariosService, 
               private emgServices:EmgsService, private serviciosService:ServiciosService,
-              private router:Router, private auth: AuthService, private configServices:ConfigurationService) 
+              private router:Router, private auth: AuthService, private configServices:ConfigurationService,
+              private agreementsServices:AgreementsService, private empresaService:EmpresasService,
+              private plantsService: PlantasService) 
   {
     this.serviciosForm = fb.group(
       {
@@ -27,6 +33,7 @@ export class SolicitarServicioComponent implements OnInit {
         type : ['',[Validators.required]],
         date : ['',[Validators.required]],
         desc : ['',[Validators.required]],
+        agreement : ['',[Validators.required]]
       }
     );
     this.fecExiste();
@@ -41,6 +48,10 @@ export class SolicitarServicioComponent implements OnInit {
   fecAnt: boolean;
   minDate:String = '';
   tipos: any;
+
+  contratos: Contrato[];
+
+
   //For email
   admin:User;
 
@@ -49,6 +60,7 @@ export class SolicitarServicioComponent implements OnInit {
     this.loadEmgs();
     this.getAdmin();
     this.getTipos();
+    this.loadContratosId();
   }
 
   getTipos(){
@@ -127,6 +139,7 @@ export class SolicitarServicioComponent implements OnInit {
     let temp = this.serviciosForm.value;
     temp.status = 0;
     temp.client =  this.emg_c_id;
+    temp.requested_by = this.auth.getId();
     console.log(temp);
     this.serviciosService.save(temp).subscribe(
       res=>{
@@ -173,4 +186,15 @@ export class SolicitarServicioComponent implements OnInit {
       }
     }
   }
+
+  loadContratosId(){
+    this.agreementsServices.getContratosByClient(this.auth.getEmpresaId()).subscribe(
+    res => {
+      this.contratos = res.detail;
+      console.log(res, this.auth.getEmpresaId());
+    },err => {
+      console.error(err);
+    });
+  }
+
 }

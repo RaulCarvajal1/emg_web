@@ -6,9 +6,14 @@ import { ServiciosService } from 'src/app/services/servicios.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user.interface';
 import { emgs } from 'src/app/interfaces/emg.interface';
-import { template } from '@angular/core/src/render3';
-import { async } from '@angular/core/testing';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { AgreementsService } from 'src/app/services/agreements.service';
+import { Contrato } from 'src/app/interfaces/agreement.interface';
+import { Plant, Lines } from 'src/app/interfaces/plant.interface';
+import { empresa } from 'src/app/interfaces/clients.interface';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { PlantasService } from 'src/app/services/plantas.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-addservicio',
@@ -19,7 +24,9 @@ export class AddservicioComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private userServices:UsuariosService, 
               private emgServices:EmgsService, private serviciosService:ServiciosService,
-              private router:Router, private configServices:ConfigurationService) 
+              private router:Router, private configServices:ConfigurationService,
+              private agreementsServices:AgreementsService, private empresaService:EmpresasService,
+              private plantsService: PlantasService, private auth:AuthService) 
               {
                 this.serviciosForm = fb.group(
                   {
@@ -28,6 +35,7 @@ export class AddservicioComponent implements OnInit {
                     type : ['',[Validators.required]],
                     date : ['',[Validators.required]],
                     desc : ['',[Validators.required]],
+                    agreement : ['',[Validators.required]]
                   }
                 );
                 this.fecExiste();
@@ -43,8 +51,22 @@ export class AddservicioComponent implements OnInit {
   minDate:String;
   fecAnt: boolean;
   tipos: any;
-  
-  //email data
+
+  contratos: Contrato[];
+
+  empresas:empresa[];
+  plants:Plant[];
+  lines:Lines[];
+
+  empresa: String ="";
+  planta: String ="";
+  linea: String ="";
+
+  empresaB: Boolean = true;
+  plantaB: Boolean = true;
+  lineaB: Boolean = true;
+
+  //email data 
   tec_email:string;
   tec_name:string;
   cli_email:string;
@@ -55,6 +77,8 @@ export class AddservicioComponent implements OnInit {
     this.loadEmgs();
     this.loadClients();
     this.getTipos();
+    this.getContratos();
+    this.getEmpresas();
   }
 
   getTipos(){
@@ -66,7 +90,6 @@ export class AddservicioComponent implements OnInit {
       }
     );
   }
-
   fecExiste(){
     this.configServices.getFec().subscribe(
       res => {
@@ -82,7 +105,6 @@ export class AddservicioComponent implements OnInit {
       }
     )
   }
-
   loadTecnicos(){
     this.userServices.gettec().subscribe(
       res=>{
@@ -136,10 +158,11 @@ export class AddservicioComponent implements OnInit {
     let temp = this.serviciosForm.value;
     temp.status = 1;
     temp.client =  this.emg_c_id;
+    temp.requested_by = this.auth.getId();
     console.log(temp);
+    this.getEmailData(temp.client,temp.tecnico);
     this.serviciosService.save(temp).subscribe(
        res=>{
-        this.getEmailData(temp.client,temp.tecnico);
         this.msg=true
         this.serviciosService.emailProgramar({
                                               "email_tecnico" : this.tec_email,
@@ -181,7 +204,6 @@ export class AddservicioComponent implements OnInit {
       }
     });
   }
-
   regresar(){
     this.router.navigateByUrl('/servicios');
   }
@@ -199,5 +221,74 @@ export class AddservicioComponent implements OnInit {
         this.minDate = `${year}-${month}-${day}T00:00`;
       }
     }
+  }
+  getContratos(){
+    this.agreementsServices.getContratos().subscribe(
+      res => {
+        this.contratos = res.detail;
+      },err => {
+        console.error(err);
+      }
+    )
+  }
+  getEmpresas(){
+    this.empresaService.get().subscribe(
+      res => {
+        if(res.detail.length===0){
+          this.empresaB =  true;
+        }else{
+          this.empresaB =  false;
+          this.empresas = res.detail;
+          this.plants = [];
+          this.lines = [];
+        }
+        console.log(res);
+      }, err => {
+        console.error(err);
+      }
+    );
+  }
+  loadPlants(){
+    this.plantsService. getAllPlantas(<string>this.empresa).subscribe(res=>{
+      if(res.detail.length===0){
+        this.plantaB =  true;
+      }else{
+        this.plantaB =  false;
+        this.plants = res.detail;
+        this.lines = [];
+      }
+      this.loadContratosId();
+    },err=>{
+      console.log(err);
+    });
+  }
+  loadLines(){
+    this.plants.forEach(el=>{
+      if(el._id==this.planta){
+        if(el.lines.length===0){
+          this.lineaB = true;
+        }else{
+          this.lineaB = false;
+          this.lines=el.lines;
+        }
+      }
+    });
+  }
+  loadEmgsF(){
+    this.emgServices.getByPlantAndLine(<string>this.planta,<string>this.linea).subscribe(
+      res => {
+        this.emgs = res.detail;
+      }, err => {
+        console.error(err)
+      }
+    );
+  }
+  loadContratosId(){
+    this.agreementsServices.getContratosByClient(<string>this.empresa).subscribe(
+    res => {
+      this.contratos = res.detail;
+    },err => {
+      console.error(err);
+    });
   }
 }

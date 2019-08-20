@@ -18,8 +18,8 @@ export class AgreementsService {
     return this.http.get<res>(`http://${link}/agreements/getcontratobyid/${id}`);
   }
 
-  getContratoByClient(id:string){
-    return this.http.get<res>(`http://${link}/agreements/getcontratobyclient/${id}`);
+  getContratosByClient(id:string){
+    return this.http.get<resArray>(`http://${link}/agreements/getcontratobyclient/${id}`);
   }
 
   getContratos(){

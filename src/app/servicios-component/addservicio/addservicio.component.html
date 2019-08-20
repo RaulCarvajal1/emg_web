@@ -7,10 +7,55 @@
         <div class="card-body">
           <h5 class="card-title">Programar servicio a equipo EMG</h5>
           <br>
+          <div class="accordion bor" id="filtros">
+            <div class="bg-light">
+              <div class="" id="headingOne">
+                <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Filtrar equipos y contratos
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#filtros">
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="cliente">Empresa</label>
+                          <select class="form-control form-control-sm" id="cliente" (change)="loadPlants()" [(ngModel)]="empresa" [ngModelOptions]="{standalone: true}" [disabled]="empresaB">
+                            <option *ngFor="let emp of empresas" value="{{emp._id}}">{{emp.name}}</option>
+                          </select> 
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="planta">Planta <small class="text-muted">seleccione primero cliente</small></label>
+                          <select class="form-control form-control-sm" id="planta" (change)="loadLines()" [(ngModel)]="planta" [ngModelOptions]="{standalone: true}" [disabled]="plantaB">
+                            <option *ngFor="let plant of plants" value="{{plant._id}}">{{plant.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="linea">Línea <small class="text-muted">seleccione primero cliente y planta</small></label>
+                          <select class="form-control form-control-sm" id="linea" (change)="loadEmgsF()" [(ngModel)]="linea" [ngModelOptions]="{standalone: true}" [disabled]="lineaB">
+                            <option *ngFor="let line of lines" value="{{line._id}}">{{line.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <hr>
           <form [formGroup]="serviciosForm" (ngSubmit)="save()">
             <div class="row">
               <div class="col">
-                <h6 class="card-subtitle">Asignacion de equipo EMG y Técnico</h6>
+                <h6 class="card-subtitle">Asignacion de Contrato, equipo EMG y Técnico</h6>
               </div>
             </div>
             <div class="row">
@@ -33,6 +78,17 @@
                   </select>
                   <div *ngIf="serviciosForm.get('tecnico').errors&&serviciosForm.get('tecnico').dirty">
                     <p *ngIf="serviciosForm.get('tecnico').hasError('required')" class="text-danger">El tecnico es requerido</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="agreement"><span class="text-danger">*</span>Contrato</label>
+                  <select class="form-control form-control-sm" id="agreement" formControlName="agreement">
+                    <option *ngFor="let contrato of contratos" value="{{contrato._id}}">{{contrato.name}}</option>
+                  </select>
+                  <div *ngIf="serviciosForm.get('agreement').errors&&serviciosForm.get('agreement').dirty">
+                    <p *ngIf="serviciosForm.get('agreement').hasError('required')" class="text-danger">El equipo es requerido</p>
                   </div>
                 </div>
               </div>

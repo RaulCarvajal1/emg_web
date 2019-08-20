@@ -8,6 +8,12 @@ import { User } from 'src/app/interfaces/user.interface';
 import { emgs } from 'src/app/interfaces/emg.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { AgreementsService } from 'src/app/services/agreements.service';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { PlantasService } from 'src/app/services/plantas.service';
+import { Contrato } from 'src/app/interfaces/agreement.interface';
+import { empresa } from 'src/app/interfaces/clients.interface';
+import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 
 @Component({
   selector: 'app-addservicio-tec',
@@ -18,7 +24,9 @@ export class AddservicioTecComponent implements OnInit {
 
     constructor(private fb:FormBuilder, private userServices:UsuariosService, 
               private emgServices:EmgsService, private serviciosService:ServiciosService,
-              private router:Router, private auth: AuthService, private configServices:ConfigurationService) 
+              private router:Router, private auth: AuthService, private configServices:ConfigurationService,
+              private agreementsServices:AgreementsService, private empresaService:EmpresasService,
+              private plantsService: PlantasService) 
   {
     this.serviciosForm = fb.group(
       {
@@ -26,6 +34,7 @@ export class AddservicioTecComponent implements OnInit {
         type : ['',[Validators.required]],
         date : ['',[Validators.required]],
         desc : ['',[Validators.required]],
+        agreement : ['',[Validators.required]]
       }
     );
     this.fecExiste();
@@ -42,6 +51,20 @@ export class AddservicioTecComponent implements OnInit {
   tipos: any;
   fecAnt: boolean;
 
+  contratos: Contrato[];
+
+  empresas:empresa[];
+  plants:Plant[];
+  lines:Lines[];
+
+  empresa: String ="";
+  planta: String ="";
+  linea: String ="";
+
+  empresaB: Boolean = true;
+  plantaB: Boolean = true;
+  lineaB: Boolean = true;
+
   //email data
   tec_email:string;
   tec_name:string;
@@ -53,6 +76,8 @@ export class AddservicioTecComponent implements OnInit {
     this.loadEmgs();
     this.loadClients();
     this.getTipos();
+    this.getContratos();
+    this.getEmpresas();
   }
   getTipos(){
     this.configServices.getTipos().subscribe(
@@ -125,6 +150,8 @@ export class AddservicioTecComponent implements OnInit {
     temp.status = 1;
     temp.tecnico = this.auth.getId();
     temp.client =  this.emg_c_id;
+    temp.requested_by = this.auth.getId();
+
     console.log(temp);
     this.serviciosService.save(temp).subscribe(
       res=>{
@@ -188,5 +215,74 @@ export class AddservicioTecComponent implements OnInit {
         this.minDate = `${year}-${month}-${day}T00:00`;
       }
     }
+  }
+  getContratos(){
+    this.agreementsServices.getContratos().subscribe(
+      res => {
+        this.contratos = res.detail;
+      },err => {
+        console.error(err);
+      }
+    )
+  }
+  getEmpresas(){
+    this.empresaService.get().subscribe(
+      res => {
+        if(res.detail.length===0){
+          this.empresaB =  true;
+        }else{
+          this.empresaB =  false;
+          this.empresas = res.detail;
+          this.plants = [];
+          this.lines = [];
+        }
+        console.log(res);
+      }, err => {
+        console.error(err);
+      }
+    );
+  }
+  loadPlants(){
+    this.plantsService. getAllPlantas(<string>this.empresa).subscribe(res=>{
+      if(res.detail.length===0){
+        this.plantaB =  true;
+      }else{
+        this.plantaB =  false;
+        this.plants = res.detail;
+        this.lines = [];
+      }
+      this.loadContratosId();
+    },err=>{
+      console.log(err);
+    });
+  }
+  loadLines(){
+    this.plants.forEach(el=>{
+      if(el._id==this.planta){
+        if(el.lines.length===0){
+          this.lineaB = true;
+        }else{
+          this.lineaB = false;
+          this.lines=el.lines;
+        }
+      }
+    });
+  }
+  loadEmgsF(){
+    this.emgServices.getByPlantAndLine(<string>this.planta,<string>this.linea).subscribe(
+      res => {
+        this.emgs = res.detail;
+      }, err => {
+        console.error(err)
+      }
+    );
+  }
+  loadContratosId(){
+    this.agreementsServices.getContratosByClient(<string>this.empresa).subscribe(
+    res => {
+      this.contratos = res.detail;
+    },err => {
+      console.error(err);
+    });
   }
 }
