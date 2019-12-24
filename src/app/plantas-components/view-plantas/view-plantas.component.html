@@ -2,7 +2,8 @@
 <div class="container">
 <hr>
 <hr>
-  <div class="row">
+
+  <div class="row" *ngIf="!load">
       <div class="col-12">
           <div class="card">
               <div class="card-body">
@@ -13,11 +14,6 @@
                       <li class="card-text"><b>Dia de registro: </b> {{reg_date}}</li>
                   </ul>
               </div>
-              <div class="row" *ngIf="actualizado">
-                <div class="col text-center">
-                  <h4 class="text-warning">Actualizando...</h4>
-                </div>
-              </div>   
               <form class="container">
                   <div class="row">
                     <div class="col">
@@ -72,9 +68,23 @@
                     </div>
                     <div class="col"></div>
                   </div>
+                  
               </form>
           </div>
       </div>
+  </div>
+
+  <div *ngIf="load">
+    <div class="row">
+      <div class="col">
+        <p class="lead mx-auto">CARGANDO</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-spinner class="mx-auto"></mat-spinner>
+      </div>
+    </div>
   </div>
 <hr>
 <hr>

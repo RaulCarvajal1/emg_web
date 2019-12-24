@@ -30,7 +30,7 @@ export class PlantasComponent implements OnInit {
     this.plantas.getAll().subscribe(
       (data)=>{
         this.planta=data.detail;
-        this.load=true;
+        this.load=true; 
       },
       (err)=>{
         console.log(err)

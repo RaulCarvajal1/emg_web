@@ -14,6 +14,7 @@ import { PlantasService } from 'src/app/services/plantas.service';
 import { Contrato } from 'src/app/interfaces/agreement.interface';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-addservicio-tec',
@@ -26,7 +27,7 @@ export class AddservicioTecComponent implements OnInit {
               private emgServices:EmgsService, private serviciosService:ServiciosService,
               private router:Router, private auth: AuthService, private configServices:ConfigurationService,
               private agreementsServices:AgreementsService, private empresaService:EmpresasService,
-              private plantsService: PlantasService) 
+              private plantsService: PlantasService, private location:Location) 
   {
     this.serviciosForm = fb.group(
       {
@@ -199,7 +200,7 @@ export class AddservicioTecComponent implements OnInit {
   }
 
   regresar(){
-    this.router.navigateByUrl('/misservicios-tec');
+    this.location.back();
   }
   getMinDate(fa){
     const date = new Date();

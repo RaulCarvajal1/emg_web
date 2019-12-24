@@ -5,6 +5,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EmpresasService } from 'src/app/services/empresas.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
+import { AlertService } from 'src/app/services/alert.service';
+import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
+import { Select2OptionData } from 'ng-select2';
 
  
 @Component({
@@ -14,7 +18,14 @@ import { empresa } from 'src/app/interfaces/clients.interface';
 })
 export class AddPlantaComponent implements OnInit {
 
-  constructor(public fb: FormBuilder, private router:Router, private clientes:EmpresasService, private plantas:PlantasService, private auth:AuthService)
+  constructor(
+    public fb: FormBuilder, 
+    private router:Router, 
+    private clientes:EmpresasService, 
+    private plantas:PlantasService, 
+    private auth:AuthService,
+    private location:Location,
+    private alert:AlertService)
   { 
     this.plantaForm=fb.group({
       client:['', [Validators.required]],
@@ -32,13 +43,15 @@ export class AddPlantaComponent implements OnInit {
 
   clients:empresa[];
   plantaForm:FormGroup;
-  msg:boolean=false;
-  msgErr:boolean=false;
+  saving:boolean = false;
+  public selec2data: Observable<Array<Select2OptionData>>;
+  temp:Select2OptionData[] = [];
 
   getNameC(){
     this.clientes.get().subscribe(
       res=>{
         this.clients=res.detail;
+        this.selec2data=this.genObservable(this.genArrayList());
       },err=>{
         console.error(err);
         return "No definido";
@@ -46,10 +59,25 @@ export class AddPlantaComponent implements OnInit {
     )
   }
   regresar(){
-    this.router.navigateByUrl('equipos/plantas');
+    this.location.back();
+  }
+
+  genArrayList():Select2OptionData[]{
+    this.clients.forEach(el => {
+      this.temp.push({id : el._id+'', text : el.name});
+    });
+    return this.temp;
+  }
+
+  genObservable(arr:Select2OptionData[]):Observable<Array<Select2OptionData>> {
+    return Observable.create((obs) => {
+      obs.next(arr);
+      obs.complete();
+    });
   }
 
   save(){
+    this.saving = true;
     let temp=this.plantaForm.value;
     let nPlant:any={
       'client' : temp.client,
@@ -66,12 +94,14 @@ export class AddPlantaComponent implements OnInit {
     };
     this.plantas.crear(nPlant).subscribe(
       res=>{
-        this.msg=true;
+        this.saving = false;
+        this.alert.success("La planta fue exitosamente registrada, serás redirigido en unos segundos.");
         setTimeout(() => {
           this.regresar();
-        }, 2000);
+        }, 4000);
       },err=>{
-        this.msgErr=true;
+        this.saving = false;
+        this.alert.error("Error durante el registro");
         console.log(err);
       }
     );

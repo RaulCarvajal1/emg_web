@@ -12,7 +12,13 @@ import { empresa } from 'src/app/interfaces/clients.interface';
 })
 export class LineasbyidComponent implements OnInit {
 
-  constructor(private router:Router, private plantas:PlantasService,private empresas:EmpresasService, private activatedRoute:ActivatedRoute,) { 
+  constructor(
+      private router:Router, 
+      private plantas:PlantasService,
+      private empresas:EmpresasService, 
+      private activatedRoute:ActivatedRoute
+    ) 
+  { 
     this.id_p=this.activatedRoute.snapshot.paramMap.get("id");
   }
 
@@ -23,7 +29,7 @@ export class LineasbyidComponent implements OnInit {
 
   planta:Plant[];
   clientes:empresa[];
-  lines:Lines[];
+  lines:Lines[]; 
 
   nPlantas:Plant[];
 
@@ -37,11 +43,14 @@ export class LineasbyidComponent implements OnInit {
   sinPlantas:boolean=false;
   sinLineas:boolean=false;
 
+  ridc: string = "";
+  ridp: string = "";
+
   loadPlants(){
     this.id_planta='';
     this.plantas.getAllPlantas(this.id_cliente).subscribe(
     (data)=>{
-      this.lines=[];
+      //this.lines=[];
       this.planta=data.detail;
       this.clientSel = false;
       if( this.planta.length == 0 ){
@@ -89,13 +98,15 @@ export class LineasbyidComponent implements OnInit {
     }
   }
   loadRet(na:any[]){
-    na.forEach(el=>{
-      if(el._id == this.id_p){
-        this.lines = el.lines;
-        console.log(el)
-      }
-      this.load=true;
-    });
+    let elemente = na.find( e => e._id == this.id_p);
+
+    this.lines = elemente.lines;
+    this.id_cliente = elemente.client;
+    this.loadPlants();
+    this.id_planta = this.id_p;
+
+    this.lines = elemente.lines;
+    this.load=true;
   }
   getPlants(){
     this.plantas.getAll().subscribe(

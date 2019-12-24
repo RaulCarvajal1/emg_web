@@ -4,6 +4,7 @@ import { PlantasService } from "./../../services/plantas.service";
 import { UsuariosService } from "./../../services/usuarios.service";
 import { Plant } from "./../../interfaces/plant.interface";
 import { User } from 'src/app/interfaces/user.interface';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-ver-mi-planta',
@@ -12,7 +13,13 @@ import { User } from 'src/app/interfaces/user.interface';
 })
 export class VerMiPlantaComponent implements OnInit {
 
-  constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantas:PlantasService, private usuarios:UsuariosService) { 
+  constructor(
+    private activatedRoute:ActivatedRoute, 
+    private router:Router, 
+    private plantas:PlantasService, 
+    private usuarios:UsuariosService,
+    private location:Location
+    ) { 
     this.id=this.activatedRoute.snapshot.paramMap.get("id")
   }
   id:string;
@@ -54,7 +61,7 @@ export class VerMiPlantaComponent implements OnInit {
     }
   }
   regresar(){
-    this.router.navigateByUrl('misplantas');
+    this.location.back();
   }
   getName(id:any){
     this.usuarios.getUser(id).subscribe(

@@ -2,6 +2,7 @@ import { Component, OnInit, DoCheck } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-ver-mi-linea',
@@ -10,7 +11,7 @@ import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 })
 export class VerMiLineaComponent implements OnInit {
 
-  constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantas:PlantasService) { 
+  constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantas:PlantasService, private location:Location) { 
     this.id_p=this.activatedRoute.snapshot.paramMap.get("id_p");
     this.id_l=this.activatedRoute.snapshot.paramMap.get("id_l");
   }

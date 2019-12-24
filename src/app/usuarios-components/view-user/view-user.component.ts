@@ -3,7 +3,8 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import { UsuariosService } from "../../services/usuarios.service";
 import { User } from "../../interfaces/user.interface";
 import { AuthService } from 'src/app/services/auth.service';
-
+import { Location } from '@angular/common';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-view-user',
@@ -14,7 +15,9 @@ export class ViewUserComponent implements OnInit{
 
   constructor(private activatedRoute: ActivatedRoute, 
               private usuarios:UsuariosService, 
-              private router:Router, private auth:AuthService) 
+              private router:Router, private auth:AuthService,
+              private location: Location,
+              private alert: AlertService) 
   {
   }
 
@@ -22,9 +25,8 @@ export class ViewUserComponent implements OnInit{
   reg_by:User;
   reg_bystr:string;
   reg_date:string;
-
+  load: boolean = false;
   usEx:Boolean = false;
-  actualizado:Boolean = false;
   im:Boolean = false;
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class ViewUserComponent implements OnInit{
         this.getName(this.user.meta.registred_by);
         this.getDate(this.user.meta.registred_date);
         this.iM();
+        this.load = true;
       },
       (err)=>{
         console.log(err)
@@ -82,7 +85,7 @@ export class ViewUserComponent implements OnInit{
     }
   }
   regresar(){
-    this.router.navigateByUrl('usuarios');
+    this.location.back();
   }
   updClick(){
     if(this.nUser==""){
@@ -109,32 +112,46 @@ export class ViewUserComponent implements OnInit{
         'email' : e
       }
     };
-
-    this.usuarios.updateUser(uUsr).subscribe(
-      data=>{
-        this.actualizado=true;
-        setTimeout(() => {
-          this.loadUser();
-          this.nName="";
-          this.nEmail="";
-          this.nUser="";
-          this.actualizado=false;  
-        }, 1500);
-      },err=>{
-        console.log(err);
-      });
+    this.alert.confirm(
+      "¿Seguro que quiere actualizar el registro?",
+      ()=>{
+        this.load = false;
+        this.usuarios.updateUser(uUsr).subscribe(
+          data=>{
+            this.loadUser();
+            this.nName="";
+            this.nEmail="";
+            this.nUser="";
+            this.load = true;
+            this.alert.success("Actualizado");
+          },err=>{
+            console.log(err);
+            this.alert.error("Ocurrio un error");
+          }
+        );
+      },
+      ()=>{
+        this.alert.error("No se registraron cambios");
+      }
+    );
+    
   }
   actDes(){
-    this.usuarios.actDes(<string>this.activatedRoute.snapshot.paramMap.get("id"),this.user.active).subscribe(
-      data=>{
-        this.actualizado=true;
-        setTimeout(() => {
-          this.loadUser();
-          this.actualizado=false;  
-        }, 1500);
-      },err=>{
-        console.log(err);
-      });
+    this.alert.confirm('Al realizar esta acción alterará el inicio de sesíon al usuario.',
+      ()=>{
+        this.load = false;
+        this.usuarios.actDes(<string>this.activatedRoute.snapshot.paramMap.get("id"),this.user.active).subscribe(
+          data=>{
+            this.loadUser();
+            this.alert.success("Actualizado");
+            this.load = true;
+          },err=>{
+            console.log(err);
+            this.alert.error("Ocurrio un error");
+          })
+      },
+      ()=>{this.alert.error("No se registraron cambios")}
+    );
   }
   getName(id:any){
     this.usuarios.getUser(id).subscribe(

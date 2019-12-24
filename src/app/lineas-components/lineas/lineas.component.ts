@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { PlantasService } from 'src/app/services/plantas.service';
 import { EmpresasService } from 'src/app/services/empresas.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
+import { AlertService } from 'src/app/services/alert.service';
 
 
 @Component({
@@ -12,7 +13,14 @@ import { empresa } from 'src/app/interfaces/clients.interface';
   styleUrls: ['./lineas.component.css']
 })
 export class LineasComponent implements OnInit {
-  constructor(private router:Router, private plantas:PlantasService, private empresas:EmpresasService) { }
+  constructor(
+    private router:Router, 
+    private plantas:PlantasService, 
+    private empresas:EmpresasService,
+    private alert: AlertService
+    ) { 
+      this.alert.alert("Primero debe seleccionar un cliente para conocer sus plantas y lineas de producción.");
+    }
 
   ngOnInit() {
     this.getClients();

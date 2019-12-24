@@ -7,6 +7,9 @@ import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { EmgsService } from 'src/app/services/emgs.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { AlertService } from 'src/app/services/alert.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-addemg',
@@ -15,9 +18,10 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 })
 export class AddemgComponent implements OnInit{
 
-  constructor(private userService:UsuariosService, private plantsService:PlantasService, 
+  constructor(private empresaService:EmpresasService, private plantsService:PlantasService, 
               private emgServices:EmgsService, private router:Router, 
-              private authService:AuthService, private fb:FormBuilder) 
+              private authService:AuthService, private fb:FormBuilder,
+              private alert:AlertService, private location: Location) 
               { 
 
                 this.emgForm = this.fb.group({
@@ -46,12 +50,14 @@ export class AddemgComponent implements OnInit{
   shortname_line:string;
   nombre:string;
 
-  msg:boolean=false;
-  msgErr:boolean=false;
+  load: boolean = true;
+  guardando: boolean = false;
 
   loadUsers(){
-    this.userService.getAllClients().subscribe(res=>{
+    this.empresaService.get().subscribe(res=>{
       this.users=res.detail;
+      this.load = false;
+      console.log(this.users);
     },err=>{
       console.log(err);
     })
@@ -98,6 +104,7 @@ export class AddemgComponent implements OnInit{
   }
 
   save(){
+    this.guardando = true;
     console.log(this.emgForm.controls);
     let temp=this.emgForm.value;
     let nemg:any={
@@ -122,27 +129,22 @@ export class AddemgComponent implements OnInit{
     res=>{
       this.emgServices.genEmg(res.detail._id).subscribe(
         res=>{
-          this.msg=true;
+          this.guardando = false
+          this.alert.success("Registro creado con éxito, serás redigirido en unos segundos.");
           setTimeout(()=>{
             this.regresar();
           },1500);
         },err=>{
-          this.msgErr=true;
-          setTimeout(()=>{
-            this.regresar();
-          },1500);
+          this.alert.error("Ocurrio un error durante el registro");
         });
     },err=>{
       console.log(err);
-      this.msgErr=true;
-      setTimeout(()=>{
-        this.regresar();
-      },1500);
+      this.alert.error("Ocurrio un error durante el registro");
     });
   }
 
   regresar(){
-    this.router.navigateByUrl('equipos/equipos');
+    this.location.back();
   }
 
 }

@@ -1,6 +1,6 @@
 export interface empresa{
-    _id : Number,
-    name : String,
-    description : String,
+    _id : number,
+    name : string,
+    description : string,
     status : boolean
 }

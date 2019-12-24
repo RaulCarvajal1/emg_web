@@ -36,7 +36,7 @@ export class PlantasService {
   }
 
   addLinea(line:JSON, id_p:string){
-    return this.http.put<res>("http://${link}/plant/addline/"+id_p,
+    return this.http.put<res>(`http://${link}/plant/addline/`+id_p,
       line
     );
   }

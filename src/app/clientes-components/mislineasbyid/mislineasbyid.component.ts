@@ -12,12 +12,18 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MislineasbyidComponent implements OnInit {
 
-  constructor(private router:Router, private plantas:PlantasService, private auth:AuthService, private activatedRoute:ActivatedRoute,) { 
+  constructor(
+    private router:Router, 
+    private plantas:PlantasService, 
+    private auth:AuthService, 
+    private activatedRoute:ActivatedRoute
+    ) 
+  { 
     this.id_p=this.activatedRoute.snapshot.paramMap.get("id");
   }
 
   ngOnInit() {
-    this.loadPlants();
+    this.loadPlants();  
     this.getPlants();
   }
 
@@ -28,6 +34,7 @@ export class MislineasbyidComponent implements OnInit {
   nPlantas:Plant[];
 
   load:boolean=false;
+  id_cliente;
   id_planta;
   busq:String="";
   id_p: String="";
@@ -39,7 +46,7 @@ export class MislineasbyidComponent implements OnInit {
     this.id_planta='';
     this.plantas.getAllPlantas(this.auth.getEmpresaId()).subscribe(
     (data)=>{
-      this.lines=[];
+      //this.lines=[];
       this.planta=data.detail;
       if( this.planta.length == 0 ){
         this.sinPlantas = true;
@@ -75,13 +82,15 @@ export class MislineasbyidComponent implements OnInit {
     }
   }
   loadRet(na:any[]){
-    na.forEach(el=>{
-      if(el._id == this.id_p){
-        this.lines = el.lines;
-        console.log(el)
-      }
-      this.load=true;
-    });
+    let elemente = na.find( e => e._id == this.id_p);
+
+    this.lines = elemente.lines;
+    this.id_cliente = elemente.client;
+    this.loadPlants();
+    this.id_planta = this.id_p;
+
+    this.lines = elemente.lines;
+    this.load=true;
   }
   getPlants(){
     this.plantas.getAll().subscribe(

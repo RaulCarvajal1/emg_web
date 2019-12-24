@@ -14,7 +14,8 @@ import { empresa } from 'src/app/interfaces/clients.interface';
 import { EmpresasService } from 'src/app/services/empresas.service';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { AlertService } from 'src/app/services/alert.service';
+import { Location } from "@angular/common";
 @Component({
   selector: 'app-addservicio',
   templateUrl: './addservicio.component.html',
@@ -23,10 +24,11 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AddservicioComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private userServices:UsuariosService, 
-              private emgServices:EmgsService, private serviciosService:ServiciosService,
-              private router:Router, private configServices:ConfigurationService,
+              private emgServices:EmgsService, private serviciosService:ServiciosService, 
+              private configServices:ConfigurationService,
               private agreementsServices:AgreementsService, private empresaService:EmpresasService,
-              private plantsService: PlantasService, private auth:AuthService) 
+              private plantsService: PlantasService, private auth:AuthService,
+              private location: Location, private alert:AlertService) 
               {
                 this.serviciosForm = fb.group(
                   {
@@ -93,7 +95,6 @@ export class AddservicioComponent implements OnInit {
   fecExiste(){
     this.configServices.getFec().subscribe(
       res => {
-        console.log(res.detail.value)
         if(res.detail===null){
           this.configServices.setFec().subscribe(res=>{console.log(res)},err=>{});
           this.getMinDate(false);
@@ -205,7 +206,7 @@ export class AddservicioComponent implements OnInit {
     });
   }
   regresar(){
-    this.router.navigateByUrl('/servicios');
+    this.location.back();
   }
   getMinDate(fa){
     const date = new Date();
@@ -226,6 +227,9 @@ export class AddservicioComponent implements OnInit {
     this.agreementsServices.getContratos().subscribe(
       res => {
         this.contratos = res.detail;
+        if(res.detail.length == 0){
+          this.alert.alert('No existe ningun contrato dentro del registro, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
+        }
       },err => {
         console.error(err);
       }
@@ -290,5 +294,8 @@ export class AddservicioComponent implements OnInit {
     },err => {
       console.error(err);
     });
+  }
+  gotoAgreements(){
+    console.log("asi si")
   }
 }

@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container pad">
-  <div class="row">
+  <div class="row" *ngIf="!load">
     <div class="col-sm-12 col-md-4 offset-md-4  centrado-porcentual">
       <div class="card ">
         <div class="card-body">
@@ -29,6 +29,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row" *ngIf="load">
+    <mat-spinner class="mx-auto"></mat-spinner>
   </div>
 </div>
 <app-footer></app-footer>

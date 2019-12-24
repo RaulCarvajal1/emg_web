@@ -35,6 +35,8 @@ export class ViewlineComponent implements OnInit, DoCheck {
   ncorto:string="";
   desc:string="";
 
+  load: boolean = true;
+
   getPlanta(){
     this.plantas.getPlanta(this.id_p).subscribe(
       res=>{
@@ -64,6 +66,7 @@ export class ViewlineComponent implements OnInit, DoCheck {
     this.nombre=this.line.name;
     this.ncorto=this.line.shortname;
     this.desc=this.line.desc;
+    this.load = false;
   }
   regresar(){
     this.router.navigateByUrl('equipos/lineas/'+this.id_p);

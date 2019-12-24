@@ -6,6 +6,8 @@ import { AuthService } from "./../../services/auth.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { EmpresasService } from 'src/app/services/empresas.service';
+import { Location } from '@angular/common';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-add-user', 
@@ -14,9 +16,13 @@ import { EmpresasService } from 'src/app/services/empresas.service';
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(private router:Router, private usuarios:UsuariosService, private auth:AuthService, public fb: FormBuilder,
-              private empresaService:EmpresasService) {
-    this.userForm=fb.group(
+  constructor(private usuarios:UsuariosService, 
+              private auth:AuthService, 
+              public fb: FormBuilder,
+              private empresaService:EmpresasService,
+              private location: Location,
+              private alert: AlertService){
+      this.userForm=fb.group(
       {
         name: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
@@ -35,16 +41,16 @@ export class AddUserComponent implements OnInit {
   options = [
     { name: "Administrador", id : 0},
     { name: "Técnico", id : 1},
-    { name: "Cliente", id : 2}];
+    { name: "Cliente", id : 2}
+  ];
+
   user:User;
   u:string;
-  msg:boolean=false;
-  msgErr:boolean=false;
   isClient: boolean = false;
   empresas: empresa[];
 
   regresar():void{
-    this.router.navigateByUrl('usuarios');
+    this.location.back();
   }
   genUsuCon(){
     this.u=""+(Math.floor(Math.random()*1000000));
@@ -76,7 +82,7 @@ export class AddUserComponent implements OnInit {
                               "role" : values.role
                           }).subscribe(
                               res=>{
-                                this.msg=true;
+                                this.alert.success("Usuario registrado exitosamente, será redireccionado en unos segundos.");
                                 this.sendMail({
                                                 "email" : res.detail.info.email,
                                                 "username" : this.u,
@@ -86,11 +92,11 @@ export class AddUserComponent implements OnInit {
                                               });
                                 setTimeout(() => {
                                   this.regresar();
-                                }, 2000);
+                                }, 4000);
                               },
                               err=>{
                                 console.log(err);
-                                this.msgErr=true;
+                                this.alert.error("Ocurrio un error durante el registro")
                               }
                             );
   }
@@ -99,6 +105,7 @@ export class AddUserComponent implements OnInit {
       console.log(res);
     },err=>{
       console.log(err);
+      this.alert.error("Ocurrio un error al enviar correo de notificación.");
     });
   }
   isClientToggle(){

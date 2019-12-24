@@ -2,7 +2,7 @@
 <div class="container">
 <hr>
 <hr>
-<div class="row">
+<div class="row" *ngIf="load">
     <div class="col-12">
         <div class="card">
             <div class="card-body" *ngIf="!im">
@@ -14,11 +14,6 @@
                     <li class="card-text"><b>Rol: </b> <span>{{getRol(user.role)}}</span></li>
                     <li class="card-text"><b>Estatus:  </b> {{getStatus(user.active)}}</li>
                 </ul>
-                <div class="row" *ngIf="actualizado">
-                    <div class="col text-center">
-                        <h4 class="text-warning">Actualizando...</h4>
-                    </div>
-                </div>
                 <form class="container">
                     <div class="form-group">
                         <label for="username">Nombre de usuario <span *ngIf="usEx" class="text-danger"><b>¡Este usuario ya existe!</b></span></label>
@@ -62,6 +57,14 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div *ngIf="!load">
+    <div class="row">
+        <p class="lead mx-auto">CARGANDO</p>
+    </div>
+    <div class="row">
+        <mat-spinner class="mx-auto"></mat-spinner>
     </div>
 </div>
 <hr>

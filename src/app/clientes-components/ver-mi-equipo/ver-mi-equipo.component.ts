@@ -6,6 +6,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { emgs, Info } from 'src/app/interfaces/emg.interface';
 import { Plant } from 'src/app/interfaces/plant.interface';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-ver-mi-equipo',
@@ -18,7 +19,8 @@ export class VerMiEquipoComponent implements OnInit {
               private emgService:EmgsService, 
               private userService:UsuariosService, 
               private plantasService:PlantasService, 
-              private router:Router) {
+              private router:Router, 
+              private location:Location) {
     this.getEmg(this.activatedRoute.snapshot.paramMap.get('id'));
   }
 
@@ -116,7 +118,7 @@ export class VerMiEquipoComponent implements OnInit {
     }
   }
   regresar(){
-    this.router.navigateByUrl('misequipos');
+    this.location.back();
   }
   actDesStr():string{
     if(this.emg.active){

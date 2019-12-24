@@ -40,10 +40,15 @@ export class EquiposComponent implements OnInit {
 
   have_lines:boolean=false;
 
+  load: boolean = true;
+
   getAllEmgs(){
     this.emgService.getAll().subscribe(
       res=>{
         this.emgs=res.detail;
+        setTimeout(() => {
+          this.load = false;
+        }, 500);
       },err=>{
         console.log(err);
       });
@@ -51,7 +56,6 @@ export class EquiposComponent implements OnInit {
   loadUsers(){
     this.empresaService.get().subscribe(res=>{
       this.clients=res.detail;
-      console.log(res.detail);
       this.setClientList(this.clients);
     },err=>{
       console.log(err);

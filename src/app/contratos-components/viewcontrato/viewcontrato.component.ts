@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgreementsService } from 'src/app/services/agreements.service';
 import { Contrato } from 'src/app/interfaces/agreement.interface';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-viewcontrato',
@@ -11,7 +12,7 @@ import { Contrato } from 'src/app/interfaces/agreement.interface';
 export class ViewcontratoComponent implements OnInit {
 
   constructor(private activatedRoute:ActivatedRoute, private router:Router, 
-              private agreementsService:AgreementsService)
+              private agreementsService:AgreementsService, private location:Location)
             { 
             }
 
@@ -61,6 +62,6 @@ export class ViewcontratoComponent implements OnInit {
     return date.slice(0,16).replace('T',' a las ');
   }
   regresar(){
-    this.router.navigateByUrl('/contratos');
+    this.location.back();
   }
 }

@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="load">
   <hr>
   <div class="row">
     <div class="col-6">
@@ -57,7 +57,7 @@
                     <td>{{getRol(user.role)}}</td>
                     <td>{{getStatus(user.active)}}</td>
                     <td>
-                        <button mat-mini-fab color="primary" (click)="usuarioDet(user._id)">
+                        <button mat-mini-fab class="bg-primary" (click)="usuarioDet(user._id)">
                             <mat-icon>pageview</mat-icon>
                         </button>
                     </td>
@@ -102,5 +102,13 @@
     </div>
   </div>
   <hr><hr>
+</div>
+<div class="container" *ngIf="!load">
+  <div class="row">
+    <p class="lead mx-auto">CARGANDO DATOS</p>
+  </div>
+  <div class="row">
+    <mat-spinner class="mx-auto"></mat-spinner>
+  </div>
 </div>
 <app-footer></app-footer>

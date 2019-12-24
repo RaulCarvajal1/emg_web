@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="!load">
   <hr>
   <div class="row">
     <div class="col-12">
@@ -41,11 +41,6 @@
             </div>
           </div>
           <hr>
-          <div class="row" *ngIf="actualizado">
-            <div class="col text-center">
-                <h4 class="text-warning">Actualizando...</h4>
-            </div>
-          </div>
           <br>
           <div class="row">
             <div class="col">
@@ -91,5 +86,16 @@
     </div>
   </div>
   <hr>
+</div>
+
+<div class="container" *ngIf="load">
+  <div class="row">
+    <p class="lead mx-auto">
+      CARGANDO
+    </p>
+  </div>
+  <div class="row" >
+    <mat-spinner class="mx-auto"></mat-spinner>
+  </div>
 </div>
 <app-footer></app-footer>

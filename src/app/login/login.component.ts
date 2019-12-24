@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  load: boolean = false;
   logForm: FormGroup;
   faillog:boolean=false;
 
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+    this.load = true;
     this.loginService.login(this.logForm.value.usr,this.logForm.value.pwd).subscribe(
       (res)=>{
         this.setSession(res);
@@ -47,6 +49,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['inicio']);
     }else{
       this.faillog=true;
+      this.load = false;
     }
   }
 }

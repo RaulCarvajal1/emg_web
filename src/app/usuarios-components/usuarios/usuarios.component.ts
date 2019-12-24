@@ -17,6 +17,8 @@ export class UsuariosComponent implements OnInit {
   users:User[];
   busq:string;
 
+  load: boolean = false;
+
   empresas: empresa[];
 
   ngOnInit() {
@@ -28,6 +30,7 @@ export class UsuariosComponent implements OnInit {
     this.usuarios.getAllUsers().subscribe(
     (data)=>{
       this.users=data.detail;
+      this.load = true;
     },
     (err)=>{
       console.log(err)

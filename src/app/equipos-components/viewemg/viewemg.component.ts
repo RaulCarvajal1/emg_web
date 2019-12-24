@@ -1,13 +1,13 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmgsService } from 'src/app/services/emgs.service';
-import { User } from 'src/app/interfaces/user.interface';
-import { UsuariosService } from 'src/app/services/usuarios.service';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { emgs, Info } from 'src/app/interfaces/emg.interface';
 import { Plant } from 'src/app/interfaces/plant.interface';
 import { EmpresasService } from 'src/app/services/empresas.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
+import { AlertService } from 'src/app/services/alert.service';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-viewemg',
@@ -20,7 +20,9 @@ export class ViewemgComponent implements OnInit, DoCheck {
               private emgService:EmgsService, 
               private empresaService:EmpresasService, 
               private plantasService:PlantasService, 
-              private router:Router) 
+              private router:Router,
+              private alert: AlertService,
+              private location: Location) 
   { 
     this.getEmg(this.activatedRoute.snapshot.paramMap.get('id'));
   }
@@ -39,7 +41,6 @@ export class ViewemgComponent implements OnInit, DoCheck {
   tipo:string;
   descripcion:string;
   serie:string;
-  actualizado:boolean=false;
   
   cl:empresa;
   cliente:String;
@@ -47,6 +48,8 @@ export class ViewemgComponent implements OnInit, DoCheck {
   planta:string;
   linea:string;
   cod_pro:string;
+
+  load: boolean = true;
 
   loadStrings(){
     let info:Info=this.emg.info;
@@ -56,8 +59,9 @@ export class ViewemgComponent implements OnInit, DoCheck {
     this.descripcion=info.description;
     this.serie=info.serial;
     this.cod_pro = this.emg.cod_pro;
-  }
 
+    this.load = false;
+  }
   getEmg(id:string){
     this.emgService.getById(id).subscribe(res=>{
       console.log(res);
@@ -123,7 +127,7 @@ export class ViewemgComponent implements OnInit, DoCheck {
     }
   }
   regresar(){
-    this.router.navigateByUrl('equipos/equipos');
+    this.location.back();
   }
   actDesStr():string{
     if(this.emg.active){
@@ -133,18 +137,30 @@ export class ViewemgComponent implements OnInit, DoCheck {
     }
   }
   actDes(){
-    this.emgService.actDes(<string>this.activatedRoute.snapshot.paramMap.get("id"),this.emg.active).subscribe(
-      data=>{
-        this.actualizado=true;
-        setTimeout(()=>{
-          this.getEmg(<string>this.activatedRoute.snapshot.paramMap.get("id"));
-          this.actualizado = false;
-        },1500);
-      },err=>{
-        console.log(err);
-      });
+    this.alert.confirm(
+      "¿Desea cambiar el estatus al equipo EMG?",
+      ()=>{
+        this.load = true;
+        this.emgService.actDes(<string>this.activatedRoute.snapshot.paramMap.get("id"),this.emg.active).subscribe(
+          data=>{
+            setTimeout(()=>{
+              this.regresar();
+            },4000);
+            this.alert.success("Actualizado correctamente. Serás redirigido en unos segundos.");
+            this.getEmg(<string>this.activatedRoute.snapshot.paramMap.get("id"));
+            this.load = false;
+          },err=>{
+            console.log(err);
+            this.alert.error("Ocurrio un error durante la actualización.");
+          });
+      },
+      ()=>{
+        this.alert.error("Sin cambios en el registro");
+      }
+      );
   }
   getPdf(){
+    this.alert.alert("Tu PDF se descargará en unos segundos.");
     let data:any={
         template: { "shortid" : "rkgmBHwjyH"  },
         data : {

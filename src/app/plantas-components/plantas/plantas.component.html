@@ -61,7 +61,7 @@
                   <td>{{pnt.boss.email}}</td>
                   <td>{{pnt.lines.length}}</td>
                   <td>
-                      <button mat-mini-fab color="primary" (click)="plantDet(pnt._id)">
+                      <button mat-mini-fab class="bg-primary" (click)="plantDet(pnt._id)">
                           <mat-icon>pageview</mat-icon>
                       </button>
                   </td>
@@ -70,6 +70,14 @@
           </table>
           <h2 *ngIf="vacio()">No existen plantas con los criterios de búsqueda</h2>
       </div>
+    </div>
+  </div>
+  <div *ngIf="!load">
+    <div class="row">
+      <p class="lead mx-auto">CARGANDO</p>
+    </div>
+    <div class="row">
+      <mat-spinner class="mx-auto"></mat-spinner>
     </div>
   </div>
   <hr><hr>

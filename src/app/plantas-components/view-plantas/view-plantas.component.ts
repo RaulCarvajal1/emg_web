@@ -5,6 +5,8 @@ import { UsuariosService } from "./../../services/usuarios.service";
 import { Plant } from "./../../interfaces/plant.interface";
 import { User } from 'src/app/interfaces/user.interface';
 import { EmpresasService } from 'src/app/services/empresas.service';
+import { AlertService } from 'src/app/services/alert.service';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -12,19 +14,21 @@ import { EmpresasService } from 'src/app/services/empresas.service';
   templateUrl: './view-plantas.component.html',
   styleUrls: ['./view-plantas.component.css']
 })
-export class ViewPlantasComponent implements OnInit, DoCheck {
+export class ViewPlantasComponent implements OnInit {
 
-  constructor(private activatedRoute:ActivatedRoute, private router:Router, private plantas:PlantasService, private usuarios:UsuariosService,
-              private empresas:EmpresasService) { 
+  constructor(
+              private activatedRoute:ActivatedRoute, 
+              private router:Router, 
+              private plantas:PlantasService, 
+              private usuarios:UsuariosService,
+              private empresas:EmpresasService,
+              private location: Location,
+              private alert: AlertService) { 
     this.id=this.activatedRoute.snapshot.paramMap.get("id")
   }
   id:string;
   ngOnInit() {
     this.getPlanta();
-  } 
-  ngDoCheck(){
-    this.getName(this.planta.meta.registred_by);
-    this.getDate(this.planta.meta.registred_date);
   }
 
   reg_by:User;
@@ -40,12 +44,17 @@ export class ViewPlantasComponent implements OnInit, DoCheck {
   nPhone:string="";
 
   actualizado:boolean=false;
+  load: boolean = true;
 
   getPlanta(){
     this.plantas.getPlanta(this.id).subscribe(
       res=>{
         this.planta=res.detail;
         this.getEmpresa();
+        this.getName(this.planta.meta.registred_by);
+        this.getDate(this.planta.meta.registred_date);
+        this.load = false;
+
       },err=>{
         console.error(err);
       }
@@ -69,7 +78,7 @@ export class ViewPlantasComponent implements OnInit, DoCheck {
     }
   }
   regresar(){
-    this.router.navigateByUrl('equipos/plantas');
+    this.location.back();
   }
   getName(id:any){
     this.usuarios.getUser(id).subscribe(
@@ -114,21 +123,27 @@ export class ViewPlantasComponent implements OnInit, DoCheck {
         'phone' : p
       }
     };
-    this.plantas.updatePlanta(nPlant).subscribe(
-      res=>{
-        this.actualizado=true;
-        setTimeout(() => {
-          this.getPlanta();
-          this.nName="";
-          this.nCode="";
-          this.neName="";
-          this.nEmail="";
-          this.nPhone="";
-          this.actualizado=false;  
-        }, 1500);
-      },err=>{
-        console.log(err);
-      }
+    this.alert.confirm("¿Actualizar el registro?",
+      ()=>{
+        this.load = true;
+        this.plantas.updatePlanta(nPlant).subscribe(
+          res=>{
+            this.getPlanta();
+            this.nName="";
+            this.nCode="";
+            this.neName="";
+            this.nEmail="";
+            this.nPhone="";
+            this.alert.success("Planta actualizada con éxito!");
+            this.load = false;
+          },err=>{
+            console.log(err);
+            this.alert.error("Error durante la actualización");
+          }
+        );
+      },
+      ()=>{this.alert.error("Sin cambios en el registro")}
     );
+    
   }
 }

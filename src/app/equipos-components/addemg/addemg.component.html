@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <div class="container">
   <hr>
-  <div class="row">
+  <div class="row" *ngIf="!load">
     <div class="col-12">
       <div class="card w-100">
         <div class="card-body">
@@ -18,7 +18,7 @@
                 <div class="form-group">
                   <label for="cliente"><span class="text-danger">*</span>Cliente</label>
                   <select class="form-control" id="cliente" (change)="loadPlants()" formControlName="cliente">
-                    <option *ngFor="let user of users" value="{{user._id}}">{{user.info.name}}</option>
+                    <option *ngFor="let user of users" value="{{user._id}}">{{user.name}}</option>
                   </select>
                   <div *ngIf="emgForm.get('cliente').errors&&emgForm.get('cliente').dirty">
                     <p *ngIf="emgForm.get('cliente').hasError('required')" class="text-danger">El cliente es requerido</p>
@@ -65,7 +65,7 @@
                   <div class="col-8">      
                     <div class="form-group">
                       <label for="modelo">...</label>
-                      <input type="text" class="form-control" id="modelo" formControlName="nombre" placeholder="Nombre" value="{{nombre}}">
+                      <input type="text" class="form-control" id="modelo1" formControlName="nombre" placeholder="Nombre" value="{{nombre}}">
                     </div>
                   </div>
                 </div>
@@ -130,13 +130,22 @@
                         <button type="submit" class="btn btn-primary w-100" [disabled]="emgForm.invalid">Guardar</button>                    
                     </div>
                 </div>
-                <div class="col-4">
-                    <h5 class="text-info" *ngIf="msg">EQUIPO REGISTRADO</h5>
-                    <h5 class="text-danger" *ngIf="msgErr">ERROR DURANTE REGISTRO</h5>
-                </div>
+            </div>
+            <div class="row" *ngIf="guardando">
+              <mat-spinner class="mx-auto"></mat-spinner>
             </div>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="load">
+    <div class="row">
+      <p class="lead mx-auto">CARGANDO</p>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-spinner class="mx-auto"></mat-spinner>
       </div>
     </div>
   </div>

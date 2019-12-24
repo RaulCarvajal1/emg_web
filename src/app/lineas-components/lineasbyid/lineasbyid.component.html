@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="load">
   <hr>
   <div class="row">
     <div class="col">
@@ -11,7 +11,8 @@
     <div class="col"> 
       <h5 class="text-center">Filtrar</h5>
     </div> 
-  </div>  
+  </div> 
+
   <div class="row">
     <div class="col-6">
       <h6 class="text-left">Cliente</h6>
@@ -23,7 +24,9 @@
       </select>
     </div>
   </div>
+
   <br>
+
   <div class="row">
     <div class="col-3">
       <h6 class="text-left">Ver líneas por planta</h6>
@@ -74,7 +77,7 @@
                 <td>{{lns.shortname}}</td>
                 <td>{{lns.desc}}</td>
                 <td>
-                  <button mat-mini-fab color="primary" (click)="plantDet(lns._id)">
+                  <button mat-mini-fab class="bg-primary" (click)="plantDet(lns._id)">
                       <mat-icon>pageview</mat-icon>
                   </button>
                 </td>
@@ -88,4 +91,14 @@
     </div>
   </div>
 </div>
+<!--<div class="container" *ngIf="!load">
+  <div class="row">
+    <p class="lead mx-auto">CARGANDO</p>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-spinner class="mx-auto"></mat-spinner>
+    </div>
+  </div>
+</div>-->
 <app-footer></app-footer>

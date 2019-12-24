@@ -14,7 +14,9 @@ import { Router } from '@angular/router';
 })
 export class ServiciosComponent implements OnInit {
 
-  constructor(private userServices:UsuariosService, private emgServices:EmgsService, private serviciosService:ServiciosService,
+  constructor(private userServices:UsuariosService, 
+              private emgServices:EmgsService, 
+              private serviciosService:ServiciosService,
               private router:Router) { }
 
   tecnicos:User[];
@@ -23,6 +25,8 @@ export class ServiciosComponent implements OnInit {
   busqById:String="";
   id_tec:String="";
   id_emg:String="";
+  
+  load:boolean = true;
 
   ngOnInit() {
     this.loadTecnicos();
@@ -52,6 +56,7 @@ export class ServiciosComponent implements OnInit {
     this.serviciosService.getAll().subscribe(
       res=>{
         this.servicios=res.detail;
+        this.load = false;
       },err=>{
         console.error(err);
       }

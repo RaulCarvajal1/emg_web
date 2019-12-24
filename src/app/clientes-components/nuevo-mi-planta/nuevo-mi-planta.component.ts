@@ -5,7 +5,7 @@ import { User } from 'src/app/interfaces/user.interface';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { Location } from "@angular/common";
 @Component({
   selector: 'app-nuevo-mi-planta',
   templateUrl: './nuevo-mi-planta.component.html',
@@ -13,7 +13,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class NuevoMiPlantaComponent implements OnInit {
 
-  constructor(public fb: FormBuilder, private router:Router, private plantas:PlantasService, private auth:AuthService)
+  constructor(public fb: FormBuilder, private router:Router, private plantas:PlantasService, private auth:AuthService, private location:Location)
   { 
     this.plantaForm=fb.group({
       name:['', [Validators.required]],
@@ -33,7 +33,7 @@ export class NuevoMiPlantaComponent implements OnInit {
 
 
   regresar(){
-    this.router.navigateByUrl('misplantas');
+    this.location.back();
   }
 
   save(){

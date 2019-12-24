@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/services/alert.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-newline',
@@ -11,8 +13,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class NewlineComponent implements OnInit {
 
-  constructor(private router:Router, private activatedRoute:ActivatedRoute, 
-              private planta:PlantasService,public fb: FormBuilder) 
+  constructor(
+    private router:Router, 
+    private activatedRoute:ActivatedRoute, 
+    private planta:PlantasService,
+    public fb: FormBuilder,
+    private location:Location,
+    private alert: AlertService ) 
               {
                 this.lineForm=fb.group({
                   name:['', [Validators.required]],
@@ -29,8 +36,6 @@ export class NewlineComponent implements OnInit {
   lineForm:FormGroup;
   btnen:boolean=true;
   nombrecorto:string="";
-  msg:boolean=false;
-  msgErr:boolean=false;
 
   id_p:string="";
 
@@ -39,6 +44,8 @@ export class NewlineComponent implements OnInit {
 
   nLine:number=0;
   nDesc:string="";
+
+  saving: boolean = false;
 
   getName(id:any){
     this.planta.getPlanta(id).subscribe(
@@ -61,14 +68,15 @@ export class NewlineComponent implements OnInit {
       'shortname':this.nombrecorto,
       'desc':temp.desc
     }
+    this.saving =  true;
     this.planta.addLinea(nl, this.id_p).subscribe(
       res=>{
-        this.msg=true;
+        this.alert.success("Linea registrada conrretamente, en unos segundos serás redireccionado.");
         setTimeout(() => {
           this.router.navigateByUrl('equipos/lineas/'+this.id_p);
-        }, 2000);
+        }, 4000);
       },err=>{
-        this.msgErr=true;
+        this.alert.error("Ocurrio un error durante el registro");
         console.log(err);
       }
     );

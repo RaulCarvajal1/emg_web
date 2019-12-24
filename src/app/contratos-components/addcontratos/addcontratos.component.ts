@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user.interface';
 import { emgs } from 'src/app/interfaces/emg.interface';
 import { AgreementsService } from 'src/app/services/agreements.service';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-addcontratos',
@@ -16,7 +17,7 @@ export class AddcontratosComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private userServices:UsuariosService, 
               private emgServices:EmgsService, private agreementService:AgreementsService,
-              private router:Router) 
+              private router:Router, private location:Location) 
               {
                 this.contratoForm = fb.group(
                   {
@@ -98,7 +99,7 @@ export class AddcontratosComponent implements OnInit {
   }
 
   regresar(){
-    this.router.navigateByUrl('/contratos');
+    this.location.back();
   }
 
 }

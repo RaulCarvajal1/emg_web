@@ -12,7 +12,7 @@ import { AgreementsService } from 'src/app/services/agreements.service';
 import { EmpresasService } from 'src/app/services/empresas.service';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { Contrato } from 'src/app/interfaces/agreement.interface';
-
+import { Location } from "@angular/common";
 
 @Component({ 
   selector: 'app-solicitar-servicio',
@@ -25,7 +25,7 @@ export class SolicitarServicioComponent implements OnInit {
               private emgServices:EmgsService, private serviciosService:ServiciosService,
               private router:Router, private auth: AuthService, private configServices:ConfigurationService,
               private agreementsServices:AgreementsService, private empresaService:EmpresasService,
-              private plantsService: PlantasService) 
+              private plantsService: PlantasService, private location:Location) 
   {
     this.serviciosForm = fb.group(
       {
@@ -169,7 +169,7 @@ export class SolicitarServicioComponent implements OnInit {
     );
   }
   regresar(){
-    this.router.navigateByUrl('/misservicios');
+    this.location.back();
   }
   getMinDate(fa){
     const date = new Date();

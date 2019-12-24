@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Location } from "@angular/common";
 @Component({
   selector: 'app-nuevo-mi-linea',
   templateUrl: './nuevo-mi-linea.component.html',
@@ -12,7 +12,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class NuevoMiLineaComponent implements OnInit {
 
   constructor(private router:Router, private activatedRoute:ActivatedRoute, 
-              private planta:PlantasService,public fb: FormBuilder) 
+              private planta:PlantasService,public fb: FormBuilder,
+              private location:Location) 
               {
                 this.lineForm=fb.group({
                   name:['', [Validators.required]],
