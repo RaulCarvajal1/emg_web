@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="!load">
 <hr>
 <hr> 
   <div class="row">
@@ -24,14 +24,11 @@
                   </div>
                   <div class="col">
                     <div class="">
-                      <h6><b>Nombre de los equipos</b></h6>
-                      <ul>
-                        <li *ngFor="let emg of emgs">{{emg}}</li>
-                      </ul>
+                      <h6><b>Fecha creación del contrato</b></h6>
+                      <h6>{{getDate(contrato.created)}}</h6>
                     </div>
                   </div>
                 </div>
-                <hr>
                 <hr>
                 <div class="row">
                   <div class="col">
@@ -60,23 +57,25 @@
                   </div>
                 </div>
                 <br>
-                <div class="row">
+                <div class="row" *ngIf="contrato.period.single">
                   <div class="col">
                     <div>
                       <h6><b>Contrato único</b></h6>
-                      <h6>El contrato abarca un solo evento</h6>
+                      <h6>El contrato solo será válido para un servicio EMG de cualquier tipo.</h6>
                     </div>
                   </div>
+                </div>
+                <div class="row" *ngIf="!contrato.period.single">
                   <div class="col">
                     <div>
                       <h6><b>Fecha de inicio</b></h6>
-                      <h6>Fecha de incio del contrato</h6>                        
+                      <h6>{{getDate(contrato.period.start)}}</h6>                        
                     </div>
                   </div>
                   <div class="col">
                     <div>
                       <h6><b>Fecha de finalización</b></h6>
-                      <h6>Fecha de finalización de contrato</h6>                        
+                      <h6>{{getDate(contrato.period.end)}}</h6>                    
                     </div>
                   </div>
                 </div>
@@ -96,5 +95,17 @@
   </div>
 <hr>
 <hr>
+</div>
+<div class="container" *ngIf="load">
+  <div class="row">
+    <div class="col text-center">
+      <p class="lead">CARGANDO</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-spinner class="mx-auto"></mat-spinner>
+    </div>
+  </div>
 </div>
 <app-footer></app-footer>

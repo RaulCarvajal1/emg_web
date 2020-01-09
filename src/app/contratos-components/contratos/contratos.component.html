@@ -38,17 +38,17 @@
               <tr>
                 <th scope="col">Nombre</th>
                 <th scope="col">Cliente</th>
-                <th scope="col">Equipos registrados</th>
+                <th scope="col">Tipo de contrato</th>
                 <th scope="col">Detalle</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let contrato of contratos">
                 <td scope="row">{{contrato.name}}</td>
-                <td>{{contrato.client}}</td>
-                <td>{{contrato.emgs.length}}</td>
+                <td>{{getEmpresa(contrato.client)}}</td>
+                <td>{{getTipo(contrato.period.single)}}</td>
                 <td>
-                    <button mat-mini-fab color="primary" (click)="contratoDet(contrato._id)">
+                    <button mat-mini-fab class="bg-primary" (click)="contratoDet(contrato._id)">
                         <mat-icon>pageview</mat-icon>
                     </button>
                 </td>

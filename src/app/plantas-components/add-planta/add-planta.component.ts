@@ -51,7 +51,7 @@ export class AddPlantaComponent implements OnInit {
     this.clientes.get().subscribe(
       res=>{
         this.clients=res.detail;
-        this.selec2data=this.genObservable(this.genArrayList());
+        //this.selec2data=this.genObservable(this.genArrayList());
       },err=>{
         console.error(err);
         return "No definido";
@@ -61,7 +61,8 @@ export class AddPlantaComponent implements OnInit {
   regresar(){
     this.location.back();
   }
-
+ 
+  /*
   genArrayList():Select2OptionData[]{
     this.clients.forEach(el => {
       this.temp.push({id : el._id+'', text : el.name});
@@ -75,7 +76,8 @@ export class AddPlantaComponent implements OnInit {
       obs.complete();
     });
   }
-
+  */
+ 
   save(){
     this.saving = true;
     let temp=this.plantaForm.value;

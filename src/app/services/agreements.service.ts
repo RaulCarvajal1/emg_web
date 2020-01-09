@@ -21,11 +21,15 @@ export class AgreementsService {
   getContratosByClient(id:string){
     return this.http.get<resArray>(`http://${link}/agreements/getcontratobyclient/${id}`);
   }
-
+  getContratosActivosByClient(id:string){
+    return this.http.get<resArray>(`http://${link}/agreements/getcontratosactivosbyclient/${id}`);
+  }
   getContratos(){
     return this.http.get<resArray>(`http://${link}/agreements/getcontratos`);
   }
-
+  getContratosActivos(){
+    return this.http.get<resArray>(`http://${link}/agreements/getcontratosactivos`);
+  }
   addEmg(id:string, data: any){
     return this.http.put<res>(`http://${link}/agreements/addemg/${id}`,data);
   }

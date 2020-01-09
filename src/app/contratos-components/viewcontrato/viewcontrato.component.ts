@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AgreementsService } from 'src/app/services/agreements.service';
 import { Contrato } from 'src/app/interfaces/agreement.interface';
 import { Location } from "@angular/common";
-
+import * as moment from 'moment';
+ 
 @Component({
   selector: 'app-viewcontrato',
   templateUrl: './viewcontrato.component.html',
@@ -29,12 +30,12 @@ export class ViewcontratoComponent implements OnInit {
   end: String;
   single: boolean;
   estatus: boolean;
-  
+  load: boolean = true;
+
   getServicio(id:string){
     this.agreementsService.getContratoById(id).subscribe(
       res=>{
         this.contrato=res.detail;
-        console.log(res.detail);
         this.getStrings();
       },err=>{
         console.error(err);
@@ -50,6 +51,8 @@ export class ViewcontratoComponent implements OnInit {
     //this.single = this.contrato.period.single;
     this.desc  = this.contrato.description;
     this.estatus  = this.contrato.status;
+
+    this.load = false;
   }
   getStatus(s:boolean){
     if(s){
@@ -63,5 +66,10 @@ export class ViewcontratoComponent implements OnInit {
   }
   regresar(){
     this.location.back();
+  }
+  getDate(date:string):string{
+    var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
+    let temp = registro.format('dddd, MMMM Do YYYY');
+    return temp.charAt(0).toUpperCase()+temp.slice(1);
   }
 }

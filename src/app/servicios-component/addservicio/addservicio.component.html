@@ -62,7 +62,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="emg"><span class="text-danger">*</span>Equipo EMG</label>
-                  <select class="form-control form-control-sm" id="emg" formControlName="emg">
+                  <select class="form-control form-control-sm" id="emg" formControlName="emg" (change)="contratosByClient()">
                     <option *ngFor="let emg of emgs" value="{{emg._id}}">{{emg.info.name}}</option>
                   </select>
                   <div *ngIf="serviciosForm.get('emg').errors&&serviciosForm.get('emg').dirty">

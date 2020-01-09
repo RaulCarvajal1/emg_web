@@ -36,12 +36,30 @@ export class ConfigurationComponent implements OnInit {
   }
  
   saveTipo(){
-    this.configServices.saveTipo({'name' : this.newTipo}).subscribe(
+    this.configServices.existeTipo(this.newTipo).subscribe(
       res => {
-        this.addserv = !this.addserv;
-        this.getTipos();
-        this.newTipo="";
-      },err => {
+        if(res.detail.length == 0){
+          this.configServices.saveTipo({'name' : this.newTipo}).subscribe(
+            res => {
+              this.addserv = !this.addserv;
+              this.getTipos();
+              this.newTipo="";
+            },err => {
+              console.error(err);
+            }
+          );
+        }else{
+          this.configServices.actualizarTipo(this.newTipo).subscribe(
+            res => {
+              this.addserv = !this.addserv;
+              this.getTipos();
+              this.newTipo="";
+            },
+            err => console.log(err)
+          );
+        }
+      },
+      err => {
         console.log(err);
       }
     );

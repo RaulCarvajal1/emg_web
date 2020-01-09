@@ -11,6 +11,7 @@ import { EmpresasService } from 'src/app/services/empresas.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { AgreementsService } from 'src/app/services/agreements.service';
 import { Contrato } from 'src/app/interfaces/agreement.interface';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-viewservicio',
@@ -67,6 +68,8 @@ export class ViewservicioComponent implements OnInit {
   score : String  = "";
   scoretext : String  = "";
   
+  load: boolean = true;
+
   loadClients(){
     this.userServices.getAllClients().subscribe(
       res=>{
@@ -88,6 +91,10 @@ export class ViewservicioComponent implements OnInit {
         this.getEmpresa();
         this.getContrato();
         this.nfec  = this.servicio.date;
+
+        setTimeout(() => {
+          this.load = false;
+        }, 1000);
       },err=>{
         console.error(err);
       }
@@ -174,7 +181,9 @@ export class ViewservicioComponent implements OnInit {
     return id.substring(id.length-5,id.length);
   }
   getDate(date:any):String{
-    return date.slice(0,16).replace('T',' a las ');
+    var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
+    let temp = registro.format('dddd, MMMM Do YYYY, h:mm a');
+    return temp.charAt(0).toUpperCase()+temp.slice(1);
   }
   getPdf(){
     let data: any = {

@@ -31,5 +31,11 @@ export class ConfigurationService {
   deleteTipo(id){
     return this.http.delete<res>(`http://${link}/config/delst/${id}`);
   }
+  actualizarTipo(id){
+    return this.http.put<res>(`http://${link}/config/actst/${id}`,{});
+  }
+  existeTipo(name){
+    return this.http.get<res>(`http://${link}/config/extst/${name}`);
+  }
 
 }

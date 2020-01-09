@@ -7,7 +7,7 @@ import { User } from 'src/app/interfaces/user.interface';
 import { EmpresasService } from 'src/app/services/empresas.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { Location } from '@angular/common';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-view-plantas',
@@ -92,7 +92,9 @@ export class ViewPlantasComponent implements OnInit {
     )
   }
   getDate(ut:string){
-    this.reg_date = ut.slice(0, 10);
+    var registro = moment(ut.replace('T',' ').slice(0,16)).locale('es');
+    this.reg_date = registro.format('dddd, MMMM Do YYYY');
+    this.reg_date =  this.reg_date.charAt(0).toUpperCase()+this.reg_date.slice(1);
   }
   updClick(){
     if(this.nName==""){

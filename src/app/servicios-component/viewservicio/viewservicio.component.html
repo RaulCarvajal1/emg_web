@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="!load">
 <hr>
 <hr> 
   <div class="row">
@@ -9,6 +9,7 @@
               <h5 class="card-title">Ver servicio</h5>
               <h6 class="card-subtitle mb-2 text-muted">Id del servicio {{getId(servicio._id)}}</h6>
               <div class="col">
+
                 <hr>
                 <div class="row">
                   <div class="col">
@@ -16,6 +17,7 @@
                   </div>
                 </div>
                 <br>
+
                 <div class="row">
                   <div class="col">
                     <div class="">
@@ -37,6 +39,7 @@
                   </div>
                 </div>
                 <br>
+
                 <div class="row">
                   <div class="col">
                     <div class="">
@@ -61,6 +64,7 @@
                 </div>
                 <br>
                 <hr>
+
                 <div class="row card" *ngIf="stat0">
                   <div class="col">
                     <div class="form-group">
@@ -110,7 +114,8 @@
                   </div>
                 </div>
                 <br>
-                <div class="row" *ngIf="proceso"><!--proceso-->
+
+                <div class="row" *ngIf="proceso">
                   <div class="col">
                     <div class="">
                       <h6><b>Fecha de inicio</b></h6>
@@ -125,7 +130,8 @@
                   </div>
                 </div>
                 <hr>
-                <div class="row" *ngIf="proceso"><!--proceso-->
+
+                <div class="row" *ngIf="proceso">
                   <div class="col">
                     <div class="">
                       <h6><b>Observaciones del servicio</b></h6>
@@ -133,6 +139,7 @@
                   </div>
                 </div>
                 <br>
+
                 <div class="row" *ngIf="proceso">
                   <div class="col">
                     <h6><b>Tipo de sensor</b></h6>
@@ -148,7 +155,8 @@
                   </div>
                 </div>
                 <br>
-                <div class="row" *ngIf="proceso"><!--proceso-->
+
+                <div class="row" *ngIf="proceso">
                   <div class="col">
                     <div class="">
                       <h6><b>Trabajo realizado</b></h6>
@@ -156,7 +164,8 @@
                     </div>
                   </div> 
                 </div>
-                <div class="row" *ngIf="proceso"><!--proceso-->                
+
+                <div class="row" *ngIf="proceso">
                   <div class="col">
                     <div class="">
                       <h6><b>Comentarios</b></h6>
@@ -164,7 +173,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="row" *ngIf="proceso"><!--proceso-->
+
+                <div class="row" *ngIf="proceso">
                   <div class="col">
                     <div class="">
                       <h6><b>Recomendaciones</b></h6>
@@ -173,15 +183,15 @@
                   </div>
                 </div>
 
-                <hr>
-                <div class="row">
+                <div class="row" *ngIf="proceso">
                   <div class="col">
                     <div class="">
                       <h6><b>Precio de la provisión de servicio</b></h6>
                     </div>
                   </div>
                 </div>
-                <div class="row">
+
+                <div class="row" *ngIf="proceso">
                   <div class="col">
                     <div class="">
                       <h6><b>Horas del servicio</b></h6>
@@ -207,7 +217,6 @@
                     </div>
                   </div>
                 </div>
-                <hr>
 
                 <div class="row" *ngIf="proceso">
                   <div class="col">
@@ -239,8 +248,8 @@
                     </div>
                   </div>
                 </div>
-                <hr>
-                <br><br>
+
+                <br>
                 <div class="row" style="padding-bottom: 0px">
                   <div class="col">
                     <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
@@ -259,5 +268,17 @@
   </div>
 <hr>
 <hr>
+</div>
+<div class="container" *ngIf="load">
+  <div class="row">
+    <div class="col text-center">
+      <p class="lead">CARGANDO</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-spinner class="mx-auto"></mat-spinner>
+    </div>
+  </div>
 </div>
 <app-footer></app-footer>

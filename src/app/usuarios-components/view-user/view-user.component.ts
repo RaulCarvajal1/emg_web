@@ -5,6 +5,7 @@ import { User } from "../../interfaces/user.interface";
 import { AuthService } from 'src/app/services/auth.service';
 import { Location } from '@angular/common';
 import { AlertService } from 'src/app/services/alert.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-view-user',
@@ -164,8 +165,11 @@ export class ViewUserComponent implements OnInit{
       }
     )
   }
+
   getDate(ut:string){
-    this.reg_date = ut.slice(0, 10);
+    var registro = moment(ut.replace('T',' ').slice(0,16)).locale('es');
+    this.reg_date = registro.format('dddd, MMMM Do YYYY');
+    this.reg_date =  this.reg_date.charAt(0).toUpperCase()+this.reg_date.slice(1);
   }
   enbuts():boolean{
     if(this.nUser!=""||this.nEmail!=""||this.nName!=""){

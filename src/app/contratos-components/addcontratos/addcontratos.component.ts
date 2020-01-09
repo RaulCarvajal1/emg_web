@@ -7,6 +7,12 @@ import { User } from 'src/app/interfaces/user.interface';
 import { emgs } from 'src/app/interfaces/emg.interface';
 import { AgreementsService } from 'src/app/services/agreements.service';
 import { Location } from "@angular/common";
+import { Observable } from 'rxjs';
+import { Select2OptionData } from 'ng-select2';
+import { Options } from 'select2';
+import { empresa } from 'src/app/interfaces/clients.interface';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-addcontratos',
@@ -17,7 +23,8 @@ export class AddcontratosComponent implements OnInit {
 
   constructor(private fb:FormBuilder, private userServices:UsuariosService, 
               private emgServices:EmgsService, private agreementService:AgreementsService,
-              private router:Router, private location:Location) 
+              private router:Router, private location:Location,
+              private empresaService:EmpresasService, private alert:AlertService) 
               {
                 this.contratoForm = fb.group(
                   {
@@ -26,37 +33,46 @@ export class AddcontratosComponent implements OnInit {
                     start : [null,[]],
                     end : [null,[]],
                     single : [false,[]],
-                    client : ['',[Validators.required]],
-                    emgs : ['',[Validators.required]]
+                    client : ['',[Validators.required]]
                   }
                 );
               }
 
-  clientes:User[];
+  empresas:empresa[];
   emgs:emgs[];
   emg_c_id: String;
   contratoForm:FormGroup;
-  msg:boolean=false;
-  msgErr:boolean=false;
+ 
+  public selec2data: Observable<Array<Select2OptionData>>;
+  temp:Select2OptionData[] = [];
+  public options: Options;
 
   ngOnInit() {
     this.loadEmgs();
-    this.loadClients();
+    this.loadEmpresas();
   }
-
-  loadClients(){
-    this.userServices.getAllClients().subscribe(
-      res=>{
-        this.clientes=res.detail;
-      },err=>{
-        console.error(err);
-      }
-    );
+  genObservable(arr:Select2OptionData[]):Observable<Array<Select2OptionData>> {
+    return Observable.create((obs) => {
+      obs.next(arr);
+      obs.complete();
+    });
+  }
+  genArrayList():Select2OptionData[]{
+    this.emgs.forEach(el => {
+      this.temp.push({id : el._id+'', text : el.info.name});
+    });
+    return this.temp;
   }
   loadEmgs(){
     this.emgServices.getAll().subscribe(
       res=>{
         this.emgs=res.detail;
+        this.selec2data=this.genObservable(this.genArrayList());
+        this.options = {
+          width: '500',
+          multiple: true,
+          tags: true
+        };
       },err=>{
         console.error(err);
       }
@@ -82,24 +98,33 @@ export class AddcontratosComponent implements OnInit {
       }
     };
     console.log(temp); 
-    this.agreementService.saveContrato(tempc).subscribe(
+    this.agreementService.saveContrato(temp).subscribe(
        res=>{
-        this.msg=true
+        this.alert.success("Contrato creado correctamente, serás redirigido en unos segundos.");
         setTimeout(() => {
           this.regresar();
         }, 1500);
       },err=>{
         console.log(err);
-        this.msgErr=true
+        this.alert.error("Error durante el registro");
         setTimeout(() => {
           this.regresar();
         }, 1500);
       }
     );
   }
-
   regresar(){
     this.location.back();
+  } 
+  loadEmpresas(){
+    this.empresaService.get().subscribe(
+      res => {
+        this.empresas = res.detail;
+        console.log(res);
+      },
+      err => {
+        console.error(err)
+      }
+    );
   }
-
 }

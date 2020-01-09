@@ -13,16 +13,9 @@
                   <div class="col">
                     <div class="form-group">
                       <label for="client"><span class="text-danger">*</span>Nombre del cliente</label>
-                      <ng-select2 [data]="selec2data | async"
-                                  [width]="200"
-                                  class="form-control1"
-                                  formControlName="client">
-                      </ng-select2>
-                      <!--
                       <select id="client" class="form-control form-control-sm" formControlName="client">
                         <option *ngFor="let c of clients" value="{{c._id}}">{{c.name}}</option>
                       </select>
-                      -->
                       <div *ngIf="plantaForm.get('client').errors&&plantaForm.get('client').dirty">
                         <p *ngIf="plantaForm.get('client').hasError('required')" class="text-danger">Seleccione un cliente</p>
                       </div>

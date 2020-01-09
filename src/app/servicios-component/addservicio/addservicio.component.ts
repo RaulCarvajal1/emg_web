@@ -16,6 +16,8 @@ import { PlantasService } from 'src/app/services/plantas.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { Location } from "@angular/common";
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-addservicio',
   templateUrl: './addservicio.component.html',
@@ -48,8 +50,6 @@ export class AddservicioComponent implements OnInit {
   emgs:emgs[];
   emg_c_id: String;
   serviciosForm:FormGroup;
-  msg:boolean=false;
-  msgErr:boolean=false;
   minDate:String;
   fecAnt: boolean;
   tipos: any;
@@ -160,11 +160,10 @@ export class AddservicioComponent implements OnInit {
     temp.status = 1;
     temp.client =  this.emg_c_id;
     temp.requested_by = this.auth.getId();
-    console.log(temp);
     this.getEmailData(temp.client,temp.tecnico);
     this.serviciosService.save(temp).subscribe(
        res=>{
-        this.msg=true
+        this.alert.success("Servicio programado correctamente, se enviaron correos a los actores implicados en este servicio. Seras redirigido en unos segundos");
         this.serviciosService.emailProgramar({
                                               "email_tecnico" : this.tec_email,
                                               "email_cliente" : this.cli_email,
@@ -179,17 +178,18 @@ export class AddservicioComponent implements OnInit {
                                             });
         setTimeout(() => {
           this.regresar();
-        }, 1500);
+        }, 3000);
       },err=>{
-        this.msgErr=true
+        this.alert.error("Error durante el registro.");
         setTimeout(() => {
           this.regresar();
-        }, 1500);
+        }, 3000);
       }
     );
   }
   getDate(date:any):string{
-    return date.slice(0,16).replace('T',' a las ');
+    var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
+    return  registro.format('dddd, MMMM Do YYYY, h:mm a');
   }
   getEmailData(idc,idt){
     this.clientes.forEach(async e=>{
@@ -224,7 +224,7 @@ export class AddservicioComponent implements OnInit {
     }
   }
   getContratos(){
-    this.agreementsServices.getContratos().subscribe(
+    this.agreementsServices.getContratosActivos().subscribe(
       res => {
         this.contratos = res.detail;
         if(res.detail.length == 0){
@@ -234,6 +234,18 @@ export class AddservicioComponent implements OnInit {
         console.error(err);
       }
     )
+  }
+  contratosByClient(){
+    this.agreementsServices.getContratosActivosByClient(this.emgs.find( e => e._id == this.serviciosForm.value.emg).client).subscribe(
+      res => {
+        this.contratos = res.detail;
+        if(res.detail.length == 0){
+          this.alert.alert('No existe ningun asignado a este cliente dueño de este equipo, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
+        }
+      },err => {
+        console.error(err);
+      }
+    );
   }
   getEmpresas(){
     this.empresaService.get().subscribe(
@@ -288,9 +300,12 @@ export class AddservicioComponent implements OnInit {
     );
   }
   loadContratosId(){
-    this.agreementsServices.getContratosByClient(<string>this.empresa).subscribe(
+    this.agreementsServices.getContratosActivosByClient(<string>this.empresa).subscribe(
     res => {
       this.contratos = res.detail;
+      if(res.detail.length == 0){
+        this.alert.alert('No existe ningun contrato dentro del registro con estos parámetros de búsqueda, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
+      }
     },err => {
       console.error(err);
     });

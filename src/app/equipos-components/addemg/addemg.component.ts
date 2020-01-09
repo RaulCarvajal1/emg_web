@@ -10,6 +10,8 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { EmpresasService } from 'src/app/services/empresas.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { Location } from '@angular/common';
+import { AgreementsService } from 'src/app/services/agreements.service';
+import { Contrato } from 'src/app/interfaces/agreement.interface';
 
 @Component({
   selector: 'app-addemg',
@@ -21,7 +23,8 @@ export class AddemgComponent implements OnInit{
   constructor(private empresaService:EmpresasService, private plantsService:PlantasService, 
               private emgServices:EmgsService, private router:Router, 
               private authService:AuthService, private fb:FormBuilder,
-              private alert:AlertService, private location: Location) 
+              private alert:AlertService, private location: Location,
+              private agreementsServices:AgreementsService) 
               { 
 
                 this.emgForm = this.fb.group({
@@ -33,13 +36,15 @@ export class AddemgComponent implements OnInit{
                   tipo : ['',[Validators.required]],
                   desc : ['',[Validators.required]],
                   serie : ['',[Validators.required]],
-                  cod_pro : ['',[Validators.required]]
+                  cod_pro : ['',[]],
+                  agreement : ['',[Validators.required]]
                 });
 
               }
 
   ngOnInit() {
     this.loadUsers();
+    this.getContratos();
   }
 
   emgForm:FormGroup;
@@ -49,6 +54,7 @@ export class AddemgComponent implements OnInit{
   lines:Lines[];
   shortname_line:string;
   nombre:string;
+  contratos: Contrato[];
 
   load: boolean = true;
   guardando: boolean = false;
@@ -119,6 +125,7 @@ export class AddemgComponent implements OnInit{
       'plant':temp.planta,
       'line':temp.linea,
       'cod_pro':temp.cod_pro,
+      'agreement':temp.agreement,
       'status':0,
       'active':true,
       'meta':{
@@ -145,6 +152,19 @@ export class AddemgComponent implements OnInit{
 
   regresar(){
     this.location.back();
+  } 
+
+  getContratos(){
+    this.agreementsServices.getContratosActivos().subscribe(
+      res => {
+        this.contratos = res.detail;
+        if(res.detail.length == 0){
+          this.alert.alert('No existe ningun contrato dentro del registro, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
+        }
+      },err => {
+        console.error(err);
+      }
+    )
   }
 
 }
