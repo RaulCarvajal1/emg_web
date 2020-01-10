@@ -159,7 +159,7 @@ export class ViewemgComponent implements OnInit{
   getPdf(){
     this.alert.alert("Tu PDF se descargará en unos segundos.");
     let data:any={
-        template: { "shortid" : "rkgmBHwjyH"  },
+        template: { "shortid" : "H1xG5CSIgU"  },
         data : {
           id: this.emg._id.substring(0,10),
           nombre: this.nombre,

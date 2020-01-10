@@ -185,7 +185,7 @@ export class VerMiServicioComponent implements OnInit {
   getPdf(){
     this.alert.alert('En unos segundos se descargará su PDF.');
     let data: any = {
-      template: { "shortid" : "HJlwC8WhkH"  },
+      template: { "shortid" : "B1gIn0SUxL"  },
       data : {id : this.servicio._id.substring(this.servicio._id.length-5,this.servicio._id.length),
               emg : this.emg,
               tec : this.tec,
@@ -220,7 +220,7 @@ export class VerMiServicioComponent implements OnInit {
     let grand_total = total_iva + total;
     this.alert.alert('En unos segundos se descargará su PDF.');
     let data: any = {
-      template: { "shortid" : "BJxqg5VrlU"  },
+      template: { "shortid" : "SygprRH8g8"  },
       data : {
             proveedor : "",
             contrato : this.contrato,
