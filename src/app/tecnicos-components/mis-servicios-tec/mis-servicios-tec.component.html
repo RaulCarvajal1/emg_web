@@ -47,7 +47,7 @@
         <div class="col-12">
           <table class="table table-striped">
               <thead>
-                <tr>
+                <tr> 
                   <th scope="col">Id</th>
                   <th scope="col">Equipo</th>
                   <th scope="col">Técnico</th>
@@ -66,7 +66,7 @@
                   <td>{{getStatus(servicio.status)}}</td>
                   <td>{{getScore(servicio.score,servicio.status)}}</td>
                   <td>
-                    <button mat-mini-fab color="primary" (click)="viewService(servicio._id)">
+                    <button mat-mini-fab class="bg-primary" (click)="viewService(servicio._id)">
                         <mat-icon>pageview</mat-icon>
                     </button>
                   </td>

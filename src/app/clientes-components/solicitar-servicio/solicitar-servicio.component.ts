@@ -188,7 +188,7 @@ export class SolicitarServicioComponent implements OnInit {
   }
 
   loadContratosId(){
-    this.agreementsServices.getContratosByClient(this.auth.getEmpresaId()).subscribe(
+    this.agreementsServices.getContratosActivosByClient(this.auth.getEmpresaId()).subscribe(
     res => {
       this.contratos = res.detail;
       console.log(res, this.auth.getEmpresaId());

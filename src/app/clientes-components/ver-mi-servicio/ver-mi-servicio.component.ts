@@ -12,6 +12,7 @@ import { AgreementsService } from 'src/app/services/agreements.service';
 import { Contrato } from 'src/app/interfaces/agreement.interface';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { Location } from "@angular/common";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ver-mi-servicio',
@@ -176,7 +177,9 @@ export class VerMiServicioComponent implements OnInit {
     return id.substring(id.length-10,id.length);
   }
   getDate(date:any):String{
-    return date.slice(0,16).replace('T',' a las ');
+    var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
+    let temp = registro.format('dddd, MMMM Do YYYY');
+    return temp.charAt(0).toUpperCase()+temp.slice(1); 
   }
   getPdf(){
     let data: any = {
@@ -202,7 +205,7 @@ export class VerMiServicioComponent implements OnInit {
               contrato : this.contrato,
               tipo_sensor : this.servicio.service_details.tipo_sensor,
               tipo_controlador : this.servicio.service_details.tipo_controlador,
-              tipo_programa : this.servicio.service_details.tipo_programa
+              tipo_programa : this.servicio.service_details.programa
           },
       options : { 'timeout': 60000 }
     };

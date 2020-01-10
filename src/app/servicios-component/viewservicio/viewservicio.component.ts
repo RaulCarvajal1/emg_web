@@ -209,7 +209,7 @@ export class ViewservicioComponent implements OnInit {
               contrato : this.contrato,
               tipo_sensor : this.servicio.service_details.tipo_sensor,
               tipo_controlador : this.servicio.service_details.tipo_controlador,
-              tipo_programa : this.servicio.service_details.tipo_programa
+              tipo_programa : this.servicio.service_details.programa
           },
     options : { 'timeout': 60000 }
     };

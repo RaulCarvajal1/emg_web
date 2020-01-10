@@ -4,6 +4,7 @@ import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { Router } from "@angular/router";
 import { PlantasService } from 'src/app/services/plantas.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { AlertService } from 'src/app/services/alert.service';
 @Component({
   selector: 'app-mis-lineas',
   templateUrl: './mis-lineas.component.html',
@@ -11,10 +12,11 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MisLineasComponent implements OnInit {
 
-  constructor(private router:Router, private plantas:PlantasService, private auth:AuthService) { }
+  constructor(private router:Router, private plantas:PlantasService, private auth:AuthService, private alert: AlertService) { }
 
   ngOnInit() {
     this.loadPlants();
+    this.alert.alert('Primero seleccionar planta para que mueste las lineas correspondientes a esa planta.');
   }
 
   planta:Plant[];

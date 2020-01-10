@@ -108,26 +108,16 @@
                   </div>
                 </div>
               </div>
+              
               <div class="col">
                 <div class="form-group">
-                  <label for="agreement"><span class="text-danger">*</span>Contrato</label>
-                  <select class="form-control form-control-sm" id="agreement" formControlName="agreement">
-                    <option *ngFor="let contrato of contratos" value="{{contrato._id}}">{{contrato.name}}</option>
-                  </select>
-                  <div *ngIf="emgForm.get('agreement').errors&&emgForm.get('agreement').dirty">
-                    <p *ngIf="emgForm.get('agreement').hasError('required')" class="text-danger">El equipo es requerido</p>
-                  </div>
-                </div>
-              </div>
-              <!--<div class="col">
-                <div class="form-group">
-                  <label for="cp"><span class="text-danger">*</span>Contrato</label>
-                  <input type="text" class="form-control" id="cp" formControlName="cod_pro" placeholder="Código de proyecto del equipo">
+                  <label for="cp"><span class="text-danger">*</span>Código de proyecto</label>
+                  <input type="text" class="form-control form-control-sm" id="cp" formControlName="cod_pro" placeholder="Código de proyecto del equipo">
                   <div *ngIf="emgForm.get('cod_pro').errors&&emgForm.get('cod_pro').dirty">
                     <p *ngIf="emgForm.get('cod_pro').hasError('required')" class="text-danger">El Código de proyecto es requerido</p>
                   </div>
                 </div>
-              </div>-->
+              </div>
             </div>
             <br><br>
             <div class="row">

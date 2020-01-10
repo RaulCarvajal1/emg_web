@@ -27,7 +27,7 @@ interface obs {
 interface service_details {
     'tipo_sensor' : String,
     'tipo_controlador' : String,
-    'tipo_programa' : String
+    'programa' : String
 }
 interface payment { 
     'paid' : Boolean,

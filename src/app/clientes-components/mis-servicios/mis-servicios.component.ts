@@ -7,6 +7,7 @@ import { servicios } from 'src/app/interfaces/service.interface';
 import { ServiciosService } from 'src/app/services/servicios.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-mis-servicios',
@@ -101,7 +102,9 @@ export class MisServiciosComponent implements OnInit {
     return id.substring(id.length-10,id.length);
   }
   getDate(date:string):string{
-    return date.slice(0,16).replace('T',' a las ');
+    var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
+    let temp = registro.format('dddd, MMMM Do YYYY');
+    return temp.charAt(0).toUpperCase()+temp.slice(1); 
   }
   gotoNew(){
     this.router.navigateByUrl('misservicios/solicitar');

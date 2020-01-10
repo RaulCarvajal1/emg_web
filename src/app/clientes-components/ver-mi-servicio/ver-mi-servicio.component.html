@@ -144,7 +144,7 @@
                   </div>
                   <div class="col">
                     <h6><b>Tipo de programa</b></h6>
-                    <h6>{{servicio.service_details.tipo_programa}}</h6> 
+                    <h6>{{servicio.service_details.programa}}</h6> 
                   </div>
                 </div>
                 <br>
@@ -191,7 +191,7 @@
                   <div class="col">
                     <div class="">
                       <h6><b>Precio unitario</b></h6>
-                      <h6>$84.58</h6> 
+                      <h6>${{servicio.payment.unitprice}}</h6> 
                     </div>
                   </div>
                   <div class="col">
@@ -202,7 +202,7 @@
                   </div>
                   <div class="col">
                     <div class="">
-                      <h6><b>Precio total USD + IVA <small class="text-muted">(16%)</small></b></h6>
+                      <h6><b>Precio total USD + IVA <small class="text-muted">({{servicio.payment.iva}})</small></b></h6>
                       <h6>${{servicio.payment.total}}</h6> 
                     </div>
                   </div>

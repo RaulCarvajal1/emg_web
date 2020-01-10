@@ -15,6 +15,8 @@ import { Contrato } from 'src/app/interfaces/agreement.interface';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { Location } from "@angular/common";
+import { AlertService } from 'src/app/services/alert.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-addservicio-tec',
@@ -27,7 +29,8 @@ export class AddservicioTecComponent implements OnInit {
               private emgServices:EmgsService, private serviciosService:ServiciosService,
               private router:Router, private auth: AuthService, private configServices:ConfigurationService,
               private agreementsServices:AgreementsService, private empresaService:EmpresasService,
-              private plantsService: PlantasService, private location:Location) 
+              private plantsService: PlantasService, private location:Location,
+              private alert:AlertService) 
   {
     this.serviciosForm = fb.group(
       {
@@ -46,8 +49,6 @@ export class AddservicioTecComponent implements OnInit {
   emgs:emgs[];
   emg_c_id: String;
   serviciosForm:FormGroup;
-  msg:boolean=false;
-  msgErr:boolean=false;
   minDate:String;
   tipos: any;
   fecAnt: boolean;
@@ -157,7 +158,7 @@ export class AddservicioTecComponent implements OnInit {
     this.serviciosService.save(temp).subscribe(
       res=>{
         this.getEmailData(temp.client,temp.tecnico);
-        this.msg=true
+        this.alert.success("Servicio programado correctamente, se enviaron correos a los actores implicados en este servicio. Seras redirigido en unos segundos");
         this.serviciosService.emailProgramar({
                                               "email_tecnico" : this.tec_email,
                                               "email_cliente" : this.cli_email,
@@ -172,17 +173,19 @@ export class AddservicioTecComponent implements OnInit {
                                             });
         setTimeout(() => {
           this.regresar();
-        }, 1500);
+        }, 3000);
       },err=>{
-        this.msgErr=true
+        this.alert.error("Error durante el registro.");
         setTimeout(() => {
           this.regresar();
-        }, 1500);
+        }, 3000);
       }
     );
   }
   getDate(date:any):string{
-    return date.slice(0,16).replace('T',' a las ');
+    var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
+    let temp = registro.format('dddd, MMMM Do YYYY');
+    return temp.charAt(0).toUpperCase()+temp.slice(1);
   }
   getEmailData(idc,idt){
     this.clientes.forEach(async e=>{
@@ -218,9 +221,12 @@ export class AddservicioTecComponent implements OnInit {
     }
   }
   getContratos(){
-    this.agreementsServices.getContratos().subscribe(
+    this.agreementsServices.getContratosActivos().subscribe(
       res => {
         this.contratos = res.detail;
+        if(res.detail.length == 0){
+          this.alert.alert('No existe ningun contrato dentro del registro, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
+        }
       },err => {
         console.error(err);
       }

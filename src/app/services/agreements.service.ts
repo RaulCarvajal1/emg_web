@@ -33,4 +33,11 @@ export class AgreementsService {
   addEmg(id:string, data: any){
     return this.http.put<res>(`http://${link}/agreements/addemg/${id}`,data);
   }
+
+  vencer(id:String){
+    return this.http.put<res>(`http://${link}/agreements/vencer/${id}`,{});
+  }
+  restar(id:String, total:number){
+    return this.http.put<res>(`http://${link}/agreements/restar/${id}`,{ total : total });
+  }
 }

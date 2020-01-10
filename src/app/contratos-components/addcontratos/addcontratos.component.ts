@@ -33,7 +33,8 @@ export class AddcontratosComponent implements OnInit {
                     start : [null,[]],
                     end : [null,[]],
                     single : [false,[]],
-                    client : ['',[Validators.required]]
+                    client : ['',[Validators.required]],
+                    monto : ['',[Validators.required, Validators.pattern(/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/)]]
                   }
                 );
               }
@@ -95,7 +96,9 @@ export class AddcontratosComponent implements OnInit {
         'start' : tempc.start,
         'end' : tempc.end,
         'single' : tempc.single
-      }
+      },
+      'monto' : tempc.monto,
+      'monto_actual' : tempc.monto
     };
     console.log(temp); 
     this.agreementService.saveContrato(temp).subscribe(

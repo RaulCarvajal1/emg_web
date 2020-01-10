@@ -7,7 +7,9 @@ export interface Contrato{
     "emgs" : string[],
     "emgsNames" : string[],
     "name" : string,
-    "status" : boolean
+    "status" : boolean,
+    "monto" : number,
+    "monto_actual" : number
 }
 
 interface period { 

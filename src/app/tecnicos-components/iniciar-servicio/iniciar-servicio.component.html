@@ -14,7 +14,7 @@
                   <div class="col">
                     <h6 class="card-subtitle mb-2">Información de solicitud</h6>
                   </div>
-                </div>
+                </div> 
                 <br>
                 <div class="row">
                   <div class="col">
@@ -55,7 +55,7 @@
                   <div class="col">
                     <div class="">
                       <h6><b>Contrato</b></h6>
-                      <h6>{{contrato}}</h6>                        
+                      <h6>{{nombre_contrato}}</h6>                        
                     </div>
                   </div>
                 </div>
@@ -124,7 +124,7 @@
                   </div>
                   <div class="col">
                     <h6><b>Tipo de programa</b></h6>
-                    <h6>{{servicio.service_details.tipo_programa}}</h6> 
+                    <h6>{{servicio.service_details.programa}}</h6> 
                   </div>
                 </div>
                 <br>
@@ -243,7 +243,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="container">
+        <div class="container" *ngIf="!guardando">
           <div class="row">
             <div class="col">
               <h1 class="display-4">Información del servicio realizado</h1>
@@ -302,13 +302,10 @@
                       <p *ngIf="finalizarForm.get('recomendaciones').hasError('required')" class="text-danger">Campo requerido</p>
                     </div>
                 </div>
+
+                
+
                 <div class="row">
-                  <div class="col">
-                    <div class="form-group">
-                      <label for="fri"><span class="text-danger">*</span>Firma del cliente PROXIMO</label>
-                      <!--<input type="file" class="form-control form-control-sm" id="fri"> EN TRABAJO-->
-                    </div>
-                  </div>
                   <div class="col">
                     <label for="ren"><span class="text-danger">*</span>Satisfacción del servicio</label>
                     <div class="row" id="ren">
@@ -339,14 +336,44 @@
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary" data-dismiss="modal" [disabled]="finalizarForm.invalid">Guardar servicio</button>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <div class="mx-auto sng-border text-center">
+                        <signature-pad [options]="signaturePadOptions" (onEndEvent)="drawComplete()" ></signature-pad>
+                        <p class="lead">Firma del cliente</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <button type="button" class="btn btn-sm btn-secondary ml-auto" (click)="clearSg()">Limpiar</button>
+                  </div>
+                </div>
+
+                <br>
+                <button type="submit" class="btn btn-primary w-100" [disabled]="finalizarForm.invalid">Guardar servicio</button>
               </form>
             </div>
           </div>      
-        </div>        
+        </div>
+        <div class="container" *ngIf="guardando">
+          <div class="row">
+            <div class="col text-center">
+              <p class="lead">CERRANDO SERVICIO</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-spinner class="mx auto"></mat-spinner>
+            </div>
+          </div>
+        </div>      
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" id="close-modal" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

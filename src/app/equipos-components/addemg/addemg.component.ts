@@ -37,7 +37,7 @@ export class AddemgComponent implements OnInit{
                   desc : ['',[Validators.required]],
                   serie : ['',[Validators.required]],
                   cod_pro : ['',[]],
-                  agreement : ['',[Validators.required]]
+                  agreement : ['',[]]
                 });
 
               }

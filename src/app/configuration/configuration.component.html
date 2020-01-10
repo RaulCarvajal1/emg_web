@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col">
           <br>
-          <h6 class="card-subtitle">Permitir fechas anteriores a la actual</h6>
+          <h6 class="lead">Permitir fechas anteriores a la actual</h6>
         </div>
         <div class="col text-right">
           <label class="switch">
@@ -56,6 +56,35 @@
               <input type="text" class="form-control w-100" id="tserv" placeholder="Ej. Calibración, Mantenimiento... Etc." [(ngModel)]="newTipo" [ngModelOptions]="{standalone: true}">
             </div>
             <button type="button" class="btn btn-primary mx-sm-3" (click)="saveTipo()">Guardar</button>
+          </form>
+        </div>
+      </div>
+      <hr>
+      <h6 class="card-subtitle mb-2 text-muted">Precios unitarios por hora de servicio e IVA.</h6>
+      <p class="card-text">Esta opción permite modificar el porcentaje de IVA correspondiente a la ley y el precio unitario por hora de los servicios.</p>
+      <div class="row">
+        <div class="col-8 text-left">
+          <p class="lead">Precio unitario por hora de servicio otorgado en USD</p>
+        </div>
+        <div class="col-4 text-right">
+          <form class="form-inline">
+            <div class="form-group">
+              <input type="number" class="form-control w-100" placeholder="Precio unitario Ej. 88.80" [(ngModel)]="unitprice" [ngModelOptions]="{standalone: true}">
+            </div>
+            <button type="button" class="btn btn-primary mx-sm-3" (click)="actualizarPrecio()" data-toggle="tooltip" data-placement="top" title="Actualizado última vez el {{unitpriceAct}}">Actualizar</button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8 text-left">
+          <p class="lead">Porcentaje de IVA actual por servicio.</p>
+        </div>
+        <div class="col-4 text-right">
+          <form class="form-inline">
+            <div class="form-group">
+              <input type="number" class="form-control w-100" placeholder="Valores de 0 a 1, Ej. 0.18" [(ngModel)]="iva" [ngModelOptions]="{standalone: true}">
+            </div>
+            <button type="button" class="btn btn-primary mx-sm-3" (click)="actualizarIva()" data-toggle="tooltip" data-placement="top" title="Actualizado última vez el {{ivaAct}}">Actualizar</button>
           </form>
         </div>
       </div>

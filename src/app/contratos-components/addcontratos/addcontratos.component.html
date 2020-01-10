@@ -74,6 +74,16 @@
                   </div>
                 </div>
               </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="monto"><span class="text-danger">*</span>Monto monetario del contrato <small>(Monto en USD)</small></label>
+                  <input type="Number" class="form-control form-control-sm" id="monto" formControlName="monto">
+                </div>
+                <div *ngIf="contratoForm.get('monto').errors&&contratoForm.get('monto').dirty">
+                  <p *ngIf="contratoForm.get('monto').hasError('required')" class="text-danger">El monto es requerido</p>
+                  <p *ngIf="contratoForm.get('monto').hasError('pattern')" class="text-danger">Digite un monto válido</p>
+                </div>
+              </div>
             </div>
             <hr>
             <br><br>

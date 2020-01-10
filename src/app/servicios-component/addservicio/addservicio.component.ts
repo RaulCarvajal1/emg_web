@@ -236,7 +236,7 @@ export class AddservicioComponent implements OnInit {
     )
   }
   contratosByClient(){
-    this.agreementsServices.getContratosActivosByClient(this.emgs.find( e => e._id == this.serviciosForm.value.emg).client).subscribe(
+    /*this.agreementsServices.getContratosActivosByClient(this.emgs.find( e => e._id == this.serviciosForm.value.emg).client).subscribe(
       res => {
         this.contratos = res.detail;
         if(res.detail.length == 0){
@@ -245,7 +245,7 @@ export class AddservicioComponent implements OnInit {
       },err => {
         console.error(err);
       }
-    );
+    );*/
   }
   getEmpresas(){
     this.empresaService.get().subscribe(
@@ -263,7 +263,7 @@ export class AddservicioComponent implements OnInit {
         console.error(err);
       }
     );
-  }
+  } 
   loadPlants(){
     this.plantsService. getAllPlantas(<string>this.empresa).subscribe(res=>{
       if(res.detail.length===0){

@@ -14,7 +14,7 @@ import { Location } from "@angular/common";
   templateUrl: './viewemg.component.html',
   styleUrls: ['./viewemg.component.css']
 })
-export class ViewemgComponent implements OnInit, DoCheck {
+export class ViewemgComponent implements OnInit{
 
   constructor(private activatedRoute:ActivatedRoute, 
               private emgService:EmgsService, 
@@ -30,9 +30,6 @@ export class ViewemgComponent implements OnInit, DoCheck {
   ngOnInit() {
     
   }
-  ngDoCheck(){
-    
-  } 
 
   emg:emgs;
 
