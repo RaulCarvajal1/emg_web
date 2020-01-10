@@ -24,6 +24,10 @@ export class ServiciosService {
     return this.http.get<resArray>(`http://${link}/service/getbytec/${id}`);
   }
 
+  getByContrato(id:String){
+    return this.http.get<resArray>(`http://${link}/service/bycontrato/${id}`);
+  }
+
   getByEmg(id:String){
     return this.http.get<resArray>(`http://${link}/service/getbyemg/${id}`);
   }
@@ -48,12 +52,12 @@ export class ServiciosService {
     return this.http.patch<res>(`http://${link}/service/asigtec/${id_s}/${id_t}`,{"date" : date});
   }
 
-  getPdf(data:any){
+  getPdf(data:any, title: string){
     var mediaType = 'application/pdf';
     this.http.post('http://127.0.0.1:5488/api/report', data, { responseType: 'blob' }).subscribe(
         (response) => {
             var blob = new Blob([response], { type: mediaType });
-            saveAs(blob, 'reporte_servicio.pdf');
+            saveAs(blob, `${title}.pdf`);
         },
         e => { console.error(e) }
     );

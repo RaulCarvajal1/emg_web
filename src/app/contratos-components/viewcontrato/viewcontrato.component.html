@@ -112,8 +112,34 @@
                 <div class="row">
                   <div class="col">
                     <div>
-                      <h6><b>Monto inicial o total</b></h6>
-                      <h6>${{contrato.monto}}.00 USD</h6>                        
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Equipo</th>
+                            <th scope="col">Técnico</th>
+                            <th scope="col">Fecha programada</th>
+                            <th scope="col">Estatus</th>
+                            <th scope="col">Calificación</th>
+                            <th scope="col">Detalle</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let servicio of servicios">
+                            <td scope="row">{{getId(servicio._id)}}</td>
+                            <td>{{getEmg(servicio.emg)}}</td>
+                            <td>{{getTecnico(servicio.tecnico)}}</td>
+                            <td>{{getDate(servicio.date)}}</td>
+                            <td>{{getStatusService(servicio.status)}}</td>
+                            <td>{{getScore(servicio.score,servicio.status)}}</td>
+                            <td>
+                              <button mat-mini-fab class="bg-primary" (click)="viewService(servicio._id)" data-toggle="tooltip" data-placement="left" title="Ver detalle">
+                                  <mat-icon>pageview</mat-icon>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>               
                     </div>
                   </div>
                 </div>

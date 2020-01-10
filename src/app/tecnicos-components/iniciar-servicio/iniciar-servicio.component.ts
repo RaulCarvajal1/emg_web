@@ -275,7 +275,7 @@ export class IniciarServicioComponent implements OnInit {
       },
         options : { 'timeout': 60000 }
       };
-      this.serviciosService.getPdf(data);
+      this.serviciosService.getPdf(data,"servicio");
     }
     regresar(){
       this.location.back();

@@ -32,5 +32,7 @@ interface service_details {
 interface payment { 
     'paid' : Boolean,
     'amount' : Number,
-    'total' : Number
+    'total' : Number,
+    'iva' : number,
+    'unit_price' : number
 }
