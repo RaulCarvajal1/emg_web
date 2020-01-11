@@ -44,7 +44,6 @@ export class AddemgComponent implements OnInit{
 
   ngOnInit() {
     this.loadUsers();
-    this.getContratos();
   }
 
   emgForm:FormGroup;
@@ -54,7 +53,6 @@ export class AddemgComponent implements OnInit{
   lines:Lines[];
   shortname_line:string;
   nombre:string;
-  contratos: Contrato[];
 
   load: boolean = true;
   guardando: boolean = false;
@@ -153,18 +151,5 @@ export class AddemgComponent implements OnInit{
   regresar(){
     this.location.back();
   } 
-
-  getContratos(){
-    this.agreementsServices.getContratosActivos().subscribe(
-      res => {
-        this.contratos = res.detail;
-        if(res.detail.length == 0){
-          this.alert.alert('No existe ningun contrato dentro del registro, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
-        }
-      },err => {
-        console.error(err);
-      }
-    )
-  }
 
 }

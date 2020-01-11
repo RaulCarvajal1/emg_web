@@ -160,7 +160,7 @@ this.alert.error("Sin cambios en el registro");
 getPdf(){
 this.alert.alert("Tu PDF se descargará en unos segundos.");
 let data:any={
-template: { "shortid" : "H1xG5CSIgU"  },
+template: { "shortid" : "rkgmBHwjyH"  }, 
 data : {
 id: this.emg._id.substring(0,10),
 nombre: this.nombre,

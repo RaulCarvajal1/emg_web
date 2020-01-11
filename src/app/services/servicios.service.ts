@@ -54,7 +54,7 @@ export class ServiciosService {
 
   getPdf(data:any, title: string){
     var mediaType = 'application/pdf';
-    this.http.post('http://165.227.24.113:5488/api/report', data, { responseType: 'blob' }).subscribe(
+    this.http.post('http://18.189.206.61:5488/api/report', data, { responseType: 'blob' }).subscribe(
         (response) => {
             var blob = new Blob([response], { type: mediaType });
             saveAs(blob, `${title}.pdf`);

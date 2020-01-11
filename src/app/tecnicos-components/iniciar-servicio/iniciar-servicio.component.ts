@@ -249,7 +249,7 @@ export class IniciarServicioComponent implements OnInit {
     }
     getPdf(){
       let data: any = {
-        template: { "shortid" : "B1gIn0SUxL"  },
+        template: { "shortid" : "HJlwC8WhkH"  }, 
         data : {id : this.servicio._id.substring(this.servicio._id.length-5,this.servicio._id.length),
           emg : this.emg,
           tec : this.tec,
