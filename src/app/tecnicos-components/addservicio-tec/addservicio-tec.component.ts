@@ -41,7 +41,6 @@ export class AddservicioTecComponent implements OnInit {
         agreement : ['',[Validators.required]]
       }
     );
-    this.fecExiste();
   }
 
   clientes:User[];
@@ -49,11 +48,12 @@ export class AddservicioTecComponent implements OnInit {
   emgs:emgs[];
   emg_c_id: String;
   serviciosForm:FormGroup;
-  minDate:String;
   tipos: any;
   fecAnt: boolean;
 
   contratos: Contrato[];
+  minDate:String = "0000-01-01T00:00";
+  maxDate:String = "3000-12-311T00:00";
 
   empresas:empresa[];
   plants:Plant[];
@@ -89,21 +89,6 @@ export class AddservicioTecComponent implements OnInit {
         console.log(err);
       }
     );
-  }
-  fecExiste(){
-    this.configServices.getFec().subscribe(
-      res => {
-        console.log(res.detail.value)
-        if(res.detail===null){
-          this.configServices.setFec().subscribe(res=>{console.log(res)},err=>{});
-          this.getMinDate(false);
-        }else{
-          this.getMinDate(<boolean>res.detail.value);
-        }
-      },err => {
-        console.log(err);
-      }
-    )
   }
   loadClients(){
     this.userServices.getAllClients().subscribe(
@@ -201,24 +186,8 @@ export class AddservicioTecComponent implements OnInit {
       }
     });
   }
-
   regresar(){
     this.location.back();
-  }
-  getMinDate(fa){
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    if(fa){
-      this.minDate='';
-    }else{
-      if(month < 10){
-        this.minDate = `${year}-0${month}-${day}T00:00`;
-      }else{
-        this.minDate = `${year}-${month}-${day}T00:00`;
-      }
-    }
   }
   getContratos(){
     this.agreementsServices.getContratosActivos().subscribe(
@@ -291,5 +260,15 @@ export class AddservicioTecComponent implements OnInit {
     },err => {
       console.error(err);
     });
+  }
+  selectContrato(){
+    let temp:Contrato = this.contratos.find( el => el._id == this.serviciosForm.value.agreement);
+    if(!temp.period.single){
+      this.minDate = temp.period.start.substring(0,16);
+      this.maxDate = temp.period.end.substring(0,16);
+    }else{
+      this.minDate = "0000-01-01T00:00";
+      this.maxDate =  "3000-12-311T00:00"
+    }
   }
 }

@@ -27,7 +27,6 @@ import { ServiciosService } from './services/servicios.service';
 import { ConfigurationService } from './services/configuration.service';
 import { AgreementsService } from './services/agreements.service';
 import { EmpresasService } from './services/empresas.service';
-import { PricesService } from './services/prices.service';
 
 import { MatMenuModule, MatSnackBarModule } from '@angular/material/';
 import { MatButtonModule } from '@angular/material/button';
@@ -143,8 +142,7 @@ import { AddEmpresaComponent } from './usuarios-components/add-empresa/add-empre
     ServiciosService,
     ConfigurationService,
     AgreementsService,
-    EmpresasService,
-    PricesService
+    EmpresasService
   ],
   bootstrap: [AppComponent]
 })

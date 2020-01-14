@@ -84,7 +84,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="agreement"><span class="text-danger">*</span>Contrato</label>
-                  <select class="form-control form-control-sm" id="agreement" formControlName="agreement">
+                  <select class="form-control form-control-sm" id="agreement" formControlName="agreement" (change)="selectContrato()">
                     <option *ngFor="let contrato of contratos" value="{{contrato._id}}">{{contrato.name}}</option>
                   </select>
                   <div *ngIf="serviciosForm.get('agreement').errors&&serviciosForm.get('agreement').dirty">
@@ -114,7 +114,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="date"><span class="text-danger">*</span>Fecha y hora</label>
-                  <input type="datetime-local" class="form-control form-control-sm" id="date" formControlName="date" min="{{minDate}}">
+                  <input type="datetime-local" class="form-control form-control-sm" id="date" formControlName="date" min="{{minDate}}" max="{{maxDate}}">
                 </div>
                 <div *ngIf="serviciosForm.get('date').errors&&serviciosForm.get('date').dirty">
                   <p *ngIf="serviciosForm.get('date').hasError('required')" class="text-danger">La fecha es requerido</p>

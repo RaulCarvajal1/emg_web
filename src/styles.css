@@ -33,3 +33,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-style: dashed;
     border-width: 1px;
 }
+
+.mt-buttons{
+    margin-top: 30px;
+}
