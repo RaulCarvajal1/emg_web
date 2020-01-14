@@ -16,7 +16,7 @@ export class MisLineasComponent implements OnInit {
 
   ngOnInit() {
     this.loadPlants();
-    this.alert.alert('Primero seleccionar planta para que mueste las lineas correspondientes a esa planta.');
+    this.alert.alert('Primero seleccionar planta para que mueste las líneas correspondientes a esa planta.');
   }
 
   planta:Plant[];

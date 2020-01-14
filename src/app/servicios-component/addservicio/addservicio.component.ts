@@ -199,7 +199,7 @@ export class AddservicioComponent implements OnInit {
       res => {
         this.contratos = res.detail;
         if(res.detail.length == 0){
-          this.alert.alert('No existe ningun contrato dentro del registro, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
+          this.alert.alert('No existe ningun contrato dentro del registro, por favor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
         }
       },err => {
         console.error(err);
@@ -211,7 +211,7 @@ export class AddservicioComponent implements OnInit {
       res => {
         this.contratos = res.detail;
         if(res.detail.length == 0){
-          this.alert.alert('No existe ningun asignado a este cliente dueño de este equipo, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
+          this.alert.alert('No existe ningun asignado a este cliente dueño de este equipo, por favor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
         }
       },err => {
         console.error(err);
@@ -275,7 +275,7 @@ export class AddservicioComponent implements OnInit {
     res => {
       this.contratos = res.detail;
       if(res.detail.length == 0){
-        this.alert.alert('No existe ningun contrato dentro del registro con estos parámetros de búsqueda, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
+        this.alert.alert('No existe ningun contrato dentro del registro con estos parámetros de búsqueda, por favor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
       }
     },err => {
       console.error(err);

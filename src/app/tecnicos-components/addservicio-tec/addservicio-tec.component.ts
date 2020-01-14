@@ -194,7 +194,7 @@ export class AddservicioTecComponent implements OnInit {
       res => {
         this.contratos = res.detail;
         if(res.detail.length == 0){
-          this.alert.alert('No existe ningun contrato dentro del registro, porfavor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
+          this.alert.alert('No existe ningun contrato dentro del registro, por favor primero generar un contrato para poder solicitar un servicio. Puedes crear un contrato en menú de Contratos > Nuevo Contrato.');
         }
       },err => {
         console.error(err);

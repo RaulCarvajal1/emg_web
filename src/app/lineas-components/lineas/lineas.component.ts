@@ -19,7 +19,7 @@ export class LineasComponent implements OnInit {
     private empresas:EmpresasService,
     private alert: AlertService
     ) { 
-      this.alert.alert("Primero debe seleccionar un cliente para conocer sus plantas y lineas de producción.");
+      this.alert.alert("Primero debe seleccionar un cliente para conocer sus plantas y líneas de producción.");
     }
 
   ngOnInit() {
