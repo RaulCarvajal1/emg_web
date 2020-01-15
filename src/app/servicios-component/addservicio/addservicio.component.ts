@@ -291,7 +291,7 @@ export class AddservicioComponent implements OnInit {
       this.maxDate = temp.period.end.substring(0,16);
     }else{
       this.minDate = "0000-01-01T00:00";
-      this.maxDate =  "3000-12-311T00:00";
+      this.maxDate =  "3000-12-311T00:00"; 
     }
   }
 }

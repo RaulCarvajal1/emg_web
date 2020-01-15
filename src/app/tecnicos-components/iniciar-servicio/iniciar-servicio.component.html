@@ -36,7 +36,7 @@
                     </div>
                   </div>
                 </div>
-                <br>
+                <br> 
                 <div class="row">
                   <div class="col">
                     <div class="">
@@ -223,11 +223,18 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>{{modalText}}</p>
+        <p>¿Iniciar servicio?</p>
+        <p class="text-muted">Al iniciar el servicio se tomará como hora de inicio la siguiente, en caso de que sea incorrecta, por favor modificarla.</p>
+        <div class="">
+          <div class="form-group">
+            <label for="date">Fecha y hora de inicio</label>
+            <input type="datetime-local" class="form-control form-control-sm" id="date" [(ngModel)]="date" min="{{minDate}}" max="{{maxDate}}">
+          </div>
+        </div> 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="inciarServicio()" data-dismiss="modal">Si</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" (click)="inciarServicio()" data-dismiss="modal" style="width: 50px;">Si</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 50px;">No</button>
       </div>
     </div>
   </div>
@@ -256,7 +263,7 @@
                   <div class="col">
                     <div class="form-group">
                       <label for="ts"><span class="text-danger">*</span>Tipo sensor</label>
-                      <input type="text" class="form-control form-control-sm" id="ts" formControlName="tipo_sensor">
+                      <input type="text" class="form-control form-control-sm" id="ts" formControlName="tipo_sensor" (change)="getServiceHours()">
                       <div *ngIf="finalizarForm.get('tipo_sensor').errors&&finalizarForm.get('tipo_sensor').dirty">
                         <p *ngIf="finalizarForm.get('tipo_sensor').hasError('required')" class="text-danger">Campo requerido</p>
                       </div>
@@ -302,9 +309,6 @@
                       <p *ngIf="finalizarForm.get('recomendaciones').hasError('required')" class="text-danger">Campo requerido</p>
                     </div>
                 </div>
-
-                
-
                 <div class="row">
                   <div class="col">
                     <label for="ren"><span class="text-danger">*</span>Satisfacción del servicio</label>
@@ -352,6 +356,86 @@
                     <button type="button" class="btn btn-sm btn-secondary ml-auto" (click)="clearSg()">Limpiar</button>
                   </div>
                 </div>
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="date">Fecha y hora de finalización</label>
+                      <p class="text-muted">Al finalizar el servicio se tomará como hora de fin la siguiente, en caso de que sea incorrecta, por favor modificarla.</p>
+                      <input type="datetime-local" class="form-control form-control-sm" id="date" formControlName="date" min="{{minDate}}" max="{{maxDate}}" (change)="getServiceHours()">
+                    </div>
+                    <div *ngIf="finalizarForm.get('date').errors&&finalizarForm.get('date').dirty">
+                      <p *ngIf="finalizarForm.get('date').hasError('required')" class="text-danger">Campo requerido</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <p>Horas totales del servicio: {{hours}} horas</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col">
+                    <p><b>Asignación de horas por concepto del contrato.</b></p>
+                    <p>Horas totales del servicio: {{hours}} horas</p>
+                  </div>
+                </div>
+
+                <div formArrayName="conceptos">
+                  <div *ngFor="let item of getConceptos.controls; let pind = index" [formGroupName]="pind">
+                  
+                    <div class="row">
+                      <div class="col-1">
+                        <div class="form-group">
+                          <div class="form-group">
+                            <label for="codigo">Id</label>
+                            <input type="text" readonly class="form-control-plaintext" id="codigo" value="{{pind+1}}">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-5">
+                        <div class="form-group">
+                          <div class="form-group">
+                            <label for="codigo">Código</label>
+                            <input type="text" readonly class="form-control-plaintext" id="codigo" formControlName="codigo" >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="form-group">
+                          <label for="precio">Precio</label>
+                          <input type="text" readonly class="form-control-plaintext" id="precio" formControlName="precio" >
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="form-group">
+                          <label for="horas"><span class="text-danger">*</span>Horas - {{getConceptos.value[pind].horas}}</label>
+                          <input type="range" class="custom-range" min="0" max="{{hours}}" step="1" id="horas" formControlName="horas" (change)="getTotal(pind)">
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="form-group">
+                          <label for="subtotal">Subtotal</label>
+                          <input type="text" readonly class="form-control-plaintext" id="subtotal" formControlName="subtotal" value="{{getSubtotal(pind)}}">
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <div class="form-group">
+                        <label for="total">Total en {{contrato.divisa}}</label>
+                        <input type="text" readonly class="form-control-plaintext" id="total" formControlName="total">
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <br>
                 <button type="submit" class="btn btn-primary w-100" [disabled]="finalizarForm.invalid">Guardar servicio</button>
@@ -367,7 +451,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <mat-spinner class="mx auto"></mat-spinner>
+              <mat-spinner class="mx-auto"></mat-spinner>
             </div>
           </div>
         </div>      

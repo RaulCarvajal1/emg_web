@@ -40,8 +40,8 @@ export class ServiciosService {
     return this.http.get<res>(`http://${link}/service/getbyid/${id}`);
   }
 
-  start(id:String){
-    return this.http.put<res>(`http://${link}/service/start/${id}`,{});
+  start(id:String, date: string){
+    return this.http.put<res>(`http://${link}/service/start/${id}`,{ date : date});
   }
 
   finish(id:String,data:any){

@@ -214,10 +214,6 @@ export class VerMiServicioComponent implements OnInit {
     this.serviciosService.getPdf(data, 'servicio');
   }
   getRemito(){
-    let total:any = this.servicio.payment.amount;
-    let iva = this.servicio.payment.iva;
-    let total_iva = total*iva;
-    let grand_total = total_iva + total;
     this.alert.alert('En unos segundos se descargará su PDF.');
     let data: any = {
       template: { "shortid" : "BJxqg5VrlU"  }, 
@@ -227,13 +223,11 @@ export class VerMiServicioComponent implements OnInit {
             remision : this.servicio._id.substring(this.servicio._id.length-10,this.servicio._id.length),
             descripcion_corta : this.servicio.desc,
             hora : this.servicio.hours,
-            unitprice : this.servicio.payment.unit_price,
-            total : this.servicio.payment.amount,
-            iva : (this.servicio.payment.iva)*100,
-            total_iva : total_iva,
-            grand_total : grand_total,
+            total : this.servicio.payment.total,
+            divisa : this.servicio.payment.divisa,
             fecha : this.getDate(this.servicio.finish),
-            descripcion_larga : this.servicio.observ.trabajo_realizado
+            descripcion_larga : this.servicio.observ.trabajo_realizado,
+            conceptos : this.servicio.conceptos
           },
     options : { 'timeout': 60000 }
     };
@@ -286,7 +280,6 @@ export class VerMiServicioComponent implements OnInit {
       }
     });
   }
-
   getRequested(){
     this.userServices.getUser(<string>this.servicio.requested_by).subscribe(
       req => {

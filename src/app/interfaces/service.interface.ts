@@ -16,7 +16,8 @@ export interface servicios {
     'requested_by' : String,
     'service_details' : service_details,
     'agreement' : String,
-    'payment' : payment
+    'payment' : payment,
+    'conceptos' : conceptos []
 }
 
 interface obs { 
@@ -30,9 +31,13 @@ interface service_details {
     'programa' : String
 }
 interface payment { 
-    'paid' : Boolean,
-    'amount' : Number,
-    'total' : Number,
-    'iva' : number,
-    'unit_price' : number
+    'divisa' : string,
+    'total' : number,
+}
+interface conceptos {
+    'codigo' : string,
+    'descripcion' : string,
+    'horas' : number,
+    'precio' : number,
+    'subtotal' : number
 }

@@ -45,7 +45,6 @@ export class ViewservicioComponent implements OnInit {
   proceso:boolean=false;
   stat0: boolean = false;
   btnen:boolean = true;
-  msg:boolean = false;
   tecnicos: User[];
   clientes:User[];
   tec_id:string = "";
@@ -53,6 +52,8 @@ export class ViewservicioComponent implements OnInit {
   requestby: String = "";
   empresa: String = "";
   contrato: String = "";
+  minDate: string = "0000-01-01T00:00";
+  maxDate: string =  "3000-12-311T00:00"
 
   //email data
   tec_email:string;
@@ -219,10 +220,6 @@ export class ViewservicioComponent implements OnInit {
     this.serviciosService.getPdf(data,"servicio");
   }
   getRemito(){
-    let total:any = this.servicio.payment.amount;
-    let iva = this.servicio.payment.iva;
-    let total_iva = total*iva;
-    let grand_total = total_iva + total;
     this.alert.alert('En unos segundos se descargará su PDF.');
     let data: any = {
       template: { "shortid" : "BJxqg5VrlU"  }, 
@@ -232,19 +229,17 @@ export class ViewservicioComponent implements OnInit {
             remision : this.servicio._id.substring(this.servicio._id.length-10,this.servicio._id.length),
             descripcion_corta : this.servicio.desc,
             hora : this.servicio.hours,
-            unitprice : this.servicio.payment.unit_price,
-            total : this.servicio.payment.amount,
-            iva : (this.servicio.payment.iva)*100,
-            total_iva : total_iva,
-            grand_total : grand_total,
+            total : this.servicio.payment.total,
+            divisa : this.servicio.payment.divisa,
             fecha : this.getDate(this.servicio.finish),
-            descripcion_larga : this.servicio.observ.trabajo_realizado
+            descripcion_larga : this.servicio.observ.trabajo_realizado,
+            conceptos : this.servicio.conceptos
           },
     options : { 'timeout': 60000 }
     };
     this.serviciosService.getPdf(data,"remito");
   }
-  regresar(){
+  regresar(){ 
     this.router.navigateByUrl('/servicios');
   }
   enBut(){
@@ -253,8 +248,7 @@ export class ViewservicioComponent implements OnInit {
   asigTec(){
     this.serviciosService.asigTec(this.servicio._id,this.tec_id, this.nfec).subscribe(
       res => {
-        console.log(res);
-        this.msg = true;
+        this.alert.success('Técnico asignado correctamente, se le notificará en seguida');
         this.stat0 = false;
         this.getEmailData(this.servicio.client,this.tec_id);
         this.serviciosService.emailProgramar({
@@ -265,15 +259,16 @@ export class ViewservicioComponent implements OnInit {
                                                 "date" : this.getDate(this.nfec),
                                                 "id" : this.servicio._id.substring(this.servicio._id.length-10,this.servicio._id.length)
                                               }).subscribe(res=>{
-                                                console.log(res);
                                               },err=>{
-                                                console.error(err);
                                               });
         setTimeout(() => {
           this.regresar()
-        }, 1000);
+        }, 3000);
       },err => {
-        console.error(err);
+        this.alert.error('Ocurrio un error durante la asignación');
+        setTimeout(() => {
+          this.regresar();
+        }, 3000);
       }
     );
   }
@@ -316,6 +311,13 @@ export class ViewservicioComponent implements OnInit {
       req => {
         let e:Contrato = req.detail;
         this.contrato = e.name;
+        if(!e.period.single){
+          this.minDate = e.period.start.substring(0,16);
+          this.maxDate = e.period.end.substring(0,16);
+        }else{
+          this.minDate = "0000-01-01T00:00";
+          this.maxDate =  "3000-12-311T00:00";
+        }
       },err => {
         console.error(err);
       }

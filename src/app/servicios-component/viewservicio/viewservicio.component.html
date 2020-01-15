@@ -51,7 +51,6 @@
                     <div class="">
                       <h6><b>Nombre de técnico</b></h6>
                       <h6 *ngIf="stat0" class="text-danger">Falta asignar técnico</h6>
-                      <h6 class="text-warning" *ngIf="msg"><b>Asignando...</b></h6>
                       <h6>{{tec}}</h6>                        
                     </div>
                   </div>
@@ -75,7 +74,7 @@
                     </div>
                     <div class="form-group">
                       <label for="nfecnue"><span class="text-danger">*</span>Fecha y hora solicitadas <small class="text-muted">Puedes cambiarlo dependiendo de la disponibilidad del técnico.</small> </label>
-                      <input class="form-control form-control-sm" type="datetime-local" id="nfecnue" [(ngModel)]="nfec" (change)="showf()">
+                      <input class="form-control form-control-sm" type="datetime-local" id="nfecnue" [(ngModel)]="nfec" (change)="showf()" min="{{minDate}}" max="{{maxDate}}">
                     </div>
                     <button class="btn btn-primary" [disabled]="btnen" (click)="asigTec()">Asignar y programar</button>
                     <small class="text-muted" *ngIf="!msg">Al asignar el técnico, se le enviara un correo notificandole que se le asigno un servicio a realizar.</small>
@@ -186,37 +185,45 @@
                 <div class="row" *ngIf="proceso">
                   <div class="col">
                     <div class="">
-                      <h6><b>Precio de la provisión de servicio</b></h6>
+                      <h6><b>Precio de la provisión de servicio por conceptos</b></h6>
                     </div>
                   </div>
                 </div>
 
                 <div class="row" *ngIf="proceso">
                   <div class="col">
-                    <div class="">
-                      <h6><b>Horas del servicio</b></h6>
-                      <h6>{{servicio.hours}} - Horas</h6> 
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="">
-                      <h6><b>Precio unitario</b></h6>
-                      <h6>${{servicio.payment.unit_price}}.0</h6> 
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="">
-                      <h6><b>Precio total USD</b></h6>
-                      <h6>${{servicio.payment.amount}}.0</h6> 
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="">
-                      <h6><b>Precio total USD + IVA <small class="text-muted">({{servicio.payment.iva}})</small></b></h6>
-                      <h6>${{servicio.payment.total}}</h6> 
-                    </div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Código</th>
+                          <th scope="col">Descripcion</th>
+                          <th scope="col">Horas</th>
+                          <th scope="col">Precio</th>
+                          <th scope="col">Subtotal</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let concepto of servicio.conceptos">
+                          <th scope="row">{{concepto.codigo}}</th>
+                          <td>{{concepto.descripcion}}</td>
+                          <td class="text-right">{{concepto.horas}}</td>
+                          <td class="text-right">${{concepto.precio}}</td>
+                          <td class="text-right">${{concepto.subtotal}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
+                <div class="row" *ngIf="proceso">
+                  <div class="col text-left">
+                    <p><b>Total de horas del servicio:</b>  {{servicio.hours}} horas</p>
+                  </div>
+                  <div class="col text-right">
+                    <p><b>Total({{servicio.payment.divisa}}):</b>  ${{servicio.payment.total}}</p>
+                  </div>
+                </div>
+
+                <hr>
 
                 <div class="row" *ngIf="proceso">
                   <div class="col">

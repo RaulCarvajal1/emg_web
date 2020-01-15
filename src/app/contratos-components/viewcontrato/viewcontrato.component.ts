@@ -10,6 +10,8 @@ import { servicios } from 'src/app/interfaces/service.interface';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { EmgsService } from 'src/app/services/emgs.service';
 import { ServiciosService } from 'src/app/services/servicios.service';
+import { empresa } from 'src/app/interfaces/clients.interface';
+import { EmpresasService } from 'src/app/services/empresas.service';
  
 @Component({
   selector: 'app-viewcontrato',
@@ -24,7 +26,8 @@ export class ViewcontratoComponent implements OnInit {
               private location:Location,
               private userServices:UsuariosService, 
               private emgServices:EmgsService, 
-              private serviciosService:ServiciosService)
+              private serviciosService:ServiciosService,
+              private empresaService:EmpresasService,)
             { 
             }
  
@@ -33,6 +36,7 @@ export class ViewcontratoComponent implements OnInit {
     this.loadTecnicos();
     this.loadEmgs();
     this.loadServices();
+    this.loadEmpresas();
   }
 
   contrato:Contrato;
@@ -49,6 +53,8 @@ export class ViewcontratoComponent implements OnInit {
   tecnicos:User[];
   emgs:emgs[];
   servicios:servicios[];
+
+  empresas: empresa[];
 
   loadTecnicos(){
     this.userServices.gettec().subscribe(
@@ -147,7 +153,6 @@ export class ViewcontratoComponent implements OnInit {
   }
   getStrings(){
     this.name = this.contrato.name;
-    this.cliente = this.contrato.client;
     //this.start = this.contrato.period.start;
     //this.end = this.contrato.period.end;
     //this.single = this.contrato.period.single;
@@ -171,5 +176,17 @@ export class ViewcontratoComponent implements OnInit {
     var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
     let temp = registro.format('dddd, MMMM Do YYYY');
     return temp.charAt(0).toUpperCase()+temp.slice(1);
+  }
+
+  loadEmpresas(){
+    this.empresaService.get().subscribe(
+      res => {
+        this.empresas = res.detail;
+        this.cliente = this.empresas.find( e => e._id == this.contrato.client).name;
+      },
+      err => {
+        console.error(err)
+      }
+    );
   }
 }

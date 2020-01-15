@@ -12,7 +12,7 @@ import { AgreementsService } from 'src/app/services/agreements.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { Contrato } from 'src/app/interfaces/agreement.interface';
 import * as moment from 'moment'; 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Location } from "@angular/common";
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { AlertService } from 'src/app/services/alert.service';
@@ -31,57 +31,13 @@ export class IniciarServicioComponent implements OnInit {
               private fb:FormBuilder, private location:Location,
               private alert: AlertService)
               { 
+                this.initForm();
+                
                 this.getServicio(this.activatedRoute.snapshot.paramMap.get("id"));
                 this.mala = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMyIDMyIiB3aWR0aD0iNTEyIiBjbGFzcz0iIj48Zz48cGF0aCBkPSJtMjYgMzJoLTIwYy0zLjMxNCAwLTYtMi42ODYtNi02di0yMGMwLTMuMzE0IDIuNjg2LTYgNi02aDIwYzMuMzE0IDAgNiAyLjY4NiA2IDZ2MjBjMCAzLjMxNC0yLjY4NiA2LTYgNnoiIGZpbGw9IiNlM2Y4ZmEiIGRhdGEtb3JpZ2luYWw9IiNFM0Y4RkEiIGNsYXNzPSIiIGRhdGEtb2xkX2NvbG9yPSIjZTNmOGZhIiBzdHlsZT0iZmlsbDojRkFFM0UzIj48L3BhdGg+PHBhdGggZD0ibTE2IDhjLTQuNDEzIDAtOCAzLjU4Ny04IDhzMy41ODcgOCA4IDggOC0zLjU4NyA4LTgtMy41ODctOC04LTh6bS00LjY2NyA2LjA0N2MwLS43NC42LTEuMzMzIDEuMzMzLTEuMzMzczEuMzMzLjU5MyAxLjMzMyAxLjMzM2MwIC43MzMtLjYgMS4zMzMtMS4zMzMgMS4zMzNzLTEuMzMzLS42LTEuMzMzLTEuMzMzem04LjQ3MiA2LjQ0OGMtLjEzLjEzLS4zMDEuMTk1LS40NzEuMTk1LS4xNzEgMC0uMzQxLS4wNjUtLjQ3MS0uMTk1LS43NjUtLjc2NS0xLjc4Mi0xLjE4NS0yLjg2My0xLjE4NXMtMi4wOTguNDIxLTIuODYyIDEuMTg2Yy0uMjYuMjYtLjY4Mi4yNi0uOTQzIDAtLjI2LS4yNi0uMjYtLjY4MiAwLS45NDMgMS4wMTYtMS4wMTYgMi4zNjgtMS41NzYgMy44MDUtMS41NzZzMi43ODguNTYgMy44MDUgMS41NzZjLjI2LjI2LjI2LjY4MiAwIC45NDJ6bS0uNDcyLTUuMTE1Yy0uNzMzIDAtMS4zMzMtLjYtMS4zMzMtMS4zMzMgMC0uNzQuNi0xLjMzMyAxLjMzMy0xLjMzM3MxLjMzMy41OTMgMS4zMzMgMS4zMzNjLjAwMS43MzMtLjU5OSAxLjMzMy0xLjMzMyAxLjMzM3oiIGZpbGw9IiM4Y2UxZWIiIGRhdGEtb3JpZ2luYWw9IiM4Q0UxRUIiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6I0RFNEI0QiIgZGF0YS1vbGRfY29sb3I9IiM4Y2UxZWIiPjwvcGF0aD48L2c+IDwvc3ZnPg==');
                 this.regular = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMyIDMyIiB3aWR0aD0iNTEyIiBjbGFzcz0iIj48Zz48cGF0aCBkPSJtMjYgMzJoLTIwYy0zLjMxNCAwLTYtMi42ODYtNi02di0yMGMwLTMuMzE0IDIuNjg2LTYgNi02aDIwYzMuMzE0IDAgNiAyLjY4NiA2IDZ2MjBjMCAzLjMxNC0yLjY4NiA2LTYgNnoiIGZpbGw9IiNmZmU2ZTIiIGRhdGEtb3JpZ2luYWw9IiNGRkU2RTIiIGNsYXNzPSIiIGRhdGEtb2xkX2NvbG9yPSIjZmZlNmUyIiBzdHlsZT0iZmlsbDojRTJGOUZGIj48L3BhdGg+PHBhdGggZD0ibTE2IDhjLTQuNDEzIDAtOCAzLjU4Ny04IDhzMy41ODcgOCA4IDggOC0zLjU4NyA4LTgtMy41ODctOC04LTh6bS01LjMzMyA2LjMzM2MwLTEuMjg2IDEuMDQ2LTIuMzMzIDIuMzMzLTIuMzMzczIuMzMzIDEuMDQ3IDIuMzMzIDIuMzMzLTEuMDQ2IDIuMzM0LTIuMzMzIDIuMzM0LTIuMzMzLTEuMDQ3LTIuMzMzLTIuMzM0em03LjUgNS44MzRoLTQuMzMzYy0uMzY4IDAtLjY2Ny0uMjk5LS42NjctLjY2N3MuMjk4LS42NjcuNjY3LS42NjdoNC4zMzNjLjM2OCAwIC42NjcuMjk5LjY2Ny42NjdzLS4yOTkuNjY3LS42NjcuNjY3em0uODMzLTMuNWMtMS4yODcgMC0yLjMzMy0xLjA0Ny0yLjMzMy0yLjMzM3MxLjA0Ni0yLjMzNCAyLjMzMy0yLjMzNCAyLjMzMyAxLjA0NyAyLjMzMyAyLjMzMy0xLjA0NiAyLjMzNC0yLjMzMyAyLjMzNHoiIGZpbGw9IiNmYzU3M2IiIGRhdGEtb3JpZ2luYWw9IiNGQzU3M0IiIGNsYXNzPSJhY3RpdmUtcGF0aCIgZGF0YS1vbGRfY29sb3I9IiNmYzU3M2IiIHN0eWxlPSJmaWxsOiM0QjlEREUiPjwvcGF0aD48L2c+IDwvc3ZnPg==");
                 this.buena = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMyIDMyIiB3aWR0aD0iNTEyIiBjbGFzcz0iIj48Zz48cGF0aCBkPSJtMjYgMzJoLTIwYy0zLjMxNCAwLTYtMi42ODYtNi02di0yMGMwLTMuMzE0IDIuNjg2LTYgNi02aDIwYzMuMzE0IDAgNiAyLjY4NiA2IDZ2MjBjMCAzLjMxNC0yLjY4NiA2LTYgNnoiIGZpbGw9IiNmZmU2ZTIiIGRhdGEtb3JpZ2luYWw9IiNGRkU2RTIiIGNsYXNzPSJhY3RpdmUtcGF0aCIgZGF0YS1vbGRfY29sb3I9IiNmZmU2ZTIiIHN0eWxlPSJmaWxsOiNFRkZGRTIiPjwvcGF0aD48cGF0aCBkPSJtMjYgMzJoLTIwYy0zLjMxNCAwLTYtMi42ODYtNi02di0yMGMwLTMuMzE0IDIuNjg2LTYgNi02aDIwYzMuMzE0IDAgNiAyLjY4NiA2IDZ2MjBjMCAzLjMxNC0yLjY4NiA2LTYgNnoiIGZpbGw9IiNmZmU2ZTIiIGRhdGEtb3JpZ2luYWw9IiNGRkU2RTIiIGNsYXNzPSJhY3RpdmUtcGF0aCIgZGF0YS1vbGRfY29sb3I9IiNmZmU2ZTIiIHN0eWxlPSJmaWxsOiNFRkZGRTIiPjwvcGF0aD48cGF0aCBkPSJtMTYgOGMtNC40MTEgMC04IDMuNTg5LTggOHMzLjU4OSA4IDggOCA4LTMuNTg5IDgtOC0zLjU4OS04LTgtOHptMy4zMzMgNC43MWMuNzM1IDAgMS4zMzMuNTk4IDEuMzMzIDEuMzMzcy0uNTk4IDEuMzMzLTEuMzMzIDEuMzMzLTEuMzMzLS41OTctMS4zMzMtMS4zMzJjMC0uNzM2LjU5OC0xLjMzNCAxLjMzMy0xLjMzNHptLTYuNjY2IDBjLjczNSAwIDEuMzMzLjU5OCAxLjMzMyAxLjMzM3MtLjU5OCAxLjMzMy0xLjMzMyAxLjMzMy0xLjMzMy0uNTk4LTEuMzMzLTEuMzMzYy0uMDAxLS43MzUuNTk3LTEuMzMzIDEuMzMzLTEuMzMzem04Ljk3NyA1LjI3MWMtLjc3MyAyLjQ5MS0zLjA0MSA0LjE2NS01LjY0NCA0LjE2NXMtNC44NzEtMS42NzQtNS42NDQtNC4xNjVjLS4wNDctLjE1Mi0uMDE5LS4zMTcuMDc1LS40NDVzLjI0NC0uMjAzLjQwMy0uMjAzaDEwLjMzM2MuMTU5IDAgLjMwOC4wNzYuNDAzLjIwMy4wOTMuMTI5LjEyMS4yOTQuMDc0LjQ0NXoiIGZpbGw9IiNmYzU3M2IiIGRhdGEtb3JpZ2luYWw9IiNGQzU3M0IiIGNsYXNzPSIiIHN0eWxlPSJmaWxsOiMwQTlEMzEiIGRhdGEtb2xkX2NvbG9yPSIjZmM1NzNiIj48L3BhdGg+PC9nPiA8L3N2Zz4=");
-                
-                this.finalizarForm = fb.group(
-                  {
-                    score : ['',[Validators.required]],
-                    tipo_sensor : ['',[Validators.required]],
-                    tipo_controlador : ['',[Validators.required]],
-                    programa : ['',[Validators.required]],
-                    trabajo_realizado : ['',[Validators.required]],
-                    comentarios : ['',[Validators.required]],
-                    recomendaciones : ['',[Validators.required]]
-                  }
-                );
               }
-  
-    ngOnInit() {
-      this.loadClients();
-      this.getTecnicos();
-      this.getIva();
-      this.getUnitprice();
-    }
-    
-
-    @ViewChild(SignaturePad) signaturePad: SignaturePad;
- 
-    private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
-      'minWidth': 1,
-      'canvasWidth': 600,
-      'canvasHeight': 300,
-      'penColor' :  'rgb(0, 0, 0)'
-    };
-
-    ngAfterViewInit() {
-      // this.signaturePad is now available
-      this.signaturePad.set('minWidth', 2); // set szimek/signature_pad options at runtime
-      this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
-    }
-   
-    drawComplete() {
-      // will be notified of szimek/signature_pad's onEnd event
-      //console.log(this.signaturePad.toDataURL());
-      this.signature = this.signaturePad.toDataURL();
-    }
-   
-    drawStart() {
-      // will be notified of szimek/signature_pad's onBegin event
-      console.log('begin drawing');
-    }
 
     finalizarForm:FormGroup;
 
@@ -91,8 +47,6 @@ export class IniciarServicioComponent implements OnInit {
     emg:string;
 
     signature : string;
-    iva: number = 0;
-    unitprice: number = 0;
 
     proceso:boolean=false;
     stat0: boolean = false;
@@ -100,12 +54,9 @@ export class IniciarServicioComponent implements OnInit {
     stat2: boolean = false;
     stat3: boolean = false;
     
-    btnen:boolean = true;
-    msg:boolean = false;
     tecnicos: User[];
     clientes:User[];
     tec_id:string = "";
-    nfec:String;
 
     requestby: String = "";
     empresa: String = "";
@@ -132,6 +83,69 @@ export class IniciarServicioComponent implements OnInit {
 
     guardando: boolean = false;
 
+    date: string = moment().format().substring(0,16);
+    minDate:String = "0000-01-01T00:00";
+    maxDate:String = "3000-12-311T00:00";
+    hours: number = 0;
+
+    index: number = 0;
+
+    totalPrecio: number = 0;
+    totalHoras: number = 0;
+    
+    maxHoras: boolean = false;
+
+    ngOnInit() {
+      this.loadClients();
+      this.getTecnicos();
+      this.getServiceHours();
+    }
+    initForm(){
+      this.finalizarForm = this.fb.group(
+        {
+          score : ['',[Validators.required]],
+          tipo_sensor : ['',[Validators.required]],
+          tipo_controlador : ['',[Validators.required]],
+          programa : ['',[Validators.required]],
+          trabajo_realizado : ['',[Validators.required]],
+          comentarios : ['',[Validators.required]],
+          recomendaciones : ['',[Validators.required]],
+          date : [moment().format().substring(0,16),[Validators.required]],
+          conceptos : this.fb.array(
+            [
+              /*this.fb.group({
+                codigo : ['',[Validators.required]],
+                horas : ['',[Validators.required]],
+                precio : ['',[Validators.required]],
+                subtotal : ['',[Validators.required]]
+              })*/
+            ]
+          ),
+          total : [0,[]]
+        }
+      );
+    }
+    @ViewChild(SignaturePad) signaturePad: SignaturePad;
+    private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
+      'minWidth': 1,
+      'canvasWidth': 600,
+      'canvasHeight': 300,
+      'penColor' :  'rgb(0, 0, 0)'
+    };
+    ngAfterViewInit() {
+      // this.signaturePad is now available
+      this.signaturePad.set('minWidth', 2); // set szimek/signature_pad options at runtime
+      this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+    }
+    drawComplete() {
+      // will be notified of szimek/signature_pad's onEnd event
+      //console.log(this.signaturePad.toDataURL());
+      this.signature = this.signaturePad.toDataURL();
+    }
+    drawStart() {
+      // will be notified of szimek/signature_pad's onBegin event
+      console.log('begin drawing');
+    }
     loadClients(){
       this.userServices.getAllClients().subscribe(
         res=>{
@@ -152,7 +166,6 @@ export class IniciarServicioComponent implements OnInit {
           this.getRequested();
           this.getEmpresa();
           this.getContrato();
-          this.nfec = this.servicio.date.slice(0,16).replace("T"," a las ");
         },err=>{
           console.error(err);
         }
@@ -279,36 +292,6 @@ export class IniciarServicioComponent implements OnInit {
     regresar(){
       this.location.back();
     }
-    enBut(){
-      this.btnen=false;
-    }
-    asigTec(){
-      this.serviciosService.asigTec(this.servicio._id,this.tec_id, this.nfec).subscribe(
-        res => {
-          console.log(res);
-          this.msg = true;
-          this.stat0 = false;
-          this.getEmailData(this.servicio.client,this.tec_id);
-          this.serviciosService.emailProgramar({
-                                                  "email_tecnico" : this.tec_email,
-                                                  "email_cliente" : this.cli_email,
-                                                  "nameTec" : this.tec_name,
-                                                  "nameCli" : this.cli_name,
-                                                  "date" : this.getDate(this.nfec),
-                                                  "id" : this.servicio._id.substring(this.servicio._id.length-10,this.servicio._id.length)
-                                                }).subscribe(res=>{
-                                                  console.log(res);
-                                                },err=>{
-                                                  console.error(err);
-                                                });
-          setTimeout(() => {
-            this.regresar()
-          }, 1000);
-        },err => {
-          console.error(err);
-        }
-      );
-    }
     getEmailData(idc,idt){
       this.clientes.forEach(async e=>{
         if(idc==e._id){
@@ -324,13 +307,13 @@ export class IniciarServicioComponent implements OnInit {
       });
     }
     inciarServicio(){
-      this.serviciosService.start(this.servicio._id).subscribe(
+      this.serviciosService.start(this.servicio._id,this.date).subscribe(
         res => {
-          console.log(res);
-          setTimeout(() => {
-            this.modalText = "Iniciando servicio. . ."
-          }, 1500);
-          this.router.navigateByUrl('/misservicios-tec');
+          this.alert.success('Servicio iniciado');
+          this.status = 'En proceso';
+          this.proceso = false;
+          this.stat2 = true;
+          this.stat1 = false;
         }, err => {
           console.error(err);
         }
@@ -361,6 +344,16 @@ export class IniciarServicioComponent implements OnInit {
         req => {
           this.contrato = req.detail;
           this.nombre_contrato = this.contrato.name;
+          if(!this.contrato.period.single){
+            this.minDate = this.contrato.period.start.substring(0,16);
+            this.maxDate = this.contrato.period.end.substring(0,16);
+          }else{
+            this.minDate = "0000-01-01T00:00";
+            this.maxDate =  "3000-12-311T00:00"
+          }
+          this.contrato.conceptos.forEach( e => {
+            this.addConcepto();
+          });
         },err => {
           console.error(err);
         }
@@ -368,22 +361,22 @@ export class IniciarServicioComponent implements OnInit {
     }
     getServiceHours(){
       var dt = moment(this.servicio.start.replace('T',' ').slice(0,16));
-      var di = moment();
+      var di = moment(this.finalizarForm.value.date.replace('T',' ').slice(0,16));
       let temp = 1;
       if(di.diff(dt,'hours')>0){
         temp = di.diff(dt,'hours');
       }
-      return temp;
+      this.hours = temp;
     }
     finalizarServicio(){
       this.guardando = true;
       let data = this.finalizarForm.value;
-      data.hours = this.getServiceHours();
-      data.unit_price = this.unitprice
-      data.iva = this.iva
-      data.amount = data.unit_price * data.hours;
-      data.total = data.amount * (1+data.iva);
+
+      data.hours = this.hours;
+      data.total = this.totalPrecio;
       data.firma =  this.signature;
+      data.divisa = this.contrato.divisa;
+
       console.log(data);
       this.serviciosService.finish( this.servicio._id, data ).subscribe(
         res => {
@@ -404,14 +397,50 @@ export class IniciarServicioComponent implements OnInit {
     clearSg(){
       this.signaturePad.clear();
     }
-    getIva(){
-      //ASDASDASDASD
-    }
-    getUnitprice(){
-      //ASDASDASDASD
-    }
-
     hideModal():void {
       document.getElementById('close-modal').click();
     }
+    getSubtotal(pind){
+      return this.contrato.conceptos[pind].precio*this.finalizarForm.value.conceptos[pind].horas;
+    }  
+    getTotal(pind){
+      this.totalHoras = 0;
+      this.totalPrecio = 0;
+
+      this.getConceptos.controls[pind].patchValue( { subtotal : this.contrato.conceptos[pind].precio*this.finalizarForm.value.conceptos[pind].horas} );
+      
+      this.getConceptos.value.forEach( e => {
+        this.totalPrecio+=e.subtotal
+        this.totalHoras+=e.horas
+      });
+
+      this.finalizarForm.patchValue({total : this.totalPrecio});
+      
+      if(this.totalHoras != this.hours){
+        this.maxHoras = true;
+        this.alert.alert('La suma de horas de los conceptos no es igual a las horas de duración del servicio, por favor distribuye bien las horas entre los conceptos.');
+      }else{
+        this.maxHoras = false;
+      }
+
+    }
+    addConcepto(){
+      const cntrs = <FormArray>this.finalizarForm.controls['conceptos'];
+      cntrs.push(
+        this.fb.group(
+          {
+            codigo : [this.contrato.conceptos[this.index].codigo,[]],
+            descripcion : [this.contrato.conceptos[this.index].descripcion,[]],
+            horas : [0,[Validators.required]],
+            precio : [this.contrato.conceptos[this.index].precio,[]],
+            subtotal : [0,[]]
+          }
+        )
+      );
+      this.index++; 
+    }
+    get getConceptos(){
+      return this.finalizarForm.get('conceptos') as FormArray;
+    }
+    
   }
