@@ -3,6 +3,7 @@ import { LoginService } from '../services/login.service';
 import {Router} from '@angular/router';
 import { AuthService } from "./../services/auth.service";
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { link } from './../services/app.settings';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.load = true;
-    this.loginService.login(this.logForm.value.usr,this.logForm.value.pwd).subscribe(
+    this.loginService.login(this.logForm.value.usr,this.logForm.value.pwd,link).subscribe(
       (res)=>{
         this.setSession(res);
       },

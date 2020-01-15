@@ -19,7 +19,7 @@
       <small class="text-danger">**Seleccione a la planta**</small> 
     </div>
     <div class="col-3">  
-      <select id="inputState" class="form-control form-control-sm" [(ngModel)]="id_planta" [ngModelOptions]="{standalone: true}" [disabled]="sinPlantas" (change)="loadlineas()">
+      <select id="inputState" class="form-control form-control-sm" [(ngModel)]="id_planta" [ngModelOptions]="{standalone: true}" [disabled]="sinPlantas" (change)="loadLineas()">
         <option *ngFor="let plt of planta" value="{{plt._id}}">{{plt.name}}</option>
       </select>
     </div>

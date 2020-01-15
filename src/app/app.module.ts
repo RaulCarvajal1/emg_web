@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgSelect2Module } from 'ng-select2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SignaturePadModule } from 'angular2-signaturepad';
 
@@ -129,7 +128,6 @@ import { AddEmpresaComponent } from './usuarios-components/add-empresa/add-empre
     MatTableModule,
     MatSnackBarModule,
     ReactiveFormsModule,
-    NgSelect2Module,
     MatProgressSpinnerModule,
     SignaturePadModule
   ],

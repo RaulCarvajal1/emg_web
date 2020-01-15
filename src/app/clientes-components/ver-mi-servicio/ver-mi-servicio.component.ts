@@ -174,7 +174,7 @@ export class VerMiServicioComponent implements OnInit {
       }
     );
   }
-  getId(id:string):string{
+  getId(id:String):String{
     return id.substring(id.length-10,id.length);
   }
   getDate(date:any):String{

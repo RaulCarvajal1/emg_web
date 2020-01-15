@@ -17,8 +17,8 @@ export class LoginService {
     })
   };
 
-  login(user:string,pass:string){
-    return this.http.post<JSON>(`http://${link}/user/login`, 
+  login(user: string,pass: string, url: string){
+    return this.http.post<JSON>(`http://${url}/user/login`, 
     {
       username: user,
       password: pass

@@ -95,11 +95,6 @@
                         <button type="submit" class="btn btn-primary w-100" [disabled]="serviciosForm.invalid">Solicitar</button>                    
                     </div>
                 </div>
-                <div class="col-4">
-                    <small class="text-muted" *ngIf="!msg">Al solicitar un servicio se enviará un correo al administrador para notificarle que se le debe asignar un servicio.</small>
-                    <h5 class="text-info" *ngIf="msg">SERVICIO PROGRAMADO</h5>
-                    <h5 class="text-danger" *ngIf="msgErr">ERROR DURANTE REGISTRO</h5>
-                </div>
             </div>
           </form>
         </div>

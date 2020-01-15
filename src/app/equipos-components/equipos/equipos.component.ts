@@ -4,7 +4,6 @@ import { emgs } from 'src/app/interfaces/emg.interface';
 import { Router } from '@angular/router';
 import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { PlantasService } from 'src/app/services/plantas.service';
-import { Select2OptionData } from 'ng-select2';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { EmpresasService } from 'src/app/services/empresas.service';
 
@@ -36,8 +35,6 @@ export class EquiposComponent implements OnInit {
   busqByName:string="";
   busqBySerial:string="";
 
-  clientesList: Array<Select2OptionData>=[];
-
   have_lines:boolean=false;
 
   load: boolean = true;
@@ -56,22 +53,9 @@ export class EquiposComponent implements OnInit {
   loadUsers(){
     this.empresaService.get().subscribe(res=>{
       this.clients=res.detail;
-      this.setClientList(this.clients);
     },err=>{
       console.log(err);
     })
-  }
-  setClientList(a:any[]){
-    this.clientesList.push({
-      id: 'alls',
-      text: 'Ver todos'
-    });
-    a.forEach(c=>{
-      this.clientesList.push({
-        id : c._id,
-        text : c.name
-      });
-    });
   }
   loadPlant(){
     this.plantService.getAll().subscribe(res=>{

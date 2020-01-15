@@ -7,7 +7,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Ver servicio</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Id del servicio {{getId(servicio._id)}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">Id del servicio {{getId(servicio._id)}}</h6> 
               <div class="col">
                 <hr>
                 <div class="row">
@@ -48,7 +48,6 @@
                     <div class="">
                       <h6><b>Nombre de técnico</b></h6>
                       <h6 *ngIf="stat0" class="text-danger">Falta asignar técnico</h6>
-                      <h6 class="text-warning" *ngIf="msg"><b>Asignando...</b></h6>
                       <h6>{{tec}}</h6>                        
                     </div>
                   </div>

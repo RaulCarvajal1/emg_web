@@ -144,11 +144,6 @@
                         <button type="submit" class="btn btn-primary w-100" [disabled]="serviciosForm.invalid">Programar</button>                    
                     </div>
                 </div>
-                <div class="col-4">
-                    <small class="text-muted" *ngIf="!msg">Al solicitar un servicio se enviará un correo al cliente y al técnico para notificarles que se les asignó un servicio.</small>
-                    <h5 class="text-info" *ngIf="msg">SERVICIO PROGRAMADO</h5>
-                    <h5 class="text-danger" *ngIf="msgErr">ERROR DURANTE REGISTRO</h5>
-                </div>
             </div>
           </form>
         </div>

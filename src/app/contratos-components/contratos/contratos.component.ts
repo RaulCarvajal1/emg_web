@@ -24,10 +24,16 @@ export class ContratosComponent implements OnInit {
 
   contratos: Contrato[];
   empresas:empresa[];
+
+  busq:string;
+
   ngOnInit() {
     this.getContratos();
   }
 
+  busqueda(){
+    this.contratos = this.contratos.filter( e => e.description == this.busq);
+  }
   getContratos(){
     this.contratosService.getContratos().subscribe(
       res => { 
