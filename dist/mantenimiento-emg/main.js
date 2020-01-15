@@ -5865,7 +5865,7 @@ var AlertService = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "link", function() { return link; });
-var link = '127.0.0.1:3033';
+var link = '165.227.24.113:8080';
 
 
 /***/ }),
