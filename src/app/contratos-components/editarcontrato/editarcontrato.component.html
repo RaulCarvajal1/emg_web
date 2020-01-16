@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="!loading">
   <hr>
   <div class="row">
     <div class="col-12">
       <div class="card w-100">
         <div class="card-body">
-          <h5 class="card-title">Generar nuevo contrato</h5>
+          <h5 class="card-title">Editar contrato</h5>
           <br>
           <form [formGroup]="contratoForm" (ngSubmit)="save()">
             
@@ -72,14 +72,24 @@
               </div>
               <div class="col">
                 <div class="row">
-                  <div class="col-8">
+                  <div class="col-4">
                     <div class="form-group">
-                      <label for="monto"><span class="text-danger">*</span>Monto monetario del contrato</label>
+                      <label for="monto"><span class="text-danger">*</span>Monto</label>
                       <input type="Number" class="form-control form-control-sm" id="monto" formControlName="monto">
                     </div>
                     <div *ngIf="contratoForm.get('monto').errors&&contratoForm.get('monto').dirty">
                       <p *ngIf="contratoForm.get('monto').hasError('required')" class="text-danger">El monto es requerido</p>
                       <p *ngIf="contratoForm.get('monto').hasError('pattern')" class="text-danger">Digite un monto válido</p>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label for="monto"><span class="text-danger">*</span>Monto actual</label>
+                      <input type="Number" class="form-control form-control-sm" id="monto_actual" formControlName="monto_actual">
+                    </div>
+                    <div *ngIf="contratoForm.get('monto_actual').errors&&contratoForm.get('monto_actual').dirty">
+                      <p *ngIf="contratoForm.get('monto_actual').hasError('required')" class="text-danger">El monto es requerido</p>
+                      <p *ngIf="contratoForm.get('monto_actual').hasError('pattern')" class="text-danger">Digite un monto válido</p>
                     </div>
                   </div>
                   <div class="col-4">
@@ -143,7 +153,7 @@
                 </div>
                 <div class="col-4">
                     <div class="pad1 w-100">
-                        <button type="submit" class="btn btn-primary w-100" [disabled]="contratoForm.invalid">Guardar</button><!--contratoForm.invalid-->                    
+                        <button type="submit" class="btn btn-primary w-100" [disabled]="contratoForm.invalid">actualizar</button><!--contratoForm.invalid-->                    
                     </div>
                 </div>
             </div>
@@ -154,5 +164,17 @@
   </div>
   <hr>
   <hr>
+</div>
+<div class="container" *ngIf="loading">
+  <div class="row">
+    <div class="col text-center">
+      <p class="lead">CARGANDO</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-spinner class="mx-auto"></mat-spinner>
+    </div>
+  </div>
 </div>
 <app-footer></app-footer>

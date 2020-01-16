@@ -12,6 +12,7 @@ import { EmgsService } from 'src/app/services/emgs.service';
 import { ServiciosService } from 'src/app/services/servicios.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { EmpresasService } from 'src/app/services/empresas.service';
+import { AlertService } from 'src/app/services/alert.service';
  
 @Component({
   selector: 'app-viewcontrato',
@@ -27,12 +28,13 @@ export class ViewcontratoComponent implements OnInit {
               private userServices:UsuariosService, 
               private emgServices:EmgsService, 
               private serviciosService:ServiciosService,
-              private empresaService:EmpresasService,)
+              private empresaService:EmpresasService,
+              private alert:AlertService)
             { 
             }
  
   ngOnInit() {
-    this.getServicio(this.activatedRoute.snapshot.paramMap.get("id"));
+    this.getContrato(this.activatedRoute.snapshot.paramMap.get("id"));
     this.loadTecnicos();
     this.loadEmgs();
     this.loadServices();
@@ -118,6 +120,12 @@ export class ViewcontratoComponent implements OnInit {
         break;
     }
   }
+  getPayment(status : number, pind: number){
+    if(status < 3){
+      return "00.0";
+    }
+    return this.servicios[pind].payment.total;
+  }
   getTecnico(id:string):string{
     if(id==null){
       return "Por asignar"
@@ -140,8 +148,7 @@ export class ViewcontratoComponent implements OnInit {
   viewService(id:String){
     this.router.navigateByUrl('servicios/'+id);
   }
-
-  getServicio(id:string){
+  getContrato(id:string){
     this.agreementsService.getContratoById(id).subscribe(
       res=>{
         this.contrato=res.detail;
@@ -175,9 +182,8 @@ export class ViewcontratoComponent implements OnInit {
   getDate(date:string):string{
     var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
     let temp = registro.format('dddd, MMMM Do YYYY');
-    return temp.charAt(0).toUpperCase()+temp.slice(1);
+    return temp.charAt(0).toUpperCase()+temp.slice(1).replace('º',''); 
   }
-
   loadEmpresas(){
     this.empresaService.get().subscribe(
       res => {
@@ -186,6 +192,26 @@ export class ViewcontratoComponent implements OnInit {
       },
       err => {
         console.error(err)
+      }
+    );
+  }
+  vencerContrato(){
+    this.alert.confirm('Al marcar este contrato como vencido ya no podra utilizarlo para asignarlo a servicios.',
+      () => {
+        this.agreementsService.vencer(this.contrato._id).subscribe(
+          res => {
+            this.alert.success("Contrato marcado como vencido.");
+            this.getContrato(this.activatedRoute.snapshot.paramMap.get("id"));
+            this.load = true;
+            setTimeout(() => {
+              this.load = false;
+            }, 1000);
+          }, err => {
+            console.log(err)
+          });
+      },
+      () => {
+        this.alert.error("No se realizaron cambios.");
       }
     );
   }

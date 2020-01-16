@@ -31,6 +31,7 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { ContratosComponent } from './contratos-components/contratos/contratos.component';
 import { AddcontratosComponent } from './contratos-components/addcontratos/addcontratos.component';
 import { ViewcontratoComponent } from './contratos-components/viewcontrato/viewcontrato.component';
+import { EditarcontratoComponent } from './contratos-components/editarcontrato/editarcontrato.component';
 import { AddEmpresaComponent } from './usuarios-components/add-empresa/add-empresa.component';
 
 //Vistas clientes
@@ -67,6 +68,7 @@ const routes: Routes = [
   {path : 'contratos', component : ContratosComponent},
   {path : 'contratos/nuevo', component : AddcontratosComponent},
   {path : 'contratos/:id', component : ViewcontratoComponent},
+  {path : 'contratos/editar/:id', component : EditarcontratoComponent},
   //Cliente
   {path : 'misplantas', component : MisPlantasComponent},
   {path : 'misplantas/nueva', component : NuevoMiPlantaComponent},

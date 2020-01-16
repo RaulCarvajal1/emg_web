@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container pad">
-  <div class="row" *ngIf="!load">
+  <div class="row">
     <div class="col-sm-12 col-md-4 offset-md-4  centrado-porcentual">
       <div class="card ">
         <div class="card-body">
@@ -21,17 +21,17 @@
               </div>
             </div>
             <button type="submit" class="btn btn-primary" [disabled]="logForm.invalid">Entrar</button>
-            <p class="text-justify text-danger" *ngIf="faillog">
-              Usuario o contraseña incorrectos, 
-              si la falla sigue contacte a los administradores
+            <p class="text-center text-danger" *ngIf="faillog">
+              Usuario o contraseña incorrectos, si la falla sigue contacte a los administradores
             </p>
+            <div class="row" *ngIf="load">
+              <mat-spinner class="mx-auto"></mat-spinner>
+            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-  <div class="row" *ngIf="load">
-    <mat-spinner class="mx-auto"></mat-spinner>
-  </div>
+  
 </div>
 <app-footer></app-footer>

@@ -170,7 +170,7 @@ export class AddservicioTecComponent implements OnInit {
   getDate(date:any):string{
     var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
     let temp = registro.format('dddd, MMMM Do YYYY');
-    return temp.charAt(0).toUpperCase()+temp.slice(1);
+    return temp.charAt(0).toUpperCase()+temp.slice(1).replace('º','');
   }
   getEmailData(idc,idt){
     this.clientes.forEach(async e=>{

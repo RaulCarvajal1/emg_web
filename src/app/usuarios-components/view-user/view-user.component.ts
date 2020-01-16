@@ -169,7 +169,7 @@ export class ViewUserComponent implements OnInit{
   getDate(ut:string){
     var registro = moment(ut.replace('T',' ').slice(0,16)).locale('es');
     this.reg_date = registro.format('dddd, MMMM Do YYYY');
-    this.reg_date =  this.reg_date.charAt(0).toUpperCase()+this.reg_date.slice(1);
+    this.reg_date =  this.reg_date.charAt(0).toUpperCase()+this.reg_date.slice(1).replace('º','');
   }
   enbuts():boolean{
     if(this.nUser!=""||this.nEmail!=""||this.nName!=""){

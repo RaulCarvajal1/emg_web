@@ -66,6 +66,7 @@ import { ContratosComponent } from './contratos-components/contratos/contratos.c
 import { AddcontratosComponent } from './contratos-components/addcontratos/addcontratos.component';
 import { ViewcontratoComponent } from './contratos-components/viewcontrato/viewcontrato.component';
 import { AddEmpresaComponent } from './usuarios-components/add-empresa/add-empresa.component';
+import { EditarcontratoComponent } from './contratos-components/editarcontrato/editarcontrato.component';
 
 
 // tslint:disable-next-line: no-unused-expression
@@ -113,7 +114,8 @@ import { AddEmpresaComponent } from './usuarios-components/add-empresa/add-empre
     ContratosComponent,
     AddcontratosComponent,
     ViewcontratoComponent,
-    AddEmpresaComponent
+    AddEmpresaComponent,
+    EditarcontratoComponent
   ],
   imports: [
     HttpClientModule,

@@ -175,7 +175,7 @@ export class AddservicioComponent implements OnInit {
   }
   getDate(date:any):string{
     var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
-    return  registro.format('dddd, MMMM Do YYYY, h:mm a');
+    return  registro.format('dddd, MMMM Do YYYY, h:mm a').replace('º','');
   }
   getEmailData(idc,idt){
     this.clientes.forEach(async e=>{

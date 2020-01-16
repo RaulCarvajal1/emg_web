@@ -180,7 +180,7 @@ export class VerMiServicioComponent implements OnInit {
   getDate(date:any):String{
     var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
     let temp = registro.format('dddd, MMMM Do YYYY');
-    return temp.charAt(0).toUpperCase()+temp.slice(1); 
+    return temp.charAt(0).toUpperCase()+temp.slice(1).replace('º','');  
   }
   getPdf(){
     this.alert.alert('En unos segundos se descargará su PDF.');

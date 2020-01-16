@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { AuthService } from "./../services/auth.service";
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { link } from './../services/app.settings';
+import { AlertService } from '../services/alert.service';
 
 
 @Component({
@@ -14,7 +15,8 @@ import { link } from './../services/app.settings';
 export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService, private router:Router,
-              private auth:AuthService, public fb: FormBuilder) {
+              private auth:AuthService, public fb: FormBuilder,
+              private alert:AlertService) {
     
     this.logForm = this.fb.group({
       usr: ['', [Validators.required]],
@@ -36,7 +38,25 @@ export class LoginComponent implements OnInit {
     this.load = true;
     this.loginService.login(this.logForm.value.usr,this.logForm.value.pwd,link).subscribe(
       (res)=>{
-        this.setSession(res);
+        if(res.detail == null){
+          this.alert.error(`<p class="text-center">No existe el usuario <b>${this.logForm.value.usr}</b></p>`);
+          this.load = false;
+          this.faillog = true;
+          setTimeout(() => {
+            this.faillog = false;
+            this.logForm.patchValue({ usr : "", pwd : ""});
+          }, 3000);
+        }else if(res.detail.active && res.detail.password == this.logForm.value.pwd){
+          this.setSession(res);
+        }else {
+          this.alert.error(`<p class="text-center">Contraseña incorrecta ó tu usuario <b>"${this.logForm.value.usr}"</b> por el momento no se encuentra <b>activo</b></p>`);
+          this.load = false;
+          this.faillog = true;
+          setTimeout(() => {
+            this.faillog = false;
+            this.logForm.patchValue({ usr : "", pwd : ""});
+          }, 3000);
+        }
       },
       (err)=>{
         console.log(err)
@@ -44,13 +64,8 @@ export class LoginComponent implements OnInit {
     };
 
   setSession(res){
-    if(res.authorized){
-      sessionStorage.setItem("detalle",JSON.stringify(res.detail));
-      this.faillog=false;
-      this.router.navigate(['inicio']);
-    }else{
-      this.faillog=true;
-      this.load = false;
-    }
+    sessionStorage.setItem("detalle",JSON.stringify(res.detail));
+    this.faillog=false;
+    this.router.navigate(['inicio']);
   }
 }

@@ -40,4 +40,7 @@ export class AgreementsService {
   restar(id:String, total:number){
     return this.http.put<res>(`http://${link}/agreements/restar/${id}`,{ total : total });
   }
+  actualizar(data:any){
+    return this.http.put<res>(`http://${link}/agreements/actualizar`,data);
+  }
 }

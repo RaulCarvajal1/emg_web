@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="cargando">
 <hr>
 <hr> 
   <div class="row">
@@ -210,9 +210,22 @@
 <hr>
 <hr>
 </div>
+
+<div class="container" *ngIf="!cargando">
+  <div class="row">
+    <div class="col text-center">
+      <p class="lead">CARGANDO</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-spinner class="mx-auto"></mat-spinner>
+    </div>
+  </div>
+</div>  
 <app-footer></app-footer>
 
-<div class="modal fade" id="alertModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" *ngIf="cargando">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -239,7 +252,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="finalModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="finalModal" tabindex="-1" role="dialog" *ngIf="cargando">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -355,7 +368,24 @@
                     <button type="button" class="btn btn-sm btn-secondary ml-auto" (click)="clearSg()">Limpiar</button>
                   </div>
                 </div>
-                <br>
+                <hr>
+                <div class="row">
+                  <div class="col">
+                    <p><b>Inicio y fin del servicio</b></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="date_ini">Fecha y hora de inicio</label>
+                      <p class="text-muted">La hora de inico registrada es la siguiente, en caso de que sea incorrecta, por favor modificarla.</p>
+                      <input type="datetime-local" class="form-control form-control-sm" id="date_ini" formControlName="date_ini" min="{{minDate}}" max="{{maxDate}}" (change)="getServiceHours()">
+                    </div>
+                    <div *ngIf="finalizarForm.get('date_ini').errors&&finalizarForm.get('date_ini').dirty">
+                      <p *ngIf="finalizarForm.get('date_ini').hasError('required')" class="text-danger">Campo requerido</p>
+                    </div>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col">
                     <div class="form-group">
@@ -437,7 +467,7 @@
                 </div>
 
                 <br>
-                <button type="submit" class="btn btn-primary w-100" [disabled]="finalizarForm.invalid">Guardar servicio</button>
+                <button type="submit" class="btn btn-primary w-100" [disabled]="finalizarForm.invalid == maxHoras">Guardar servicio</button>
               </form>
             </div>
           </div>      

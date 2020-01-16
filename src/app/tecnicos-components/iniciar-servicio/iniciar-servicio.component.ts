@@ -31,8 +31,8 @@ export class IniciarServicioComponent implements OnInit {
               private fb:FormBuilder, private location:Location,
               private alert: AlertService)
               { 
-                this.initForm();
                 
+                this.initForm();
                 this.getServicio(this.activatedRoute.snapshot.paramMap.get("id"));
                 this.mala = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMyIDMyIiB3aWR0aD0iNTEyIiBjbGFzcz0iIj48Zz48cGF0aCBkPSJtMjYgMzJoLTIwYy0zLjMxNCAwLTYtMi42ODYtNi02di0yMGMwLTMuMzE0IDIuNjg2LTYgNi02aDIwYzMuMzE0IDAgNiAyLjY4NiA2IDZ2MjBjMCAzLjMxNC0yLjY4NiA2LTYgNnoiIGZpbGw9IiNlM2Y4ZmEiIGRhdGEtb3JpZ2luYWw9IiNFM0Y4RkEiIGNsYXNzPSIiIGRhdGEtb2xkX2NvbG9yPSIjZTNmOGZhIiBzdHlsZT0iZmlsbDojRkFFM0UzIj48L3BhdGg+PHBhdGggZD0ibTE2IDhjLTQuNDEzIDAtOCAzLjU4Ny04IDhzMy41ODcgOCA4IDggOC0zLjU4NyA4LTgtMy41ODctOC04LTh6bS00LjY2NyA2LjA0N2MwLS43NC42LTEuMzMzIDEuMzMzLTEuMzMzczEuMzMzLjU5MyAxLjMzMyAxLjMzM2MwIC43MzMtLjYgMS4zMzMtMS4zMzMgMS4zMzNzLTEuMzMzLS42LTEuMzMzLTEuMzMzem04LjQ3MiA2LjQ0OGMtLjEzLjEzLS4zMDEuMTk1LS40NzEuMTk1LS4xNzEgMC0uMzQxLS4wNjUtLjQ3MS0uMTk1LS43NjUtLjc2NS0xLjc4Mi0xLjE4NS0yLjg2My0xLjE4NXMtMi4wOTguNDIxLTIuODYyIDEuMTg2Yy0uMjYuMjYtLjY4Mi4yNi0uOTQzIDAtLjI2LS4yNi0uMjYtLjY4MiAwLS45NDMgMS4wMTYtMS4wMTYgMi4zNjgtMS41NzYgMy44MDUtMS41NzZzMi43ODguNTYgMy44MDUgMS41NzZjLjI2LjI2LjI2LjY4MiAwIC45NDJ6bS0uNDcyLTUuMTE1Yy0uNzMzIDAtMS4zMzMtLjYtMS4zMzMtMS4zMzMgMC0uNzQuNi0xLjMzMyAxLjMzMy0xLjMzM3MxLjMzMy41OTMgMS4zMzMgMS4zMzNjLjAwMS43MzMtLjU5OSAxLjMzMy0xLjMzMyAxLjMzM3oiIGZpbGw9IiM4Y2UxZWIiIGRhdGEtb3JpZ2luYWw9IiM4Q0UxRUIiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6I0RFNEI0QiIgZGF0YS1vbGRfY29sb3I9IiM4Y2UxZWIiPjwvcGF0aD48L2c+IDwvc3ZnPg==');
                 this.regular = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMyIDMyIiB3aWR0aD0iNTEyIiBjbGFzcz0iIj48Zz48cGF0aCBkPSJtMjYgMzJoLTIwYy0zLjMxNCAwLTYtMi42ODYtNi02di0yMGMwLTMuMzE0IDIuNjg2LTYgNi02aDIwYzMuMzE0IDAgNiAyLjY4NiA2IDZ2MjBjMCAzLjMxNC0yLjY4NiA2LTYgNnoiIGZpbGw9IiNmZmU2ZTIiIGRhdGEtb3JpZ2luYWw9IiNGRkU2RTIiIGNsYXNzPSIiIGRhdGEtb2xkX2NvbG9yPSIjZmZlNmUyIiBzdHlsZT0iZmlsbDojRTJGOUZGIj48L3BhdGg+PHBhdGggZD0ibTE2IDhjLTQuNDEzIDAtOCAzLjU4Ny04IDhzMy41ODcgOCA4IDggOC0zLjU4NyA4LTgtMy41ODctOC04LTh6bS01LjMzMyA2LjMzM2MwLTEuMjg2IDEuMDQ2LTIuMzMzIDIuMzMzLTIuMzMzczIuMzMzIDEuMDQ3IDIuMzMzIDIuMzMzLTEuMDQ2IDIuMzM0LTIuMzMzIDIuMzM0LTIuMzMzLTEuMDQ3LTIuMzMzLTIuMzM0em03LjUgNS44MzRoLTQuMzMzYy0uMzY4IDAtLjY2Ny0uMjk5LS42NjctLjY2N3MuMjk4LS42NjcuNjY3LS42NjdoNC4zMzNjLjM2OCAwIC42NjcuMjk5LjY2Ny42NjdzLS4yOTkuNjY3LS42NjcuNjY3em0uODMzLTMuNWMtMS4yODcgMC0yLjMzMy0xLjA0Ny0yLjMzMy0yLjMzM3MxLjA0Ni0yLjMzNCAyLjMzMy0yLjMzNCAyLjMzMyAxLjA0NyAyLjMzMyAyLjMzMy0xLjA0NiAyLjMzNC0yLjMzMyAyLjMzNHoiIGZpbGw9IiNmYzU3M2IiIGRhdGEtb3JpZ2luYWw9IiNGQzU3M0IiIGNsYXNzPSJhY3RpdmUtcGF0aCIgZGF0YS1vbGRfY29sb3I9IiNmYzU3M2IiIHN0eWxlPSJmaWxsOiM0QjlEREUiPjwvcGF0aD48L2c+IDwvc3ZnPg==");
@@ -95,6 +95,8 @@ export class IniciarServicioComponent implements OnInit {
     
     maxHoras: boolean = false;
 
+    cargando: boolean = false;
+
     ngOnInit() {
       this.loadClients();
       this.getTecnicos();
@@ -111,6 +113,7 @@ export class IniciarServicioComponent implements OnInit {
           comentarios : ['',[Validators.required]],
           recomendaciones : ['',[Validators.required]],
           date : [moment().format().substring(0,16),[Validators.required]],
+          date_ini : ['',[Validators.required]],
           conceptos : this.fb.array(
             [
               /*this.fb.group({
@@ -124,6 +127,9 @@ export class IniciarServicioComponent implements OnInit {
           total : [0,[]]
         }
       );
+      setTimeout(() => {
+        this.cargando = true;
+      }, 1500);
     }
     @ViewChild(SignaturePad) signaturePad: SignaturePad;
     private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
@@ -166,6 +172,7 @@ export class IniciarServicioComponent implements OnInit {
           this.getRequested();
           this.getEmpresa();
           this.getContrato();
+          this.finalizarForm.patchValue({ date_ini : this.servicio.start.slice(0,16)});
         },err=>{
           console.error(err);
         }
@@ -257,7 +264,7 @@ export class IniciarServicioComponent implements OnInit {
     getDate(date:any):String{
       var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
       let temp = registro.format('dddd, MMMM Do YYYY');
-      return temp.charAt(0).toUpperCase()+temp.slice(1);
+      return temp.charAt(0).toUpperCase()+temp.slice(1).replace('º','');
     }
     getPdf(){
       let data: any = {
@@ -314,6 +321,7 @@ export class IniciarServicioComponent implements OnInit {
           this.proceso = false;
           this.stat2 = true;
           this.stat1 = false;
+          this.getServicio(<string>this.servicio._id);
         }, err => {
           console.error(err);
         }
@@ -360,13 +368,15 @@ export class IniciarServicioComponent implements OnInit {
       );
     }
     getServiceHours(){
-      var dt = moment(this.servicio.start.replace('T',' ').slice(0,16));
+      var dt = moment(this.finalizarForm.value.date_ini.replace('T',' ').slice(0,16));
       var di = moment(this.finalizarForm.value.date.replace('T',' ').slice(0,16));
       let temp = 1;
       if(di.diff(dt,'hours')>0){
         temp = di.diff(dt,'hours');
       }
       this.hours = temp;
+      //this.minDate = this.finalizarForm.value.date_ini.slice(0,16);
+      //this.maxDate = this.finalizarForm.value.date.slice(0,16);
     }
     finalizarServicio(){
       this.guardando = true;
@@ -417,12 +427,11 @@ export class IniciarServicioComponent implements OnInit {
       this.finalizarForm.patchValue({total : this.totalPrecio});
       
       if(this.totalHoras != this.hours){
-        this.maxHoras = true;
+        this.maxHoras = false;
         this.alert.alert('La suma de horas de los conceptos no es igual a las horas de duración del servicio, por favor distribuye bien las horas entre los conceptos.');
       }else{
-        this.maxHoras = false;
+        this.maxHoras = true;
       }
-
     }
     addConcepto(){
       const cntrs = <FormArray>this.finalizarForm.controls['conceptos'];

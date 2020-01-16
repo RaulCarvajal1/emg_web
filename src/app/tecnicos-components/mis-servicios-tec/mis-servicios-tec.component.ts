@@ -105,7 +105,7 @@ export class MisServiciosTecComponent implements OnInit {
   getDate(date:string):string{
     var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
     let temp = registro.format('dddd, MMMM Do YYYY');
-    return temp.charAt(0).toUpperCase()+temp.slice(1);
+    return temp.charAt(0).toUpperCase()+temp.slice(1).replace('º','');
   }
   gotoNew(){
     this.router.navigateByUrl('misservicios-tec/nuevo');

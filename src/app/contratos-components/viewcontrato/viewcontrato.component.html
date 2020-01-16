@@ -7,6 +7,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Ver contrato</h5>
+              
               <h6 class="card-subtitle mb-2 text-muted">Nombre del contrato {{name}}</h6>
               <div class="col">
                 <hr>
@@ -169,18 +170,16 @@
                             <th scope="col">Técnico</th>
                             <th scope="col">Fecha programada</th>
                             <th scope="col">Estatus</th>
-                            <th scope="col">Calificación</th>
                             <th scope="col">Detalle</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let servicio of servicios">
+                          <tr *ngFor="let servicio of servicios; let pind = Index">
                             <td scope="row">{{getId(servicio._id)}}</td>
                             <td>{{getEmg(servicio.emg)}}</td>
                             <td>{{getTecnico(servicio.tecnico)}}</td>
                             <td>{{getDate(servicio.date)}}</td>
                             <td>{{getStatusService(servicio.status)}}</td>
-                            <td>{{getScore(servicio.score,servicio.status)}}</td>
                             <td>
                               <button mat-mini-fab class="bg-primary" (click)="viewService(servicio._id)" data-toggle="tooltip" data-placement="left" title="Ver detalle">
                                   <mat-icon>pageview</mat-icon>
@@ -198,8 +197,12 @@
                   <div class="col">
                     <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
                   </div>
-                  <div class="col"></div>
-                  <div class="col"></div>
+                  <div class="col">
+                    <a role="button" class="btn btn-primary w-100" routerLink="/contratos/editar/{{activatedRoute.snapshot.paramMap.get('id')}}" routerLinkActive="active">Editar</a>
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-warning w-100" (click)="vencerContrato()">Marcar contrato como vencido</button>
+                  </div>
                 </div>
               </div>
             </div>
