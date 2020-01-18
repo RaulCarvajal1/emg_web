@@ -10,6 +10,7 @@ import { Location } from "@angular/common";
 import { EmpresasService } from 'src/app/services/empresas.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-ver-mi-equipo',
@@ -17,13 +18,15 @@ import { empresa } from 'src/app/interfaces/clients.interface';
   styleUrls: ['./ver-mi-equipo.component.css']
 })
 export class VerMiEquipoComponent implements OnInit {
-  constructor(private activatedRoute:ActivatedRoute, 
+  constructor(
+    private activatedRoute:ActivatedRoute, 
     private emgService:EmgsService, 
     private empresaService:EmpresasService, 
     private plantasService:PlantasService, 
-    private router:Router,
+    private auth: AuthService,
     private alert: AlertService,
-    private location: Location) 
+    private location: Location,
+    private router:Router) 
 { 
 this.getEmg(this.activatedRoute.snapshot.paramMap.get('id'));
 }
@@ -61,13 +64,20 @@ this.cod_pro = this.emg.cod_pro;
 this.load = false;
 }
 getEmg(id:string){
-this.emgService.getById(id).subscribe(res=>{
-console.log(res);
-this.emg=res.detail;
-this.getClient();
-},req=>{
-console.log(req);
-});
+  this.emgService.getById(id).subscribe(res=>{
+    if(res.detail == null || res.detail.client != this.auth.getEmpresaId()){
+      this.alert.alert('NO EXISTE EL EQUIPO QUE ESCANEO, INTENTAR DE NUEVO.');
+      this.regresar();
+    }
+    this.emg=res.detail;
+    this.getClient();
+  },req=>{
+    this.alert.alert('NO EXISTE EL EQUIPO QUE ESCANEO, INTENTAR DE NUEVO.');
+      setTimeout(() => {
+        this.regresar();          
+      }, 1000);
+      console.log(req);
+  });
 }
 getClient(){
 let emp:string=this.emg.client;
@@ -180,4 +190,15 @@ options : { "timeout": 60000 }
 
 this.emgService.getPdf(data);
 }
+
+  gotoNewService(){
+    this.router.navigateByUrl(`misservicios/solicitar/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+  }
+  gotoServices(){
+    this.router.navigateByUrl(`misservicios/emg/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+  }
+  gotoEditar(){
+    this.router.navigateByUrl(`misequipos/editar/${this.activatedRoute.snapshot.paramMap.get('id')}/${this.emg.client}`)
+  }
+
 }

@@ -33,6 +33,10 @@ import { AddcontratosComponent } from './contratos-components/addcontratos/addco
 import { ViewcontratoComponent } from './contratos-components/viewcontrato/viewcontrato.component';
 import { EditarcontratoComponent } from './contratos-components/editarcontrato/editarcontrato.component';
 import { AddEmpresaComponent } from './usuarios-components/add-empresa/add-empresa.component';
+import { AddservicioemgComponent } from './servicios-component/addservicioemg/addservicioemg.component';
+import { ServiciosemgComponent } from './servicios-component/serviciosemg/serviciosemg.component';
+import { EditaremgComponent } from './equipos-components/editaremg/editaremg.component';
+import { AddservicioemgTecComponent } from './tecnicos-components/addservicioemg-tec/addservicioemg-tec.component';
 
 //Vistas clientes
 import { VerMiPlantaComponent } from './clientes-components/ver-mi-planta/ver-mi-planta.component';
@@ -43,10 +47,15 @@ import { NuevoMiLineaComponent } from './clientes-components/nuevo-mi-linea/nuev
 import { NuevoMiPlantaComponent } from './clientes-components/nuevo-mi-planta/nuevo-mi-planta.component';
 import { MislineasbyidComponent } from './clientes-components/mislineasbyid/mislineasbyid.component';
 import { VerMiServicioComponent } from './clientes-components/ver-mi-servicio/ver-mi-servicio.component';
+import { SolicitarServicioemgComponent } from './clientes-components/solicitar-servicioemg/solicitar-servicioemg.component';
+import { MisServiciosemgComponent } from './clientes-components/mis-serviciosemg/mis-serviciosemg.component';
+
+import { ScannerComponent } from './scanner/scanner.component';
 
 const routes: Routes = [
   {path : 'login', component : LoginComponent},
   {path : 'inicio', component : InicioComponent},
+  {path : 'scanner', component : ScannerComponent},
   {path : 'usuarios', component : UsuariosComponent},
   {path : 'usuarios/nuevaempresa', component : AddEmpresaComponent},
   {path : 'usuarios/nuevo', component : AddUserComponent},
@@ -61,8 +70,11 @@ const routes: Routes = [
   {path : 'equipos/equipos', component : EquiposComponent},
   {path : 'equipos/equipos/nuevo', component : AddemgComponent},
   {path : 'equipos/equipos/:id', component : ViewemgComponent},
+  {path : 'equipos/equipos/editar/:id/:c', component : EditaremgComponent},
   {path : 'servicios', component : ServiciosComponent},
+  {path : 'servicios/:id', component : ServiciosemgComponent},
   {path : 'servicios/nuevo', component : AddservicioComponent},
+  {path : 'servicios/nuevo/:id', component : AddservicioemgComponent},
   {path : 'servicios/:id', component : ViewservicioComponent},
   {path : 'configuracion', component : ConfigurationComponent},
   {path : 'contratos', component : ContratosComponent},
@@ -80,12 +92,16 @@ const routes: Routes = [
   {path : 'misequipos', component : MisEquiposComponent},
   {path : 'misequipos/nuevo', component : NuevoMiEquipoComponent},
   {path : 'misequipos/:id', component : VerMiEquipoComponent},
+  {path : 'misequipos/editar/:id/:c', component : EditaremgComponent},
   {path : 'misservicios', component : MisServiciosComponent},
+  {path : 'misservicios/emg/:id', component : MisServiciosemgComponent},
   {path : 'misservicios/solicitar', component : SolicitarServicioComponent},
+  {path : 'misservicios/solicitar/:id', component : SolicitarServicioemgComponent},
   {path : 'misservicios/:id', component : VerMiServicioComponent},
   //Tecnicos
   {path : 'misservicios-tec', component : MisServiciosTecComponent},
   {path : 'misservicios-tec/nuevo', component : AddservicioTecComponent},
+  {path : 'misservicios-tec/nuevo/:id', component : AddservicioemgTecComponent},
   {path : 'misservicios-tec/:id', component : IniciarServicioComponent},
   {path : 'micuenta', component : MiCuentaComponent}
 ];

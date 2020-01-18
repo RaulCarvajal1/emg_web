@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -67,6 +70,13 @@ import { AddcontratosComponent } from './contratos-components/addcontratos/addco
 import { ViewcontratoComponent } from './contratos-components/viewcontrato/viewcontrato.component';
 import { AddEmpresaComponent } from './usuarios-components/add-empresa/add-empresa.component';
 import { EditarcontratoComponent } from './contratos-components/editarcontrato/editarcontrato.component';
+import { ScannerComponent } from './scanner/scanner.component';
+import { AddservicioemgComponent } from './servicios-component/addservicioemg/addservicioemg.component';
+import { ServiciosemgComponent } from './servicios-component/serviciosemg/serviciosemg.component';
+import { EditaremgComponent } from './equipos-components/editaremg/editaremg.component';
+import { AddservicioemgTecComponent } from './tecnicos-components/addservicioemg-tec/addservicioemg-tec.component';
+import { SolicitarServicioemgComponent } from './clientes-components/solicitar-servicioemg/solicitar-servicioemg.component';
+import { MisServiciosemgComponent } from './clientes-components/mis-serviciosemg/mis-serviciosemg.component';
 
 
 // tslint:disable-next-line: no-unused-expression
@@ -115,7 +125,14 @@ import { EditarcontratoComponent } from './contratos-components/editarcontrato/e
     AddcontratosComponent,
     ViewcontratoComponent,
     AddEmpresaComponent,
-    EditarcontratoComponent
+    EditarcontratoComponent,
+    ScannerComponent,
+    AddservicioemgComponent,
+    ServiciosemgComponent,
+    EditaremgComponent,
+    AddservicioemgTecComponent,
+    SolicitarServicioemgComponent,
+    MisServiciosemgComponent
   ],
   imports: [
     HttpClientModule,
@@ -131,7 +148,10 @@ import { EditarcontratoComponent } from './contratos-components/editarcontrato/e
     MatSnackBarModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    SignaturePadModule
+    SignaturePadModule,
+    ZXingScannerModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [
     LoginService,

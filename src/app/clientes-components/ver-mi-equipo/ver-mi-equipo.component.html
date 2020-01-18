@@ -64,9 +64,9 @@
           </div>
           <br>
           <div class="row" style="padding-bottom: 0px">
-            <div class="col-4">
+            <div class="col text-center">
               <h6><b>Código QR de identificación</b></h6>
-              <img src="{{emg.qr}}" class="img-fluid" style="width: 200px;">
+              <img src="{{emg.qr}}" class="img-fluid" style="width: 250px;">
             </div>
           </div>
           <div class="row pad1">
@@ -80,7 +80,17 @@
               <button type="button" class="btn btn-danger w-100" (click)="getPdf()">Descargar ficha(PDF)</button>
             </div>
           </div>
-        </div>
+          <div class="row pad1" style="margin-top: 10px;">
+            <div class="col">
+              <button type="button" class="btn btn-primary w-100" (click)="gotoNewService()">Registrar servicio</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary w-100" (click)="gotoServices()">Ver servicios</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary w-100" (click)="gotoEditar()">Actualizar</button>
+            </div>
+          </div>
       </div>
       <hr><hr>
     </div>

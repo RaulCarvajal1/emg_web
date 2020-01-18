@@ -8,6 +8,7 @@ import { EmpresasService } from 'src/app/services/empresas.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { AlertService } from 'src/app/services/alert.service';
 import { Location } from "@angular/common";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-viewemg',
@@ -22,7 +23,8 @@ export class ViewemgComponent implements OnInit{
               private plantasService:PlantasService, 
               private router:Router,
               private alert: AlertService,
-              private location: Location) 
+              private location: Location,
+              private auth: AuthService) 
   { 
     this.getEmg(this.activatedRoute.snapshot.paramMap.get('id'));
   }
@@ -61,10 +63,19 @@ export class ViewemgComponent implements OnInit{
   }
   getEmg(id:string){
     this.emgService.getById(id).subscribe(res=>{
-      console.log(res);
+      if(res.detail == null){
+        this.alert.alert('NO EXISTE EL EQUIPO QUE ESCANEO, INTENTAR DE NUEVO.');
+        setTimeout(() => {
+          this.regresar();          
+        }, 1000);
+      }
       this.emg=res.detail;
-      this.getClient();
+      this.getClient(); 
     },req=>{
+      this.alert.alert('NO EXISTE EL EQUIPO QUE ESCANEO, INTENTAR DE NUEVO.');
+      setTimeout(() => {
+        this.regresar();          
+      }, 1000);
       console.log(req);
     });
   }
@@ -180,4 +191,51 @@ export class ViewemgComponent implements OnInit{
     this.emgService.getPdf(data);
   }
 
+  gotoNewService(){
+    switch (this.auth.getRole()) {
+      case 0:
+        this.router.navigateByUrl(`servicios/nuevo/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        break;
+      case 1:
+        this.router.navigateByUrl(`misservicios-tec/nuevo/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        //this.router.navigateByUrl(`servicios/nuevo/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        break;
+      case 2:
+        this.alert.message('Cliente');
+        //this.router.navigateByUrl(`servicios/nuevo/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        break;
+      default:
+        break;
+    }
+  }
+  gotoServices(){
+    switch (this.auth.getRole()) {
+      case 0:
+        this.router.navigateByUrl(`servicios/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        break;
+      case 2:
+        this.alert.message('Cliente');
+        //this.router.navigateByUrl(`servicios/nuevo/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        break;
+      default:
+        this.router.navigateByUrl(`servicios/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        break;
+    }
+  }
+
+  gotoEditar(){
+    switch (this.auth.getRole()) {
+      case 0:
+        this.router.navigateByUrl(`equipos/equipos/editar/${this.activatedRoute.snapshot.paramMap.get('id')}/false`)
+        break;
+      case 2:
+        this.alert.message('Cliente');
+        //this.router.navigateByUrl(`servicios/nuevo/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        break;
+      default:
+        this.router.navigateByUrl(`equipos/equipos/editar/${this.activatedRoute.snapshot.paramMap.get('id')}/false`)
+        break;
+    }
+  }
+  
 }

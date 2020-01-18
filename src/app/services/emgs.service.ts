@@ -33,6 +33,9 @@ export class EmgsService {
   genEmg(id:string){
     return this.http.put<res>(`http://${link}/emg/genqr/${id}`,{});
   }
+  update(data: any){
+    return this.http.put<res>(`http://${link}/emg/edit`,data);
+  }
   getById(id:string){
     return this.http.get<res>(`http://${link}/emg/getbyid/${id}`);
   }
