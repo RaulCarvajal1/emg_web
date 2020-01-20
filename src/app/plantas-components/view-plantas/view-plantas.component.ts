@@ -37,12 +37,6 @@ export class ViewPlantasComponent implements OnInit {
   planta:Plant;
   empresa: String = "";
 
-  nName:string="";
-  nCode:string="";
-  neName:string="";
-  nEmail:string="";
-  nPhone:string="";
-
   actualizado:boolean=false;
   load: boolean = true;
 
@@ -50,9 +44,9 @@ export class ViewPlantasComponent implements OnInit {
     this.plantas.getPlanta(this.id).subscribe(
       res=>{
         this.planta=res.detail;
-        this.getEmpresa();
         this.getName(this.planta.meta.registred_by);
         this.getDate(this.planta.meta.registred_date);
+        this.getEmpresa();
         this.load = false;
 
       },err=>{
@@ -63,19 +57,10 @@ export class ViewPlantasComponent implements OnInit {
   getEmpresa(){
     this.empresas.getid(this.planta.client).subscribe(
       res => {
-        this.empresa = res.detail.name;
-        console.log(res);
+        this.empresa =  res.detail.name;
       },err => {
-        console.error(err);
       }
     );
-  }
-  enbuts():boolean{
-    if(this.nName!=""||this.nCode!=""||this.neName!=""||this.nEmail!=""){
-      return false;
-    }else{
-      return true;
-    }
   }
   regresar(){
     this.location.back();
@@ -96,56 +81,10 @@ export class ViewPlantasComponent implements OnInit {
     this.reg_date = registro.format('dddd, MMMM Do YYYY');
     this.reg_date =  this.reg_date.charAt(0).toUpperCase()+this.reg_date.slice(1).replace('º','');
   }
-  updClick(){
-    if(this.nName==""){
-      this.nName=this.planta.name;
-    }
-    if(this.nCode==""){
-      this.nCode=this.planta.code;
-    }
-    if(this.neName==""){
-      this.neName=this.planta.boss.name;
-    }
-    if(this.nEmail==""){
-      this.nEmail=this.planta.boss.email;
-    }
-    if(this.nPhone==""){
-      this.nPhone=this.planta.boss.phone;
-    }
-    this.actualizar(this.nName,this.nCode,this.neName,this.nEmail,this.nPhone);
+  plantDet(id:string){
+    this.router.navigateByUrl('equipos/lineas/'+this.planta._id+"/"+id);
   }
-  actualizar(n:string,c:string,ne:string,e:string,p:string){
-    let nPlant:any={
-      '_id' : this.id,
-      'name' : n,
-      'code' : c,
-      'boss' : {
-        'name' : ne,
-        'email' : e,
-        'phone' : p
-      }
-    };
-    this.alert.confirm("¿Actualizar el registro?",
-      ()=>{
-        this.load = true;
-        this.plantas.updatePlanta(nPlant).subscribe(
-          res=>{
-            this.getPlanta();
-            this.nName="";
-            this.nCode="";
-            this.neName="";
-            this.nEmail="";
-            this.nPhone="";
-            this.alert.success("Planta actualizada con éxito!");
-            this.load = false;
-          },err=>{
-            console.log(err);
-            this.alert.error("Error durante la actualización");
-          }
-        );
-      },
-      ()=>{this.alert.error("Sin cambios en el registro")}
-    );
-    
+  gotoActualizar(){
+    this.router.navigateByUrl('equipos/plantas/editar/'+this.id);
   }
 }

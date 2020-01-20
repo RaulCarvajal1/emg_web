@@ -49,6 +49,7 @@ import { MislineasbyidComponent } from './clientes-components/mislineasbyid/misl
 import { VerMiServicioComponent } from './clientes-components/ver-mi-servicio/ver-mi-servicio.component';
 import { SolicitarServicioemgComponent } from './clientes-components/solicitar-servicioemg/solicitar-servicioemg.component';
 import { MisServiciosemgComponent } from './clientes-components/mis-serviciosemg/mis-serviciosemg.component';
+import { EditarPlantaComponent } from './plantas-components/editar-planta/editar-planta.component';
 
 import { ScannerComponent } from './scanner/scanner.component';
 
@@ -63,6 +64,7 @@ const routes: Routes = [
   {path : 'equipos/plantas', component : PlantasComponent},
   {path : 'equipos/plantas/:id', component : ViewPlantasComponent},
   {path : 'equipos/plantas/nueva/:id', component : AddPlantaComponent},
+  {path : 'equipos/plantas/editar/:id', component : EditarPlantaComponent},
   {path : 'equipos/lineas', component : LineasComponent},
   {path : 'equipos/lineas/:id', component : LineasbyidComponent},
   {path : 'equipos/lineas/nueva/:id', component : NewlineComponent},
@@ -72,7 +74,7 @@ const routes: Routes = [
   {path : 'equipos/equipos/:id', component : ViewemgComponent},
   {path : 'equipos/equipos/editar/:id/:c', component : EditaremgComponent},
   {path : 'servicios', component : ServiciosComponent},
-  {path : 'servicios/:id', component : ServiciosemgComponent},
+  {path : 'servicios/emg/:id', component : ServiciosemgComponent},
   {path : 'servicios/nuevo', component : AddservicioComponent},
   {path : 'servicios/nuevo/:id', component : AddservicioemgComponent},
   {path : 'servicios/:id', component : ViewservicioComponent},

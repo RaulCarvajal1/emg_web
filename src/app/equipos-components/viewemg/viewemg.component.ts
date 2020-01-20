@@ -211,14 +211,14 @@ export class ViewemgComponent implements OnInit{
   gotoServices(){
     switch (this.auth.getRole()) {
       case 0:
-        this.router.navigateByUrl(`servicios/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        this.router.navigateByUrl(`servicios/emg/${this.activatedRoute.snapshot.paramMap.get('id')}`)
         break;
       case 2:
         this.alert.message('Cliente');
         //this.router.navigateByUrl(`servicios/nuevo/${this.activatedRoute.snapshot.paramMap.get('id')}`)
         break;
       default:
-        this.router.navigateByUrl(`servicios/${this.activatedRoute.snapshot.paramMap.get('id')}`)
+        this.router.navigateByUrl(`servicios/emg/${this.activatedRoute.snapshot.paramMap.get('id')}`)
         break;
     }
   }
