@@ -37,6 +37,8 @@ import { AddservicioemgComponent } from './servicios-component/addservicioemg/ad
 import { ServiciosemgComponent } from './servicios-component/serviciosemg/serviciosemg.component';
 import { EditaremgComponent } from './equipos-components/editaremg/editaremg.component';
 import { AddservicioemgTecComponent } from './tecnicos-components/addservicioemg-tec/addservicioemg-tec.component';
+import { EditarservicioComponent } from './servicios-component/editarservicio/editarservicio.component';
+import { UpdateUserComponent } from './usuarios-components/update-user/update-user.component';
 
 //Vistas clientes
 import { VerMiPlantaComponent } from './clientes-components/ver-mi-planta/ver-mi-planta.component';
@@ -60,6 +62,7 @@ const routes: Routes = [
   {path : 'usuarios', component : UsuariosComponent},
   {path : 'usuarios/nuevaempresa', component : AddEmpresaComponent},
   {path : 'usuarios/nuevo', component : AddUserComponent},
+  {path : 'usuarios/editar/:id', component : UpdateUserComponent},
   {path : 'usuarios/:id', component : ViewUserComponent},
   {path : 'equipos/plantas', component : PlantasComponent},
   {path : 'equipos/plantas/:id', component : ViewPlantasComponent},
@@ -77,12 +80,14 @@ const routes: Routes = [
   {path : 'servicios/emg/:id', component : ServiciosemgComponent},
   {path : 'servicios/nuevo', component : AddservicioComponent},
   {path : 'servicios/nuevo/:id', component : AddservicioemgComponent},
+  {path : 'servicios/editar/:id', component : EditarservicioComponent},
   {path : 'servicios/:id', component : ViewservicioComponent},
   {path : 'configuracion', component : ConfigurationComponent},
   {path : 'contratos', component : ContratosComponent},
   {path : 'contratos/nuevo', component : AddcontratosComponent},
   {path : 'contratos/:id', component : ViewcontratoComponent},
   {path : 'contratos/editar/:id', component : EditarcontratoComponent},
+  
   //Cliente
   {path : 'misplantas', component : MisPlantasComponent},
   {path : 'misplantas/nueva', component : NuevoMiPlantaComponent},

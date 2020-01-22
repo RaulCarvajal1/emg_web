@@ -56,19 +56,19 @@
                   <div class="col">
                     <div class="form-group">
                         <label for="gen"><span class="text-danger">*</span>Generar</label>
-                        <button class="btn btn-primary w-100" type="button" (click)="genUsuCon()" id="gen">Generar usuario y contraseña</button>
+                        <button class="btn btn-primary w-100 btn-sm readonly" type="button" (click)="genUsuCon()" id="gen">Generar usuario y contraseña</button>
                     </div>
                   </div>
                   <div class="col">
                       <div class="form-group">
                           <label for="username"><span class="text-danger">*</span>Usuario</label>
-                          <input type="text" class="form-control form-control-sm" id="username" placeholder="Usuario" [(ngModel)]="u" [ngModelOptions]="{standalone: true}">
+                          <input type="text" class="form-control form-control-sm" id="username" placeholder="Usuario" [(ngModel)]="u" [ngModelOptions]="{standalone: true}" readonly>
                       </div>
                   </div>
                   <div class="col">
                       <div class="form-group">
                           <label for="pass"><span class="text-danger">*</span>Contraseña</label>
-                          <input type="text" class="form-control form-control-sm" id="pass" placeholder="Contraseña" [(ngModel)]="u" [ngModelOptions]="{standalone: true}">
+                          <input type="text" class="form-control form-control-sm" id="pass" placeholder="Contraseña" [(ngModel)]="u" [ngModelOptions]="{standalone: true}" readonly>
                       </div>
                   </div>
                 </div>

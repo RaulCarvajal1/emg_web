@@ -53,7 +53,21 @@ export class AddUserComponent implements OnInit {
     this.location.back();
   }
   genUsuCon(){
-    this.u=""+(Math.floor(Math.random()*1000000));
+    let user =""+(Math.floor(Math.random()*1000000));
+    this.usuarios.userExists(user).subscribe(
+      res => {
+        if(res.detail){
+          console.log('Existe usuario');
+          this.genUsuCon();
+        }else{
+          console.log('No existe usuario');
+          this.u = user;
+        }
+      },
+      err => {
+        console.log(err)
+      }
+    );
   }
   getRol(id){
     this.options.forEach(e=>{

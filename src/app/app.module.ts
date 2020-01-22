@@ -55,6 +55,8 @@ import { SolicitarServicioComponent } from './clientes-components/solicitar-serv
 import { MisServiciosTecComponent } from './tecnicos-components/mis-servicios-tec/mis-servicios-tec.component';
 import { AddservicioTecComponent } from './tecnicos-components/addservicio-tec/addservicio-tec.component';
 import { IniciarServicioComponent } from './tecnicos-components/iniciar-servicio/iniciar-servicio.component';
+import { EditarPlantaComponent } from './plantas-components/editar-planta/editar-planta.component';
+
 //Vistas clientes
 import { VerMiPlantaComponent } from './clientes-components/ver-mi-planta/ver-mi-planta.component';
 import { VerMiLineaComponent } from './clientes-components/ver-mi-linea/ver-mi-linea.component';
@@ -77,8 +79,8 @@ import { EditaremgComponent } from './equipos-components/editaremg/editaremg.com
 import { AddservicioemgTecComponent } from './tecnicos-components/addservicioemg-tec/addservicioemg-tec.component';
 import { SolicitarServicioemgComponent } from './clientes-components/solicitar-servicioemg/solicitar-servicioemg.component';
 import { MisServiciosemgComponent } from './clientes-components/mis-serviciosemg/mis-serviciosemg.component';
-import { EditarPlantaComponent } from './plantas-components/editar-planta/editar-planta.component';
-
+import { EditarservicioComponent } from './servicios-component/editarservicio/editarservicio.component';
+import { UpdateUserComponent } from './usuarios-components/update-user/update-user.component';
 
 // tslint:disable-next-line: no-unused-expression
 @NgModule({
@@ -134,7 +136,9 @@ import { EditarPlantaComponent } from './plantas-components/editar-planta/editar
     AddservicioemgTecComponent,
     SolicitarServicioemgComponent,
     MisServiciosemgComponent,
-    EditarPlantaComponent
+    EditarPlantaComponent,
+    EditarservicioComponent,
+    UpdateUserComponent
   ],
   imports: [
     HttpClientModule,

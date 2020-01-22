@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/interfaces/user.interface';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { UsuariosService } from 'src/app/services/usuarios.service';
-import { AlertService } from 'src/app/services/alert.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { EmpresasService } from 'src/app/services/empresas.service';
+import { AlertService } from 'src/app/services/alert.service';
+import { User } from 'src/app/interfaces/user.interface';
 import { empresa } from 'src/app/interfaces/clients.interface';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-mi-cuenta',
-  templateUrl: './mi-cuenta.component.html',
-  styleUrls: ['./mi-cuenta.component.css']
+  selector: 'app-update-user',
+  templateUrl: './update-user.component.html',
+  styleUrls: ['./update-user.component.css']
 })
-export class MiCuentaComponent implements OnInit {
+export class UpdateUserComponent implements OnInit {
 
   constructor(private usuarios:UsuariosService, 
               private auth:AuthService, 
@@ -43,12 +43,8 @@ export class MiCuentaComponent implements OnInit {
   isClient: boolean = false;
   empresas: empresa[];
   load:boolean = true;
-
-  passtoggle:boolean = true;
   
-  viewToggle(){
-    this.passtoggle = !this.passtoggle;
-  }
+
   initForm(){
     this.userForm=this.fb.group(
       {
@@ -65,7 +61,7 @@ export class MiCuentaComponent implements OnInit {
     this.isClientToggle();
   }
   loadUser(){
-    this.usuarios.getUser(<string>this.auth.getId()).subscribe(
+    this.usuarios.getUser(<string>this.activatedRoute.snapshot.paramMap.get("id")).subscribe(
       (data)=>{
         this.user=data.detail;
         this.initForm();
@@ -93,8 +89,7 @@ export class MiCuentaComponent implements OnInit {
     console.log(values);
     this.usuarios.updateUser(values).subscribe(
       res => {
-        this.alert.success("Actualización exítosa!. Se cerrará tu sesión en unos instantes.");
-        this.auth.closeSession();
+        this.alert.success("Actualización exítosa!. Serás redirigido en unos instantes.");
         setTimeout(() => {
           this.regresar();
         }, 1500);
@@ -140,11 +135,5 @@ export class MiCuentaComponent implements OnInit {
       );
     }
   }
-  getButtonText(){
-    if(this.passtoggle){
-      return 'Ver';
-    }else{
-      return 'Ocultar'
-    }
-  }
+
 }

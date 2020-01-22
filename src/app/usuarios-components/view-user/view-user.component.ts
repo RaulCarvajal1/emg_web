@@ -27,7 +27,6 @@ export class ViewUserComponent implements OnInit{
   reg_bystr:string;
   reg_date:string;
   load: boolean = false;
-  usEx:Boolean = false;
   im:Boolean = false;
 
   ngOnInit() {
@@ -47,10 +46,6 @@ export class ViewUserComponent implements OnInit{
         console.log(err)
     });
   }
-  nUser:string="";
-  nName:string=""; 
-  nEmail:string="";
-  nPass:string="";
   getRol(r:number):string{
     switch (r) {
       case 0:
@@ -88,55 +83,6 @@ export class ViewUserComponent implements OnInit{
   regresar(){
     this.location.back();
   }
-  updClick(){
-    if(this.nUser==""){
-      this.nUser=this.user.username;
-    }
-    if(this.nPass==""){
-      this.nPass=this.user.password;
-    }
-    if(this.nName==""){
-      this.nName=this.user.info.name;
-    }
-    if(this.nEmail==""){
-      this.nEmail=this.user.info.email;
-    }
-    this.actualizar(this.nUser,this.nPass,this.nName,this.nEmail);
-  }
-  actualizar(u:string,p:string,n:string,e:string){  
-    let uUsr:any={
-      '_id' : this.user._id,
-      'username' : u,
-      'password' : p,
-      'info' : {
-        'name' : n,
-        'email' : e
-      }
-    };
-    this.alert.confirm(
-      "¿Seguro que quiere actualizar el registro?",
-      ()=>{
-        this.load = false;
-        this.usuarios.updateUser(uUsr).subscribe(
-          data=>{
-            this.loadUser();
-            this.nName="";
-            this.nEmail="";
-            this.nUser="";
-            this.load = true;
-            this.alert.success("Actualizado");
-          },err=>{
-            console.log(err);
-            this.alert.error("Ocurrio un error");
-          }
-        );
-      },
-      ()=>{
-        this.alert.error("No se registraron cambios");
-      }
-    );
-    
-  }
   actDes(){
     this.alert.confirm('Al realizar esta acción alterará el inicio de sesíon al usuario.',
       ()=>{
@@ -165,32 +111,18 @@ export class ViewUserComponent implements OnInit{
       }
     )
   }
-
   getDate(ut:string){
     var registro = moment(ut.replace('T',' ').slice(0,16)).locale('es');
     this.reg_date = registro.format('dddd, MMMM Do YYYY');
     this.reg_date =  this.reg_date.charAt(0).toUpperCase()+this.reg_date.slice(1).replace('º','');
   }
-  enbuts():boolean{
-    if(this.nUser!=""||this.nEmail!=""||this.nName!=""){
-      return false;
-    }
-    return true;
-  }
   goToMiCuenta(){
     this.router.navigateByUrl('micuenta');
   }
-  existeUsuario(){
-    this.usuarios.userExists(this.nUser).subscribe(
-      res=>{
-        if(res.detail!=null){
-          this.usEx=true;
-        }else{
-          this.usEx=false;
-        }
-      },err=>{
-        console.log(err);
-      }
-    );
+  gotoActualizar(){
+    this.router.navigateByUrl('usuarios/editar/'+this.user._id);
+  }
+  replacePassword(psw:string ): string{
+    return '🚫'.repeat(psw.length);
   }
 }

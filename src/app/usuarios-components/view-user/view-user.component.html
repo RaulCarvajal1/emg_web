@@ -8,45 +8,78 @@
             <div class="card-body" *ngIf="!im">
                 <h5 class="card-title">Ver usuario a detalle</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{user.info.name}}</h6>
-                <ul>
-                    <li class="card-text"><b>Registrado por: </b> {{reg_bystr}}</li>
-                    <li class="card-text"><b>Día de registro: </b> {{reg_date}}</li>
-                    <li class="card-text"><b>Rol: </b> <span>{{getRol(user.role)}}</span></li>
-                    <li class="card-text"><b>Estatus:  </b> {{getStatus(user.active)}}</li>
-                </ul>
-                <form class="container">
-                    <div class="form-group">
-                        <label for="username">Nombre de usuario <span *ngIf="usEx" class="text-danger"><b>¡Este usuario ya existe!</b></span></label>
-                        <input type="text" [(ngModel)]="nUser" class="form-control form-control-sm" id="username" placeholder="{{user.username}}" [ngModelOptions]="{standalone: true}" (focusout)="existeUsuario()">
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <h6 class="card-subtitle">
+                            Información de inicio de sesión y datos personales
+                        </h6>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="text" [(ngModel)]="nPass" class="form-control form-control-sm" id="password" placeholder="(Cambiar contraseña usuario)" [ngModelOptions]="{standalone: true}" (focusout)="existeUsuario()">
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p class="card-text"><b>Nombre: </b><br> {{user.info.name}}</p>
                     </div>
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" [(ngModel)]="nName" class="form-control form-control-sm" id="nombre" placeholder="{{user.info.name}}" [ngModelOptions]="{standalone: true}">
+                    <div class="col">
+                        <p class="card-text"><b>Correo: </b><br> {{user.info.email}}</p>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" [(ngModel)]="nEmail" class="form-control form-control-sm" id="email" placeholder="{{user.info.email}}" [ngModelOptions]="{standalone: true}">
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p class="card-text"><b>Username: </b><br> <span>{{user.username}}</span></p>
                     </div>
-                    <div class="form-group">
-                        <small class="text-danger">***Campos disponibles para actualizar los datos del usuario***</small>
+                    <div class="col">
+                        <p class="card-text"><b>Contraseña:  </b><br> {{replacePassword(user.password)}}</p>
                     </div>
-                    <div class="row pad1">
-                        <div class="col">
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <h6 class="card-subtitle">
+                            Otra información de usuario
+                        </h6>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p class="card-text"><b>Registrado por: </b><br> {{reg_bystr}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="card-text"><b>Día de registro: </b><br> {{reg_date}}</p>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p class="card-text"><b>Rol: </b><br> <span>{{getRol(user.role)}}</span></p>
+                    </div>
+                    <div class="col">
+                        <p class="card-text"><b>Estatus:  </b><br> {{getStatus(user.active)}}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="pad1 w-100">
                             <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
                         </div>
-                        <div class="col">
+                    </div>
+                    <div class="col-4">
+                        <div class="pad1 w-100">
                             <button type="button" class="btn btn-warning w-100" (click)="actDes()">{{isActivatedStr(user.active)}}</button>
                         </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary w-100" (click)="updClick()" [disabled]="enbuts()">Actualizar</button>
+                    </div>
+                    <div class="col-4">
+                        <div class="pad1 w-100">
+                            <button type="button" class="btn btn-primary w-100" (click)="gotoActualizar()">Actualizar</button>                    
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
+
             <div class="card-body" *ngIf="im">
                 <h5 class="card-title">El usuario que quieres visualizar te pertenece</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Si deseas modificar tus datos da click <a [routerLink]="['../../micuenta']">aqui</a></h6>
