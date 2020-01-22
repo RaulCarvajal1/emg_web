@@ -37,7 +37,6 @@ import { AddservicioemgComponent } from './servicios-component/addservicioemg/ad
 import { ServiciosemgComponent } from './servicios-component/serviciosemg/serviciosemg.component';
 import { EditaremgComponent } from './equipos-components/editaremg/editaremg.component';
 import { AddservicioemgTecComponent } from './tecnicos-components/addservicioemg-tec/addservicioemg-tec.component';
-import { EditarservicioComponent } from './servicios-component/editarservicio/editarservicio.component';
 import { UpdateUserComponent } from './usuarios-components/update-user/update-user.component';
 
 //Vistas clientes
@@ -80,7 +79,6 @@ const routes: Routes = [
   {path : 'servicios/emg/:id', component : ServiciosemgComponent},
   {path : 'servicios/nuevo', component : AddservicioComponent},
   {path : 'servicios/nuevo/:id', component : AddservicioemgComponent},
-  {path : 'servicios/editar/:id', component : EditarservicioComponent},
   {path : 'servicios/:id', component : ViewservicioComponent},
   {path : 'configuracion', component : ConfigurationComponent},
   {path : 'contratos', component : ContratosComponent},

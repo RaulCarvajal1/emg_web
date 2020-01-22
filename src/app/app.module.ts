@@ -79,7 +79,6 @@ import { EditaremgComponent } from './equipos-components/editaremg/editaremg.com
 import { AddservicioemgTecComponent } from './tecnicos-components/addservicioemg-tec/addservicioemg-tec.component';
 import { SolicitarServicioemgComponent } from './clientes-components/solicitar-servicioemg/solicitar-servicioemg.component';
 import { MisServiciosemgComponent } from './clientes-components/mis-serviciosemg/mis-serviciosemg.component';
-import { EditarservicioComponent } from './servicios-component/editarservicio/editarservicio.component';
 import { UpdateUserComponent } from './usuarios-components/update-user/update-user.component';
 
 // tslint:disable-next-line: no-unused-expression
@@ -137,7 +136,6 @@ import { UpdateUserComponent } from './usuarios-components/update-user/update-us
     SolicitarServicioemgComponent,
     MisServiciosemgComponent,
     EditarPlantaComponent,
-    EditarservicioComponent,
     UpdateUserComponent
   ],
   imports: [
