@@ -152,16 +152,21 @@
                   </div>
                 </div>
 
-                <div class="row" *ngIf="proceso">
+                <div class="row" *ngIf="proceso && autorizado">
                   <div class="col">
+                    <h6><b>Autorización del servicio</b></h6>
+                  </div>
+                </div>
+                <div class="row" *ngIf="proceso && autorizado">
+                  <div class="col"> 
                     <div class="">
-                      <h6><b>Firma del cliente</b></h6>
+                      <h6>Firma del cliente</h6>
                       <img src="{{servicio.signature}}" class="w-100 img-fluid">                       
                     </div>
                   </div>
                   <div class="col">
                     <div class="row text-center">
-                      <h6><b>Satisfacción del cliente</b></h6>                     
+                      <h6>Satisfacción del cliente</h6>                     
                     </div>
                     <div class="row text-center">
                       <div class="col" *ngIf="malac">
@@ -181,8 +186,17 @@
                       <small class="text-muted">El rango de evalución se basa en Mala, Buena y Excelente experiencia</small>
                     </div>
                   </div>
+                <br>
+                </div>
+
+                <div class="row" *ngIf="proceso && autorizado">
+                  <div class="col">
+                    <h6><b>Autorizado por :</b></h6>
+                    <h6>{{authby}}</h6>
+                  </div>
                 </div>
                 <hr>
+
                 <br><br>
                 <div class="row" style="padding-bottom: 0px">
                   <div class="col">
@@ -321,53 +335,7 @@
                       <p *ngIf="finalizarForm.get('recomendaciones').hasError('required')" class="text-danger">Campo requerido</p>
                     </div>
                 </div>
-                <div class="row">
-                  <div class="col">
-                    <label for="ren"><span class="text-danger">*</span>Satisfacción del servicio</label>
-                    <div class="row" id="ren">
-                        <div class="col">
-                          <div class="form-check">
-                            <label>
-                              <input type="radio" name="score" value="0" formControlName="score">
-                              <img [src]="mala" class="img-fluid">
-                            </label>
-                          </div>                      
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <label>
-                              <input type="radio" name="score" value="1" formControlName="score">
-                              <img [src]="regular" class="img-fluid">
-                            </label>
-                          </div> 
-                        </div>
-                        <div class="col">
-                          <div class="form-check">
-                            <label>
-                              <input type="radio" name="score" value="2" formControlName="score">
-                              <img [src]="buena" class="img-fluid">
-                            </label>
-                          </div> 
-                        </div>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group">
-                      <div class="mx-auto sng-border text-center">
-                        <signature-pad [options]="signaturePadOptions" (onEndEvent)="drawComplete()" ></signature-pad>
-                        <p class="lead">Firma del cliente</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <button type="button" class="btn btn-sm btn-secondary ml-auto" (click)="clearSg()">Limpiar</button>
-                  </div>
-                </div>
                 <hr>
                 <div class="row">
                   <div class="col">

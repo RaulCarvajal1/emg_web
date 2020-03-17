@@ -40,35 +40,28 @@ export class IniciarServicioComponent implements OnInit {
               }
 
     finalizarForm:FormGroup;
-
     servicio:servicios;
     status:String;
     tec:string;
     emg:string;
-
     signature : string;
-
     proceso:boolean=false;
     stat0: boolean = false;
     stat1: boolean = false;
     stat2: boolean = false;
     stat3: boolean = false;
-    
     tecnicos: User[];
     clientes:User[];
     tec_id:string = "";
-
     requestby: String = "";
     empresa: String = "";
     nombre_contrato: String = "";
     contrato:Contrato ;
-
     //email data
     tec_email:string;
     tec_name:string;
     cli_email:string;
     cli_name:string;
-  
     //Calificaciones imgs
     mala : SafeUrl; 
     regular : SafeUrl;
@@ -78,24 +71,19 @@ export class IniciarServicioComponent implements OnInit {
     buenac : boolean = false;
     score : String  = "";
     scoretext : String  = "";
-    
     modalText: String = "¿Seguro de Iniciar servicio?";
-
     guardando: boolean = false;
-
     date: string = moment().format().substring(0,16);
     minDate:String = "0000-01-01T00:00";
     maxDate:String = "3000-12-311T00:00";
     hours: number = 0;
-
     index: number = 0;
-
     totalPrecio: number = 0;
     totalHoras: number = 0;
-    
     maxHoras: boolean = false;
-
     cargando: boolean = false;
+    autorizado: boolean =  false;
+    authby: string = "null";
 
     ngOnInit() {
       this.loadClients();
@@ -105,7 +93,6 @@ export class IniciarServicioComponent implements OnInit {
     initForm(){
       this.finalizarForm = this.fb.group(
         {
-          score : ['',[Validators.required]],
           tipo_sensor : ['',[Validators.required]],
           tipo_controlador : ['',[Validators.required]],
           programa : ['',[Validators.required]],
@@ -114,43 +101,13 @@ export class IniciarServicioComponent implements OnInit {
           recomendaciones : ['',[Validators.required]],
           date : [moment().format().substring(0,16),[Validators.required]],
           date_ini : ['',[Validators.required]],
-          conceptos : this.fb.array(
-            [
-              /*this.fb.group({
-                codigo : ['',[Validators.required]],
-                horas : ['',[Validators.required]],
-                precio : ['',[Validators.required]],
-                subtotal : ['',[Validators.required]]
-              })*/
-            ]
-          ),
+          conceptos : this.fb.array([]),
           total : [0,[]]
         }
       );
       setTimeout(() => {
         this.cargando = true;
       }, 1500);
-    }
-    @ViewChild(SignaturePad) signaturePad: SignaturePad;
-    private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
-      'minWidth': 1,
-      'canvasWidth': 600,
-      'canvasHeight': 300,
-      'penColor' :  'rgb(0, 0, 0)'
-    };
-    ngAfterViewInit() {
-      // this.signaturePad is now available
-      this.signaturePad.set('minWidth', 2); // set szimek/signature_pad options at runtime
-      this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
-    }
-    drawComplete() {
-      // will be notified of szimek/signature_pad's onEnd event
-      //console.log(this.signaturePad.toDataURL());
-      this.signature = this.signaturePad.toDataURL();
-    }
-    drawStart() {
-      // will be notified of szimek/signature_pad's onBegin event
-      console.log('begin drawing');
     }
     loadClients(){
       this.userServices.getAllClients().subscribe(
@@ -202,8 +159,16 @@ export class IniciarServicioComponent implements OnInit {
           this.stat2 = true;
           break;
         case 3:
-          this.status = 'Realizado';
+          this.alert.alert("Este servicio esta realizado, pero no autorizado por el cliente. Espera a que un administrador o el cliente autorize el servicio.");
+          this.status = 'Realizado/No autorizado';
           this.proceso = true;
+          this.stat3 = true;
+          break;
+        case 4:
+          this.status = 'Realizado/Autorizado';
+          this.getAutorizedBy();
+          this.proceso = true;
+          this.autorizado = true;
           this.stat3 = true;
           break;
       }
@@ -337,6 +302,16 @@ export class IniciarServicioComponent implements OnInit {
         }
       );
     }
+    getAutorizedBy(){
+      this.userServices.getUser(<string>this.servicio.autorized_by).subscribe(
+        req => {
+          let e:User = req.detail;
+          this.authby = e.info.name;
+        },err => {
+          console.error(err);
+        }
+      );
+    }
     getEmpresa(){
       this.empresaService.getid(this.servicio.client).subscribe(
         req => {
@@ -384,7 +359,6 @@ export class IniciarServicioComponent implements OnInit {
 
       data.hours = this.hours;
       data.total = this.totalPrecio;
-      data.firma =  this.signature;
       data.divisa = this.contrato.divisa;
 
       console.log(data);
@@ -403,9 +377,6 @@ export class IniciarServicioComponent implements OnInit {
           this.alert.error('Ocurrio un error durante el registro')
         }
       );
-    }
-    clearSg(){
-      this.signaturePad.clear();
     }
     hideModal():void {
       document.getElementById('close-modal').click();
@@ -453,3 +424,4 @@ export class IniciarServicioComponent implements OnInit {
     }
     
   }
+  

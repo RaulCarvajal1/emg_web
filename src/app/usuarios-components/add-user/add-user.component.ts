@@ -126,6 +126,9 @@ export class AddUserComponent implements OnInit {
     let temp = this.userForm.value.role;
     if(temp == 2){
       this.isClient = !this.isClient;
+      if(this.empresas.length == 0){
+        this.alert.alert('No existen empresas registradas, primero registra una empresa.');
+      }
     }
   }
   loadEmpresas(){

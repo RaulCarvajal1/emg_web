@@ -70,10 +70,21 @@
                   </div>
                 </div>
               </div>
-              <div class="col">
+              <!--<div class="col">
                 <div class="form-group">
                   <label for="modelo"><span class="text-danger">*</span>Modelo</label>
                   <input type="text" class="form-control form-control-sm" id="modelo" formControlName="modelo" placeholder="Modelo del equipo">
+                  <div *ngIf="emgForm.get('modelo').errors&&emgForm.get('modelo').dirty">
+                    <p *ngIf="emgForm.get('modelo').hasError('required')" class="text-danger">El modelo es requerido</p>
+                  </div>
+                </div>
+              </div>-->
+              <div class="col">
+                <div class="form-group">
+                  <label for="modelo"><span class="text-danger">*</span>Modelo</label>
+                  <select class="form-control form-control-sm" id="modelo" formControlName="modelo" (change)="getModelo()">
+                    <option *ngFor="let modelo of modelos" value="{{modelo.modelo}}">{{modelo.modelo}}</option>
+                  </select>
                   <div *ngIf="emgForm.get('modelo').errors&&emgForm.get('modelo').dirty">
                     <p *ngIf="emgForm.get('modelo').hasError('required')" class="text-danger">El modelo es requerido</p>
                   </div>

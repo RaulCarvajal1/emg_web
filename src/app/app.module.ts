@@ -80,6 +80,8 @@ import { AddservicioemgTecComponent } from './tecnicos-components/addservicioemg
 import { SolicitarServicioemgComponent } from './clientes-components/solicitar-servicioemg/solicitar-servicioemg.component';
 import { MisServiciosemgComponent } from './clientes-components/mis-serviciosemg/mis-serviciosemg.component';
 import { UpdateUserComponent } from './usuarios-components/update-user/update-user.component';
+import { AddmodeloComponent } from './equipos-components/addmodelo/addmodelo.component';
+import { VermodeloComponent } from './equipos-components/vermodelo/vermodelo.component';
 
 // tslint:disable-next-line: no-unused-expression
 @NgModule({
@@ -136,7 +138,9 @@ import { UpdateUserComponent } from './usuarios-components/update-user/update-us
     SolicitarServicioemgComponent,
     MisServiciosemgComponent,
     EditarPlantaComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    AddmodeloComponent,
+    VermodeloComponent
   ],
   imports: [
     HttpClientModule,

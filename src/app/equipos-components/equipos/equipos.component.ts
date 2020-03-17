@@ -6,6 +6,8 @@ import { Plant, Lines } from 'src/app/interfaces/plant.interface';
 import { PlantasService } from 'src/app/services/plantas.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { EmpresasService } from 'src/app/services/empresas.service';
+import { models } from 'src/app/interfaces/models.interface';
+import { ModelsService } from 'src/app/services/models.service';
 
 @Component({
   selector: 'app-equipos',
@@ -15,11 +17,13 @@ import { EmpresasService } from 'src/app/services/empresas.service';
 export class EquiposComponent implements OnInit {
 
   constructor(private emgService: EmgsService, private router: Router,
-              private empresaService: EmpresasService, private plantService: PlantasService)
+              private empresaService: EmpresasService, private plantService: PlantasService,
+              private modelsService:ModelsService)
               {
                 this.getAllEmgs();
                 this.loadUsers();
                 this.loadPlant();
+                this.getModelos();
               }
 
   ngOnInit() {
@@ -34,6 +38,8 @@ export class EquiposComponent implements OnInit {
   lines:Lines[];
   busqByName:string="";
   busqBySerial:string="";
+
+  modelos:models[];
 
   have_lines:boolean=false;
 
@@ -151,5 +157,18 @@ export class EquiposComponent implements OnInit {
     }else{
       return "Activo"
     }
+  }
+
+  getModelos(){
+    this.modelsService.get().subscribe(
+      res => this.modelos = res.detail,
+      err => console.error(err)
+    );
+  }
+  gotoAdd(){
+    this.router.navigateByUrl("equipos/modelos/add");
+  }
+  detalleModelo(id: string){
+    this.router.navigateByUrl("equipos/modelos/"+id);
   }
 }

@@ -215,16 +215,21 @@
                 </div>
                 <hr>
 
-                <div class="row" *ngIf="proceso">
+                <div class="row" *ngIf="proceso && autorizado">
                   <div class="col">
+                    <h6><b>Autorización del servicio</b></h6>
+                  </div>
+                </div>
+                <div class="row" *ngIf="proceso && autorizado">
+                  <div class="col"> 
                     <div class="">
-                      <h6><b>Firma del cliente</b></h6>
+                      <h6>Firma del cliente</h6>
                       <img src="{{servicio.signature}}" class="w-100 img-fluid">                       
                     </div>
                   </div>
                   <div class="col">
                     <div class="row text-center">
-                      <h6><b>Satisfacción del cliente</b></h6>                     
+                      <h6>Satisfacción del cliente</h6>                     
                     </div>
                     <div class="row text-center">
                       <div class="col" *ngIf="malac">
@@ -244,18 +249,33 @@
                       <small class="text-muted">El rango de evalución se basa en Mala, Buena y Excelente experiencia</small>
                     </div>
                   </div>
+                <br>
+                </div>
+
+                <div class="row" *ngIf="proceso && autorizado">
+                  <div class="col">
+                    <h6><b>Autorizado por :</b></h6>
+                    <h6>{{authby}}</h6>
+                  </div>
                 </div>
                 <hr>
-                <br><br>
+
+                <br>
                 <div class="row" style="padding-bottom: 0px">
                   <div class="col">
                     <button type="button" class="btn btn-info w-100" (click)="regresar()">Regresar</button>
                   </div>
                   <div class="col">
-                    <button type="button" class="btn btn-danger w-100" (click)="getPdf()" [disabled]="!proceso">Descargar reporte(PDF)</button>
+                    <button type="button" class="btn btn-danger w-100" (click)="getPdf()" [disabled]="!(proceso&&autorizado)">Descargar reporte(PDF)</button>
                   </div>
                   <div class="col">
-                    <button type="button" class="btn btn-danger w-100" (click)="getRemito()" [disabled]="!proceso">Descargar remito(PDF)</button>
+                    <button type="button" class="btn btn-danger w-100" (click)="getRemito()" [disabled]="!(proceso&&autorizado)">Descargar remito(PDF)</button>
+                  </div>
+                </div>
+                <br>
+                <div class="row" style="padding-bottom: 0px" *ngIf="!(proceso&&autorizado)">
+                  <div class="col-4">
+                    <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#finalModal">Autorizar servicio</button>
                   </div>
                 </div>
               </div>
@@ -267,3 +287,94 @@
 <hr>
 </div>
 <app-footer></app-footer>
+
+<div class="modal fade" id="finalModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Autorizar servicio</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container" *ngIf="!guardando">
+          <div class="row">
+            <div class="col">
+              <h1 class="lead">Autorización del servicio</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <form [formGroup]="autorizarForm" (ngSubmit)="autorizar()">
+                <div class="row">
+                  <div class="col">
+                    <label for="ren"><span class="text-danger">*</span>Satisfacción del servicio</label>
+                    <div class="row" id="ren">
+                        <div class="col">
+                          <div class="form-check">
+                            <label>
+                              <input type="radio" name="score" value="0" formControlName="score">
+                              <img [src]="mala" class="img-fluid">
+                            </label>
+                          </div>                      
+                        </div>
+                        <div class="col">
+                          <div class="form-check">
+                            <label>
+                              <input type="radio" name="score" value="1" formControlName="score">
+                              <img [src]="regular" class="img-fluid">
+                            </label>
+                          </div> 
+                        </div>
+                        <div class="col">
+                          <div class="form-check">
+                            <label>
+                              <input type="radio" name="score" value="2" formControlName="score">
+                              <img [src]="buena" class="img-fluid">
+                            </label>
+                          </div> 
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <div class="mx-auto sng-border text-center">
+                        <signature-pad [options]="signaturePadOptions" (onEndEvent)="drawComplete()" ></signature-pad>
+                        <p class="lead">Firma del cliente</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <button type="button" class="btn btn-sm btn-secondary ml-auto" (click)="clearSg()">Limpiar</button>
+                  </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary w-100" [disabled]="autorizarForm.invalid">Guardar servicio</button>
+              </form>
+            </div>
+          </div>      
+        </div>
+        <div class="container" *ngIf="guardando">
+          <div class="row">
+            <div class="col text-center">
+              <p class="lead">CERRANDO SERVICIO</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-spinner class="mx-auto"></mat-spinner>
+            </div>
+          </div>
+        </div>      
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="close-modal" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

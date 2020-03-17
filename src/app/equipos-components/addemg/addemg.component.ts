@@ -12,6 +12,8 @@ import { AlertService } from 'src/app/services/alert.service';
 import { Location } from '@angular/common';
 import { AgreementsService } from 'src/app/services/agreements.service';
 import { Contrato } from 'src/app/interfaces/agreement.interface';
+import { ModelsService } from 'src/app/services/models.service';
+import { models } from 'src/app/interfaces/models.interface';
 
 @Component({
   selector: 'app-addemg',
@@ -24,7 +26,7 @@ export class AddemgComponent implements OnInit{
               private emgServices:EmgsService, private router:Router, 
               private authService:AuthService, private fb:FormBuilder,
               private alert:AlertService, private location: Location,
-              private agreementsServices:AgreementsService) 
+              private modelsService:ModelsService) 
               { 
 
                 this.emgForm = this.fb.group({
@@ -44,6 +46,7 @@ export class AddemgComponent implements OnInit{
 
   ngOnInit() {
     this.loadUsers();
+    this.getModelos();
   }
 
   emgForm:FormGroup;
@@ -56,6 +59,9 @@ export class AddemgComponent implements OnInit{
 
   load: boolean = true;
   guardando: boolean = false;
+
+  modelos:models[];
+
 
   loadUsers(){
     this.empresaService.get().subscribe(res=>{
@@ -152,4 +158,21 @@ export class AddemgComponent implements OnInit{
     this.location.back();
   } 
 
+  getModelos(){
+    this.modelsService.get().subscribe(
+      res => {
+        this.modelos = res.detail
+        if(this.modelos.length == 0){
+          this.alert.alert("No se encuentran modelos registrados, por favor regresa a la pantalla anterior y da click en la penstaña correspondiente para registrar modelos nuevos.");
+        }
+      },
+      err => console.error(err)
+    );
+  }
+
+  getModelo(){
+    let modelo:models = this.modelos.find( e => e.modelo == this.emgForm.value.modelo);
+
+    this.emgForm.patchValue({ tipo : modelo.tipo , desc : modelo.descripcion});
+  }
 }

@@ -5,6 +5,9 @@ import { UsuariosService } from "./../../services/usuarios.service";
 import { Plant } from "./../../interfaces/plant.interface";
 import { User } from 'src/app/interfaces/user.interface';
 import { Location } from "@angular/common";
+import * as moment from 'moment';
+import { EmpresasService } from 'src/app/services/empresas.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-ver-mi-planta',
@@ -14,51 +17,50 @@ import { Location } from "@angular/common";
 export class VerMiPlantaComponent implements OnInit {
 
   constructor(
-    private activatedRoute:ActivatedRoute, 
-    private router:Router, 
-    private plantas:PlantasService, 
-    private usuarios:UsuariosService,
-    private location:Location
-    ) { 
-    this.id=this.activatedRoute.snapshot.paramMap.get("id")
+      private activatedRoute:ActivatedRoute, 
+      private router:Router, 
+      private plantas:PlantasService, 
+      private usuarios:UsuariosService,
+      private empresas:EmpresasService,
+      private location: Location,
+      private alert: AlertService) { 
+  this.id=this.activatedRoute.snapshot.paramMap.get("id")
   }
   id:string;
   ngOnInit() {
-    this.getPlanta();
-  }  
-  ngDoCheck(){
-    this.getName(this.planta.meta.registred_by);
-    this.getDate(this.planta.meta.registred_date);
+  this.getPlanta();
   }
-
+  
   reg_by:User;
   reg_bystr:string="";
   reg_date:string="";
   planta:Plant;
-
-  nName:string="";
-  nCode:string="";
-  neName:string="";
-  nEmail:string="";
-  nPhone:string="";
+  empresa: String = "";
 
   actualizado:boolean=false;
+  load: boolean = true;
 
   getPlanta(){
     this.plantas.getPlanta(this.id).subscribe(
       res=>{
         this.planta=res.detail;
+        this.getName(this.planta.meta.registred_by);
+        this.getDate(this.planta.meta.registred_date);
+        this.getEmpresa();
+        this.load = false;
+
       },err=>{
         console.error(err);
       }
     );
   }
-  enbuts():boolean{
-    if(this.nName!=""||this.nCode!=""||this.neName!=""||this.nEmail!=""){
-      return false;
-    }else{
-      return true;
-    }
+  getEmpresa(){
+    this.empresas.getid(this.planta.client).subscribe(
+      res => {
+        this.empresa =  res.detail.name;
+      },err => {
+      }
+    );
   }
   regresar(){
     this.location.back();
@@ -75,52 +77,14 @@ export class VerMiPlantaComponent implements OnInit {
     )
   }
   getDate(ut:string){
-    this.reg_date = ut.slice(0, 10);
+    var registro = moment(ut.replace('T',' ').slice(0,16)).locale('es');
+    this.reg_date = registro.format('dddd, MMMM Do YYYY');
+    this.reg_date =  this.reg_date.charAt(0).toUpperCase()+this.reg_date.slice(1).replace('º','');
   }
-  updClick(){
-    if(this.nName==""){
-      this.nName=this.planta.name;
-    }
-    if(this.nCode==""){
-      this.nCode=this.planta.code;
-    }
-    if(this.neName==""){
-      this.neName=this.planta.boss.name;
-    }
-    if(this.nEmail==""){
-      this.nEmail=this.planta.boss.email;
-    }
-    if(this.nPhone==""){
-      this.nPhone=this.planta.boss.phone;
-    }
-    this.actualizar(this.nName,this.nCode,this.neName,this.nEmail,this.nPhone);
+  plantDet(id:string){
+    this.router.navigateByUrl('equipos/lineas/'+this.planta._id+"/"+id);
   }
-  actualizar(n:string,c:string,ne:string,e:string,p:string){
-    let nPlant:any={
-      '_id' : this.id,
-      'name' : n,
-      'code' : c,
-      'boss' : {
-        'name' : ne,
-        'email' : e,
-        'phone' : p
-      }
-    };
-    this.plantas.updatePlanta(nPlant).subscribe(
-      res=>{
-        this.actualizado=true;
-        setTimeout(() => {
-          this.getPlanta();
-          this.nName="";
-          this.nCode="";
-          this.neName="";
-          this.nEmail="";
-          this.nPhone="";
-          this.actualizado=false;
-        }, 1500);
-      },err=>{
-        console.log(err);
-      }
-    );
+  gotoActualizar(){
+    this.router.navigateByUrl('equipos/plantas/editar/'+this.id);
   }
 }

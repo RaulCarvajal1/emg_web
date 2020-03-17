@@ -52,6 +52,9 @@ import { SolicitarServicioemgComponent } from './clientes-components/solicitar-s
 import { MisServiciosemgComponent } from './clientes-components/mis-serviciosemg/mis-serviciosemg.component';
 import { EditarPlantaComponent } from './plantas-components/editar-planta/editar-planta.component';
 
+import { AddmodeloComponent } from './equipos-components/addmodelo/addmodelo.component';
+import { VermodeloComponent } from './equipos-components/vermodelo/vermodelo.component';
+
 import { ScannerComponent } from './scanner/scanner.component';
 
 const routes: Routes = [
@@ -74,6 +77,8 @@ const routes: Routes = [
   {path : 'equipos/equipos', component : EquiposComponent},
   {path : 'equipos/equipos/nuevo', component : AddemgComponent},
   {path : 'equipos/equipos/:id', component : ViewemgComponent},
+  {path : 'equipos/modelos/add', component : AddmodeloComponent},
+  {path : 'equipos/modelos/:id', component : VermodeloComponent},
   {path : 'equipos/equipos/editar/:id/:c', component : EditaremgComponent},
   {path : 'servicios', component : ServiciosComponent},
   {path : 'servicios/emg/:id', component : ServiciosemgComponent},

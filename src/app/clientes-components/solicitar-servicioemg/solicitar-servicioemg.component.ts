@@ -156,6 +156,9 @@ export class SolicitarServicioemgComponent implements OnInit {
     res => {
       this.contratos = res.detail;
       console.log(res, this.auth.getEmpresaId());
+      if(this.contratos.length == 0){
+        this.alert.alert('No existe ningun contrato dentro del registro, por favor primero solicitar al administrador que resgiste un contrato para poder solicitar un servicio.');
+      }
     },err => {
       console.error(err);
     });

@@ -14,6 +14,7 @@ export interface servicios {
     'signature' : String,
     'score' : number,
     'requested_by' : String,
+    'autorized_by' : String,
     'service_details' : service_details,
     'agreement' : String,
     'payment' : payment,

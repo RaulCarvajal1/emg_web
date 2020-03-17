@@ -78,11 +78,11 @@ export class ServiciosComponent implements OnInit {
                  });
     return n.info.name;
   }
-   /*
-  0. Solicitado por cliente(Falta asignar tecnico)
-  1. Programado
-  2. En proceso
-  3. Realizado
+  /*
+    0. Solicitado por cliente(Falta asignar tecnico)
+    1. Programado
+    2. En proceso
+    3. Realizado
   */
   getStatus(n:number):string{
     switch (n) {
@@ -96,7 +96,10 @@ export class ServiciosComponent implements OnInit {
         return "En proceso";
         break;
       case 3:
-        return "Realizado";
+        return "Realizado/No autorizado";
+        break;
+      case 4:
+        return "Realizado/Autorizado";
         break;
       default:
         break;
@@ -156,7 +159,7 @@ export class ServiciosComponent implements OnInit {
     }
   }
   getScore(score:Number, status :Number){
-    if(status != 3){
+    if(status <= 3){
       return 'No Calificado';
     }else{
       switch (score) {
@@ -166,6 +169,8 @@ export class ServiciosComponent implements OnInit {
           return 'Buena';
         case 2:
           return 'Excelente';
+        default:
+          return 'No calificado';
       }
     }
   }
