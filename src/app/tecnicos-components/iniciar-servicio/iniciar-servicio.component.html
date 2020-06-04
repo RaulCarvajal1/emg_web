@@ -26,7 +26,7 @@
                   <div class="col">
                     <div class="">
                       <h6><b>Empresa</b></h6>
-                      <h6>{{empresa}}</h6>                        
+                      <h6>{{empresa}}</h6>                         
                     </div>
                   </div>
                   <div class="col">
@@ -152,6 +152,18 @@
                   </div>
                 </div>
 
+                <div class="row" *ngIf="proceso"><!--proceso-->
+                  <div class="col">
+                      <h6><b>Enlaces adjuntos</b></h6>
+                      <h6 *ngIf="servicio.enlaces.length == 0 || servicio.enlaces == 0">Sin enlaces adjuntos</h6>
+                      <ul *ngIf="servicio.enlaces.length > 0">
+                        <li *ngFor="let enlace of enlaces">
+                          <a href="{{enlace}}">{{enlace}}</a>
+                        </li>
+                      </ul> 
+                  </div> 
+                </div>
+                
                 <div class="row" *ngIf="proceso && autorizado">
                   <div class="col">
                     <h6><b>Autorización del servicio</b></h6>
@@ -335,7 +347,14 @@
                       <p *ngIf="finalizarForm.get('recomendaciones').hasError('required')" class="text-danger">Campo requerido</p>
                     </div>
                 </div>
-
+                <div class="form-group">
+                  <label for="re">Enlace a archivos en la nube(Dropbox, GDrive, etc...)</label>
+                  <textarea class="form-control form-control-sm" id="re" rows="3" formControlName="enlaces"></textarea>
+                  <small class="text-muted">Si son varios enlaces, separar por coma.</small>
+                  <div *ngIf="finalizarForm.get('enlaces').errors&&finalizarForm.get('enlaces').dirty">
+                    <p *ngIf="finalizarForm.get('enlaces').hasError('required')" class="text-danger">Campo requerido</p>
+                  </div>
+              </div>
                 <hr>
                 <div class="row">
                   <div class="col">
@@ -346,7 +365,7 @@
                   <div class="col">
                     <div class="form-group">
                       <label for="date_ini">Fecha y hora de inicio</label>
-                      <p class="text-muted">La hora de inico registrada es la siguiente, en caso de que sea incorrecta, por favor modificarla.</p>
+                      <small class="text-muted"> (La hora de inico registrada es la siguiente, en caso de que sea incorrecta, por favor modificarla.)</small>
                       <input type="datetime-local" class="form-control form-control-sm" id="date_ini" formControlName="date_ini" min="{{minDate}}" max="{{maxDate}}" (change)="getServiceHours()">
                     </div>
                     <div *ngIf="finalizarForm.get('date_ini').errors&&finalizarForm.get('date_ini').dirty">
@@ -358,7 +377,7 @@
                   <div class="col">
                     <div class="form-group">
                       <label for="date">Fecha y hora de finalización</label>
-                      <p class="text-muted">Al finalizar el servicio se tomará como hora de fin la siguiente, en caso de que sea incorrecta, por favor modificarla.</p>
+                      <small class="text-muted"> (Al finalizar el servicio se tomará como hora de fin la siguiente, en caso de que sea incorrecta, por favor modificarla.)</small>
                       <input type="datetime-local" class="form-control form-control-sm" id="date" formControlName="date" min="{{minDate}}" max="{{maxDate}}" (change)="getServiceHours()">
                     </div>
                     <div *ngIf="finalizarForm.get('date').errors&&finalizarForm.get('date').dirty">

@@ -11,6 +11,7 @@ import { EmpresasService } from 'src/app/services/empresas.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { empresa } from 'src/app/interfaces/clients.interface';
 import { AuthService } from 'src/app/services/auth.service';
+import { consts } from 'src/app/services/reports.settings';
 
 @Component({
   selector: 'app-ver-mi-equipo',
@@ -50,6 +51,9 @@ planta:string;
 linea:string;
 cod_pro:string;
 
+enlaces:string[];
+extra:string;
+
 load: boolean = true;
 
 loadStrings(){
@@ -60,6 +64,8 @@ this.tipo=info.type;
 this.descripcion=info.description;
 this.serie=info.serial;
 this.cod_pro = this.emg.cod_pro;
+this.enlaces = this.emg.enlaces.split(',');
+this.emg.extras.length==0? this.extra = "Sin información extra registrada":this.extra = this.emg.extras;
 
 this.load = false;
 }
@@ -170,7 +176,7 @@ this.alert.error("Sin cambios en el registro");
 getPdf(){
 this.alert.alert("Tu PDF se descargará en unos segundos.");
 let data:any={
-template: { "shortid" : "rkgmBHwjyH"  }, 
+template: { "shortid" : consts.ficha_id }, 
 data : {
 id: this.emg._id.substring(0,10),
 nombre: this.nombre,

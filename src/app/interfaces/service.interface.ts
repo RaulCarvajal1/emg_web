@@ -18,7 +18,8 @@ export interface servicios {
     'service_details' : service_details,
     'agreement' : String,
     'payment' : payment,
-    'conceptos' : conceptos []
+    'conceptos' : conceptos [],
+    'enlaces' : string
 }
 
 interface obs { 

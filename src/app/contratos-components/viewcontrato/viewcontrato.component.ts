@@ -89,7 +89,7 @@ export class ViewcontratoComponent implements OnInit {
     );
   }
   getScore(score:Number, status :Number){
-    if(status != 3){
+    if(status <= 3){
       return 'No Calificado';
     }else{
       switch (score) {
@@ -99,6 +99,8 @@ export class ViewcontratoComponent implements OnInit {
           return 'Buena';
         case 2:
           return 'Excelente';
+        default:
+          return 'No calificado';
       }
     }
   }
@@ -114,7 +116,10 @@ export class ViewcontratoComponent implements OnInit {
         return "En proceso";
         break;
       case 3:
-        return "Realizado";
+        return "Realizado/No autorizado";
+        break;
+      case 4:
+        return "Realizado/Autorizado";
         break;
       default:
         break;

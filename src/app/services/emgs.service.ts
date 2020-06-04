@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { res, resArray } from "./../interfaces/response.interface";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { link } from './app.settings';
+import { consts } from './reports.settings';
+import { toBase64String } from '@angular/compiler/src/output/source_map';
 
 
 @Injectable({
@@ -49,13 +51,15 @@ export class EmgsService {
 
   getPdf(data:any){
     var mediaType = 'application/pdf';
-    this.http.post('http://18.189.206.61:5488/api/report', data, { responseType: 'blob' }).subscribe(
+    this.http.post(consts.link, data, {'responseType' : 'blob'}).subscribe(
         (response) => {
-            var blob = new Blob([response], { type: mediaType });
+            var blob = new Blob( [ <any>response ], { type: mediaType });
             saveAs(blob, 'ficha_emg.pdf');
+            console.log(response);
         },
         e => { console.error(e) }
     );
   }
 
 }
+

@@ -57,6 +57,8 @@ export class EditaremgComponent implements OnInit {
       desc : [emg.info.description,[Validators.required]],
       serie : [emg.info.serial,[Validators.required]],
       cod_pro : [emg.cod_pro,[Validators.required]],
+      enlaces : [emg.enlaces,[]],
+      extras : [emg.extras,[]],
       _id : [emg._id,[]]
     });
     this.loadPlants();
@@ -134,7 +136,9 @@ export class EditaremgComponent implements OnInit {
       'meta':{
         'registred_by' : this.authService.getId()
       },
-      '_id': temp._id
+      '_id': temp._id,
+      'enlaces' : temp.enlaces,
+      'extras' : temp.extras
     };
     this.emgServices.update(nemg).subscribe(
     res=>{

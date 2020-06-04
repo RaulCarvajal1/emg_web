@@ -9,7 +9,7 @@ import { empresa } from 'src/app/interfaces/clients.interface';
 import { AlertService } from 'src/app/services/alert.service';
 import { Location } from "@angular/common";
 import { AuthService } from 'src/app/services/auth.service';
-
+import { consts } from '../../services/reports.settings'
 @Component({
   selector: 'app-viewemg',
   templateUrl: './viewemg.component.html',
@@ -48,6 +48,9 @@ export class ViewemgComponent implements OnInit{
   linea:string;
   cod_pro:string;
 
+  enlaces:string[];
+  extra:string; 
+
   load: boolean = true;
 
   loadStrings(){
@@ -58,7 +61,8 @@ export class ViewemgComponent implements OnInit{
     this.descripcion=info.description;
     this.serie=info.serial;
     this.cod_pro = this.emg.cod_pro;
-
+    this.enlaces = this.emg.enlaces.split(',');
+    this.emg.extras.length==0? this.extra = "Sin información extra registrada":this.extra = this.emg.extras;
     this.load = false;
   }
   getEmg(id:string){
@@ -170,7 +174,7 @@ export class ViewemgComponent implements OnInit{
   getPdf(){
     this.alert.alert("Tu PDF se descargará en unos segundos.");
     let data:any={
-        template: { "shortid" : "rkgmBHwjyH"  }, 
+        template: { "shortid" :  consts.ficha_id }, 
         data : {
           id: this.emg._id.substring(0,10),
           nombre: this.nombre,

@@ -36,7 +36,8 @@ export class VermodeloComponent implements OnInit {
     this.modelForm = this.fb.group({
       modelo : [this.modelo.modelo, [Validators.required]],
       tipo : [this.modelo.tipo, [Validators.required]],
-      descripcion : [this.modelo.descripcion, [Validators.required]]
+      descripcion : [this.modelo.descripcion, [Validators.required]],
+      enlaces : [this.modelo.enlaces, []]
     });
   }
 

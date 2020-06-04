@@ -39,7 +39,7 @@ export class AddUserComponent implements OnInit {
   userForm:FormGroup;
 
   options = [
-    { name: "Administrador", id : 0},
+    //{ name: "Administrador", id : 0},
     { name: "Técnico", id : 1},
     { name: "Cliente", id : 2}
   ];

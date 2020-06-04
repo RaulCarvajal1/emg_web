@@ -119,11 +119,7 @@ export class AddservicioTecComponent implements OnInit {
   }
   getClientId(){
     let temp = this.serviciosForm.value.emg;
-    this.emgs.forEach(emg => {
-      if(emg._id==temp){
-        this.emg_c_id=emg.client;
-      }
-    });
+    this.serviciosForm.value.client = this.emgs.find( e => e._id == temp).client;
   }
    /*
   0. Solicitado por cliente(Falta asignar tecnico)
@@ -139,15 +135,14 @@ export class AddservicioTecComponent implements OnInit {
     temp.client =  this.emg_c_id;
     temp.requested_by = this.auth.getId();
 
-    console.log(temp);
     this.serviciosService.save(temp).subscribe(
       res=>{
-        this.getEmailData(temp.client,temp.tecnico);
+        this.getEmailData(temp.tecnico);
         this.alert.success("Servicio programado correctamente, se enviaron correos a los actores implicados en este servicio. Seras redirigido en unos segundos");
         this.serviciosService.emailProgramar({
-                                              "email_tecnico" : this.tec_email,
+                                              "email_tecnico" : this.auth.getEmail(),
                                               "email_cliente" : this.cli_email,
-                                              "nameTec" : this.tec_name,
+                                              "nameTec" : this.auth.getName(),
                                               "nameCli" : this.cli_name,
                                               "date" : this.getDate(temp.date),
                                               "id" : res.detail._id.substring(res.detail._id.length-10,res.detail._id.length)
@@ -172,19 +167,10 @@ export class AddservicioTecComponent implements OnInit {
     let temp = registro.format('dddd, MMMM Do YYYY');
     return temp.charAt(0).toUpperCase()+temp.slice(1).replace('º','');
   }
-  getEmailData(idc,idt){
-    this.clientes.forEach(async e=>{
-      if(idc==e._id){
-        this.cli_email=e.info.email;
-        this.cli_name=e.info.name;
-      }
-    });
-    this.tecnicos.forEach(async e=>{
-      if(idt==e._id){
-        this.tec_email=e.info.email;
-        this.tec_name=e.info.name;
-      }
-    });
+  getEmailData( idt ){
+    let tempt: User = this.tecnicos.find( e => e._id == idt);
+    this.tec_email=tempt.info.email;
+    this.tec_name=tempt.info.name;
   }
   regresar(){
     this.location.back();

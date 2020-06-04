@@ -71,8 +71,8 @@ export class AddservicioComponent implements OnInit {
   //email data 
   tec_email:string;
   tec_name:string;
-  cli_email:string;
-  cli_name:string;
+  cli_email:string = "";
+  cli_name:string = "";
 
   ngOnInit() {
     this.loadTecnicos();
@@ -121,11 +121,7 @@ export class AddservicioComponent implements OnInit {
   }
   getClientId(){
     let temp = this.serviciosForm.value.emg;
-    this.emgs.forEach(emg => {
-      if(emg._id==temp){
-        this.emg_c_id=emg.client;
-      }
-    });
+    this.serviciosForm.value.client = this.emgs.find( e => e._id == temp).client;
   }
   getTecName(tecid){
     this.tecnicos.forEach(e=>{
@@ -144,9 +140,9 @@ export class AddservicioComponent implements OnInit {
     this.getClientId();
     let temp = this.serviciosForm.value;
     temp.status = 1;
-    temp.client =  this.emg_c_id;
     temp.requested_by = this.auth.getId();
-    this.getEmailData(temp.client,temp.tecnico);
+    this.getEmailData(temp.tecnico);
+    console.log(temp);
     this.serviciosService.save(temp).subscribe(
        res=>{
         this.alert.success("Servicio programado correctamente, se enviaron correos a los actores implicados en este servicio. Seras redirigido en unos segundos");
@@ -177,19 +173,10 @@ export class AddservicioComponent implements OnInit {
     var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
     return  registro.format('dddd, MMMM Do YYYY, h:mm a').replace('º','');
   }
-  getEmailData(idc,idt){
-    this.clientes.forEach(async e=>{
-      if(idc==e._id){
-        this.cli_email=e.info.email;
-        this.cli_name=e.info.name;
-      }
-    });
-    this.tecnicos.forEach(async e=>{
-      if(idt==e._id){
-        this.tec_email=e.info.email;
-        this.tec_name=e.info.name;
-      }
-    });
+  getEmailData( idt ){
+    let tempt: User = this.tecnicos.find( e => e._id == idt);
+    this.tec_email=tempt.info.email;
+    this.tec_name=tempt.info.name;
   }
   regresar(){
     this.location.back();
@@ -229,7 +216,6 @@ export class AddservicioComponent implements OnInit {
           this.plants = [];
           this.lines = [];
         }
-        console.log(res);
       }, err => {
         console.error(err);
       }

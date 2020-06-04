@@ -14,8 +14,8 @@ import { Contrato } from 'src/app/interfaces/agreement.interface';
 import * as moment from 'moment'; 
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Location } from "@angular/common";
-import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { AlertService } from 'src/app/services/alert.service';
+import { consts } from 'src/app/services/reports.settings';
 
 @Component({
   selector: 'app-iniciar-servicio',
@@ -85,6 +85,8 @@ export class IniciarServicioComponent implements OnInit {
     autorizado: boolean =  false;
     authby: string = "null";
 
+    enlaces:string[]; 
+
     ngOnInit() {
       this.loadClients();
       this.getTecnicos();
@@ -99,6 +101,7 @@ export class IniciarServicioComponent implements OnInit {
           trabajo_realizado : ['',[Validators.required]],
           comentarios : ['',[Validators.required]],
           recomendaciones : ['',[Validators.required]],
+          enlaces : ['',[]],
           date : [moment().format().substring(0,16),[Validators.required]],
           date_ini : ['',[Validators.required]],
           conceptos : this.fb.array([]),
@@ -129,6 +132,7 @@ export class IniciarServicioComponent implements OnInit {
           this.getRequested();
           this.getEmpresa();
           this.getContrato();
+          this.enlaces = this.servicio.enlaces.split(',');
           this.finalizarForm.patchValue({ date_ini : this.servicio.start.slice(0,16)});
         },err=>{
           console.error(err);
@@ -233,7 +237,7 @@ export class IniciarServicioComponent implements OnInit {
     }
     getPdf(){
       let data: any = {
-        template: { "shortid" : "HJlwC8WhkH"  }, 
+        template: { "shortid" : consts.reporte_id  }, 
         data : {id : this.servicio._id.substring(this.servicio._id.length-5,this.servicio._id.length),
           emg : this.emg,
           tec : this.tec,

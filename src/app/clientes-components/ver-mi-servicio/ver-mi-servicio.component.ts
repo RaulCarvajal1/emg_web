@@ -17,6 +17,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { AuthService } from 'src/app/services/auth.service';
+import { consts } from 'src/app/services/reports.settings';
 
 @Component({
   selector: 'app-ver-mi-servicio',
@@ -92,6 +93,9 @@ export class VerMiServicioComponent implements OnInit {
   guardando: boolean = false;
   signature : string;
 
+  enlaces:string[]; 
+
+
   //Signature
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
     private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
@@ -139,6 +143,7 @@ export class VerMiServicioComponent implements OnInit {
         this.getRequested();
         this.getEmpresa();
         this.getContrato();
+        this.enlaces = this.servicio.enlaces.split(',');
         this.nfec = this.servicio.date.slice(0,16).replace("T"," a las ");
       },err=>{
         console.error(err);
@@ -240,7 +245,7 @@ export class VerMiServicioComponent implements OnInit {
   getPdf(){
     this.alert.alert('En unos segundos se descargará su PDF.');
     let data: any = {
-      template: { "shortid" : "HJlwC8WhkH"  }, 
+      template: { "shortid" : consts.reporte_id  }, 
       data : {id : this.servicio._id.substring(this.servicio._id.length-5,this.servicio._id.length),
               emg : this.emg,
               tec : this.tec,
@@ -271,7 +276,7 @@ export class VerMiServicioComponent implements OnInit {
   getRemito(){
     this.alert.alert('En unos segundos se descargará su PDF.');
     let data: any = {
-      template: { "shortid" : "BJxqg5VrlU"  }, 
+      template: { "shortid" : consts.remito_id  }, 
       data : {
             proveedor : "",
             contrato : this.contrato,

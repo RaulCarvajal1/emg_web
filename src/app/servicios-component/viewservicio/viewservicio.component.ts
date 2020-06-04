@@ -14,6 +14,7 @@ import { Contrato } from 'src/app/interfaces/agreement.interface';
 import * as moment from 'moment';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { consts } from 'src/app/services/reports.settings';
 
 @Component({
   selector: 'app-viewservicio',
@@ -84,6 +85,8 @@ export class ViewservicioComponent implements OnInit {
   autorizado: boolean =  false;
   authby: string = "null";
 
+  enlaces:string[];
+
   loadClients(){
     this.userServices.getAllClients().subscribe(
       res=>{
@@ -105,7 +108,7 @@ export class ViewservicioComponent implements OnInit {
         this.getEmpresa();
         this.getContrato();
         this.nfec  = this.servicio.date;
-
+        this.enlaces = this.servicio.enlaces.split(',');
         setTimeout(() => {
           this.load = false;
         }, 1000);
@@ -209,7 +212,7 @@ export class ViewservicioComponent implements OnInit {
   getPdf(){
     this.alert.alert('En unos segundos se descargará su PDF.');
     let data: any = {
-      template: { "shortid" : "HJlwC8WhkH"  }, 
+      template: { "shortid" : consts.reporte_id  }, 
       data : {id : this.servicio._id.substring(this.servicio._id.length-5,this.servicio._id.length),
               emg : this.emg,
               tec : this.tec,
@@ -240,7 +243,7 @@ export class ViewservicioComponent implements OnInit {
   getRemito(){
     this.alert.alert('En unos segundos se descargará su PDF.');
     let data: any = {
-      template: { "shortid" : "BJxqg5VrlU"  }, 
+      template: { "shortid" : consts.remito_id  }, 
       data : {
             proveedor : "",
             contrato : this.contrato,

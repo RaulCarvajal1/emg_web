@@ -182,6 +182,18 @@
                   </div>
                 </div>
 
+                <div class="row" *ngIf="proceso"><!--proceso-->
+                  <div class="col">
+                      <h6><b>Enlaces adjuntos</b></h6>
+                      <h6 *ngIf="servicio.enlaces.length == 0 || servicio.enlaces == 0">Sin enlaces adjuntos</h6>
+                      <ul *ngIf="servicio.enlaces.length > 0">
+                        <li *ngFor="let enlace of enlaces">
+                          <a href="{{enlace}}">{{enlace}}</a>
+                        </li>
+                      </ul> 
+                  </div> 
+                </div>
+
                 <div class="row" *ngIf="proceso">
                   <div class="col">
                     <div class="">

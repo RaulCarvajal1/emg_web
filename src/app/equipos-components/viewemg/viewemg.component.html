@@ -58,6 +58,25 @@
             </div>
           </div>
           <br>
+          <div class="row">
+            <div class="col"> 
+                <h6><b>Enlaces adjuntos</b></h6>
+                <h6 *ngIf="emg.enlaces.length == 0 || emg.enlaces == 0">Sin enlaces adjuntos</h6>
+                <ul *ngIf="emg.enlaces.length > 0">
+                  <li *ngFor="let enlace of enlaces">
+                    <a href="{{enlace}}">{{enlace}}</a>
+                  </li>
+                </ul> 
+            </div> 
+            <div class="col">
+              <h6><b>Información extra</b></h6>
+              <p class="text-justify">
+                {{extra}}
+              </p>
+            </div>
+          </div>
+
+          <br>
           <div class="row" style="padding-bottom: 0px">
             <div class="col text-center">
               <h6><b>Código QR de identificación</b></h6>

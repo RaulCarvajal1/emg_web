@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { res, resArray } from "../interfaces/response.interface";
 import { saveAs } from 'file-saver';
 import { link } from './app.settings';
+import { consts } from './reports.settings';
 
 
 @Injectable({
@@ -58,9 +59,10 @@ export class ServiciosService {
 
   getPdf(data:any, title: string){
     var mediaType = 'application/pdf';
-    this.http.post('http://18.189.206.61:5488/api/report', data, { responseType: 'blob' }).subscribe(
+    this.http.post(consts.link, data, { responseType: 'blob' }).subscribe(
         (response) => {
             var blob = new Blob([response], { type: mediaType });
+            console.log(blob.size);
             saveAs(blob, `${title}.pdf`);
         },
         e => { console.error(e) }

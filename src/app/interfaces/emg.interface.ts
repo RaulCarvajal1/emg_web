@@ -8,7 +8,9 @@ export interface emgs{
     "status" : number,
     "active" : boolean,
     "cod_pro" : string,
-    "meta" : Meta
+    "meta" : Meta,
+    "enlaces" : string,
+    "extras" : string
 }
 export interface Meta{
     "registred_by" : string,

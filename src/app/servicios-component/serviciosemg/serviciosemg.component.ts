@@ -79,33 +79,36 @@ export class ServiciosemgComponent implements OnInit {
                  });
     return n.info.name;
   }
-   /*
-  0. Solicitado por cliente(Falta asignar tecnico)
-  1. Programado
-  2. En proceso
-  3. Realizado
+  /*
+    0. Solicitado por cliente(Falta asignar tecnico)
+    1. Programado
+    2. En proceso
+    3. Realizado
   */
-  getStatus(n:number):string{
-    switch (n) {
-      case 0:
-        return "Solicitado (Asignar Tec)";
-        break;
-      case 1:
-        return "Programado";
-        break;
-      case 2:
-        return "En proceso";
-        break;
-      case 3:
-        return "Realizado";
-        break;
-      default:
-        break;
-    }
+ getStatus(n:number):string{
+  switch (n) {
+    case 0:
+      return "Solicitado (Asignar Tec)";
+      break;
+    case 1:
+      return "Programado";
+      break;
+    case 2:
+      return "En proceso";
+      break;
+    case 3:
+      return "Realizado/No autorizado";
+      break;
+    case 4:
+      return "Realizado/Autorizado";
+      break;
+    default:
+      break;
   }
+}
   getId(id:string):string{
     return id.substring(id.length-10,id.length);
-  }
+  } 
   getDate(date:string):string{
     var registro = moment(date.replace('T',' ').slice(0,16)).locale('es');
     let temp = registro.format('dddd, MMMM Do YYYY');
@@ -157,7 +160,7 @@ export class ServiciosemgComponent implements OnInit {
     }
   }
   getScore(score:Number, status :Number){
-    if(status != 3){
+    if(status <= 3){
       return 'No Calificado';
     }else{
       switch (score) {
@@ -167,6 +170,8 @@ export class ServiciosemgComponent implements OnInit {
           return 'Buena';
         case 2:
           return 'Excelente';
+        default:
+          return 'No calificado';
       }
     }
   }

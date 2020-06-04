@@ -141,10 +141,11 @@
             <table class="table table-striped" *ngIf="modelos.length > 0">
                 <thead>
                   <tr>
-                    <th scope="col-1">Tipo</th>
-                    <th scope="col-1">Modelo</th>
-                    <th scope="col-8">Descripción</th>
-                    <th scope="col-2 text-right">Detalle</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Links</th>
+                    <th scope="col">Detalle</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -152,7 +153,8 @@
                     <td scope="row">{{modelo.tipo}}</td>
                     <td scope="row">{{modelo.modelo}}</td>
                     <td>{{modelo.descripcion}}</td>
-                    <td>
+                    <td>{{modelo.enlaces.split(',').length}}</td>
+                    <td class="text-center">
                       <button mat-mini-fab class="bg-primary" (click)="detalleModelo(modelo._id)">
                           <mat-icon>pageview</mat-icon>
                       </button>

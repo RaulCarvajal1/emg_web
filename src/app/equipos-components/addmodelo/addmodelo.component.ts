@@ -20,7 +20,8 @@ export class AddmodeloComponent implements OnInit {
     this.modelForm = this.fb.group({
       modelo : ['',[Validators.required]],
       tipo : ['',[Validators.required]],
-      descripcion : ['',[Validators.required]]
+      descripcion : ['',[Validators.required]],
+      enlaces : ['',[]]
     });
   }
 

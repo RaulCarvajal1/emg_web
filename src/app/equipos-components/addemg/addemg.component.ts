@@ -39,7 +39,9 @@ export class AddemgComponent implements OnInit{
                   desc : ['',[Validators.required]],
                   serie : ['',[Validators.required]],
                   cod_pro : ['',[]],
-                  agreement : ['',[]]
+                  agreement : ['',[]],
+                  enlaces : ['',[]],
+                  extras : ['', []]
                 });
 
               }
@@ -134,7 +136,9 @@ export class AddemgComponent implements OnInit{
       'active':true,
       'meta':{
         'registred_by' : this.authService.getId()
-      }
+      },
+      'enlaces': temp.enlaces,
+      'extras' : temp.extras
     };
     this.emgServices.create(nemg).subscribe(
     res=>{
@@ -173,6 +177,6 @@ export class AddemgComponent implements OnInit{
   getModelo(){
     let modelo:models = this.modelos.find( e => e.modelo == this.emgForm.value.modelo);
 
-    this.emgForm.patchValue({ tipo : modelo.tipo , desc : modelo.descripcion});
+    this.emgForm.patchValue({ tipo : modelo.tipo , desc : modelo.descripcion, enlaces : modelo.enlaces});
   }
 }
